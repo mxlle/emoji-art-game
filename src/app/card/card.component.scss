@@ -1,0 +1,15 @@
+:host {
+  &.selected {
+    mat-card {
+      background-color: #555;
+    }
+  }
+}
+
+mat-card {
+  padding: 30px;
+  font-size: 60px;
+  display: grid;
+  place-items: center;
+  cursor: pointer;
+}

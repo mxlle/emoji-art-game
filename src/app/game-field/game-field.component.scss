@@ -1,0 +1,12 @@
+:host {
+  display: block;
+  margin: 16px;
+}
+
+.player-hand {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  grid-auto-rows: 1fr;
+  grid-gap: 16px;
+  margin: 16px 0;
+}

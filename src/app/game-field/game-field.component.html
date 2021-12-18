@@ -1,0 +1,47 @@
+<h2>Game info</h2>
+<mat-card>
+  <button mat-flat-button color="primary" (click)="proceed()">Proceed</button>
+  <div>Phase: {{ game?.phase }}</div>
+  <div>Current demand: {{ currentRound?.demand }}</div>
+  <div>Chosen Fakes: {{ game?.chosenFakes?.length }}</div>
+  <div>Chosen Originals: {{ game?.chosenOriginals?.length }}</div>
+  <div *ngIf="game.phase === 5">GAME OVER</div>
+</mat-card>
+<h2 *ngIf="currentRound?.themes?.length">Current theme</h2>
+<div class="player-hand">
+  <app-card *ngFor="let picture of currentRound?.themes">{{
+    picture
+  }}</app-card>
+</div>
+<h2 *ngIf="currentRound?.offeredPictures?.length">Current Offer</h2>
+<div class="player-hand">
+  <app-card
+    *ngFor="let picture of currentRound?.offeredPictures"
+    [selected]="
+      currentSelection.includes(picture) ||
+      currentRound?.chosenPictures?.includes(picture)
+    "
+    (click)="choosePicture(picture)"
+    >{{ picture }}</app-card
+  >
+</div>
+<div *ngFor="let player of game.players">
+  <h2 [style.color]="player.color">
+    {{ player.name }}
+    ({{
+      currentRound?.buyerIds?.includes(player.id)
+        ? "Buyer"
+        : currentRound?.painterIds?.includes(player.id)
+        ? "Painter"
+        : "??"
+    }})
+  </h2>
+  <div class="player-hand">
+    <app-card
+      *ngFor="let picture of player.pictures"
+      [selected]="player.selectedPictures.includes(picture)"
+      (click)="offerPicture(player, picture)"
+      >{{ picture }}</app-card
+    >
+  </div>
+</div>
