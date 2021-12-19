@@ -3,26 +3,31 @@
   <button mat-flat-button color="primary" (click)="proceed()">Proceed</button>
   <div>Phase: {{ game?.phase }}</div>
   <div>Current demand: {{ currentRound?.demand }}</div>
-  <div>Chosen Fakes: {{ game?.chosenFakes?.length }}</div>
-  <div>Chosen Originals: {{ game?.chosenOriginals?.length }}</div>
+  <div>Team Score: {{ game?.teamPoints?.length }}</div>
+  <div>Fakes: {{ game?.fakePoints?.length }}</div>
+  <div>Neutral: {{ game?.neutralCards?.length }}</div>
   <div *ngIf="game.phase === 5">GAME OVER</div>
 </mat-card>
 <h2 *ngIf="currentRound?.themes?.length">Current theme</h2>
-<div class="player-hand">
-  <app-card *ngFor="let picture of currentRound?.themes">{{
-    picture
-  }}</app-card>
-</div>
-<h2 *ngIf="currentRound?.offeredPictures?.length">Current Offer</h2>
-<div class="player-hand">
+<div class="picture-grid">
   <app-card
-    *ngFor="let picture of currentRound?.offeredPictures"
-    [selected]="
-      currentSelection.includes(picture) ||
-      currentRound?.chosenPictures?.includes(picture)
-    "
-    (click)="choosePicture(picture)"
-    >{{ picture }}</app-card
+    *ngFor="let theme of currentRound?.themes; let index = index"
+    [selected]="currentTheme === index"
+    (click)="currentTheme = index"
+  >
+    {{ theme }}
+  </app-card>
+</div>
+<h2 *ngIf="currentRound?.pictures?.length">Current Offer</h2>
+<div class="picture-grid">
+  <app-picture
+    *ngFor="let picture of currentRound?.pictures"
+    class="{{ getPictureCssClass(picture) }}"
+    [picture]="picture"
+    [themes]="currentRound.themes"
+    [selected]="picture.buyerTheme !== undefined"
+    (click)="toggleBuyerSelection(picture)"
+    >{{ picture.card }}</app-picture
   >
 </div>
 <div *ngFor="let player of game.players">
@@ -30,18 +35,21 @@
     {{ player.name }}
     ({{
       currentRound?.buyerIds?.includes(player.id)
-        ? "Buyer"
+        ? buyer + " Buyer"
         : currentRound?.painterIds?.includes(player.id)
-        ? "Painter"
+        ? painter + " Painter"
         : "??"
     }})
   </h2>
-  <div class="player-hand">
-    <app-card
+  <div class="picture-grid">
+    <app-picture
       *ngFor="let picture of player.pictures"
-      [selected]="player.selectedPictures.includes(picture)"
-      (click)="offerPicture(player, picture)"
-      >{{ picture }}</app-card
+      class="{{ getPictureCssClass(picture) }}"
+      [picture]="picture"
+      [themes]="currentRound.themes"
+      [selected]="picture.painterTheme !== undefined"
+      (click)="togglePainterSelection(picture)"
+      >{{ picture.card }}</app-picture
     >
   </div>
 </div>

@@ -11,8 +11,9 @@ export interface Game {
 
   rounds: GameRound[];
 
-  chosenFakes: string[];
-  chosenOriginals: string[];
+  teamPoints: Picture[];
+  fakePoints: Picture[];
+  neutralCards: Picture[];
 }
 
 export enum GamePhase {
@@ -29,15 +30,19 @@ export interface GameRound {
   buyerIds: string[];
   themes: string[];
   demand?: number;
-  originals: string[];
-  offeredPictures: string[];
-  chosenPictures: string[];
+  pictures: Picture[];
+}
+
+export interface Picture {
+  card: string;
+  painterTheme?: number;
+  buyerTheme?: number;
+  isFake?: boolean;
 }
 
 export interface Player {
   id: string;
   name: string;
   color?: string;
-  pictures: string[];
-  selectedPictures: string[];
+  pictures: Picture[];
 }

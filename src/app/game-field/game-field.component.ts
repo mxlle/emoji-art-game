@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
 
 import { allColors, randomInt } from "game-tools-js";
-import { Game, GamePhase, GameRound, Player } from "../game";
+import { Game, GamePhase, GameRound, Picture, Player } from "../game";
 import {
   choosePictures,
   createGame,
@@ -10,6 +10,7 @@ import {
   setDemand,
   startRound,
 } from "../gameLogic";
+import { buyer, painter } from "../../assets/gameConsts";
 
 const getInitialPlayers = (): Player[] => [
   {
@@ -17,28 +18,24 @@ const getInitialPlayers = (): Player[] => [
     name: "Almi",
     color: allColors[0],
     pictures: [],
-    selectedPictures: [],
   },
   {
     id: "owi",
     name: "Owi",
     color: allColors[4],
     pictures: [],
-    selectedPictures: [],
   },
   {
     id: "wibi",
     name: "Wibi",
     color: allColors[8],
     pictures: [],
-    selectedPictures: [],
   },
   {
     id: "uli",
     name: "Uli",
     color: allColors[12],
     pictures: [],
-    selectedPictures: [],
   },
 ];
 
@@ -49,36 +46,62 @@ const getInitialPlayers = (): Player[] => [
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GameFieldComponent implements OnInit {
-  game: Game;
-  currentSelection: string[] = [];
+  set game(game: Game) {
+    this._game = game;
+    localStorage.setItem("game", JSON.stringify(game));
+  }
+  get game(): Game {
+    return this._game;
+  }
+
+  currentTheme: number = 0;
 
   get currentRound(): GameRound {
     return this.game && this.game.rounds[this.game.currentRound];
   }
 
+  private _game: Game;
+
   constructor() {
-    this.game = createGame(getInitialPlayers());
+    const savedGame = localStorage.getItem("game");
+    this._game = savedGame
+      ? JSON.parse(savedGame)
+      : createGame(getInitialPlayers());
   }
 
   ngOnInit(): void {}
 
-  offerPicture(player: Player, picture: string) {
-    if (player.selectedPictures.includes(picture)) {
-      player.selectedPictures = player.selectedPictures.filter(
-        (pic) => pic !== picture
-      );
+  togglePainterSelection(picture: Picture) {
+    if (picture.painterTheme === this.currentTheme) {
+      picture.painterTheme = undefined;
     } else {
-      player.selectedPictures.push(picture);
+      picture.painterTheme = this.currentTheme;
     }
   }
 
-  choosePicture(picture: string) {
-    if (this.currentSelection.includes(picture)) {
-      this.currentSelection = this.currentSelection.filter(
-        (pic) => pic !== picture
-      );
+  toggleBuyerSelection(picture: Picture) {
+    if (picture.buyerTheme === this.currentTheme) {
+      picture.buyerTheme = undefined;
     } else {
-      this.currentSelection.push(picture);
+      picture.buyerTheme = this.currentTheme;
+    }
+  }
+
+  getPictureCssClass(picture: Picture): string {
+    if (
+      this.game.teamPoints.findIndex((pic) => pic.card === picture.card) > -1
+    ) {
+      return "correct";
+    } else if (
+      this.game.neutralCards.findIndex((pic) => pic.card === picture.card) > -1
+    ) {
+      return "neutral";
+    } else if (
+      this.game.fakePoints.findIndex((pic) => pic.card === picture.card) > -1
+    ) {
+      return "fake";
+    } else {
+      return "";
     }
   }
 
@@ -98,8 +121,7 @@ export class GameFieldComponent implements OnInit {
         offerPictures(this.game);
         break;
       case GamePhase.Choose:
-        choosePictures(this.game, this.currentSelection);
-        this.currentSelection = [];
+        choosePictures(this.game);
         break;
       case GamePhase.Evaluate:
         endRound(this.game);
@@ -108,5 +130,15 @@ export class GameFieldComponent implements OnInit {
         this.newGame();
         break;
     }
+    // trigger save
+    this.game = { ...this.game };
+  }
+
+  get painter(): typeof painter {
+    return painter;
+  }
+
+  get buyer(): typeof buyer {
+    return buyer;
   }
 }

@@ -1,0 +1,12 @@
+<app-card [selected]="selected">
+  {{ picture?.card }}
+  <div *ngIf="picture?.buyerTheme !== undefined" class="theme buyer">
+    {{ themes[picture?.buyerTheme ?? -1] }}
+  </div>
+  <div *ngIf="picture?.painterTheme !== undefined" class="theme painter">
+    {{ themes[picture?.painterTheme ?? -1] }}
+  </div>
+  <div *ngIf="picture?.isFake" class="theme painter fake">
+    {{ masterFaker }}
+  </div>
+</app-card>

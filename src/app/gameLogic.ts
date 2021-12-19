@@ -1,4 +1,4 @@
-import { Game, GamePhase, GameRound, Player } from "./game";
+import { Game, GamePhase, GameRound, Picture, Player } from "./game";
 import { generateId } from "./util";
 import { shuffleArray } from "game-tools-js";
 import {
@@ -6,6 +6,7 @@ import {
   fakesPerRound,
   gameEndCondition,
   getNumOfCardsPerPlayer,
+  themesPerRound,
 } from "../assets/gameConsts";
 import { dealCards, drawCards } from "./gameFunctions";
 
@@ -19,8 +20,9 @@ export function createGame(players: Player[]): Game {
     currentRound: -1,
     phase: GamePhase.Init,
     rounds: [],
-    chosenFakes: [],
-    chosenOriginals: [],
+    teamPoints: [],
+    neutralCards: [],
+    fakePoints: [],
   };
 }
 
@@ -32,7 +34,7 @@ export function startRound(game: Game) {
       getNumOfCardsPerPlayer(game.players.length)
     );
     game.players.forEach((player, index) => {
-      player.pictures = dealtCards[index];
+      player.pictures = dealtCards[index].map((card) => ({ card }));
     });
   }
 
@@ -40,10 +42,8 @@ export function startRound(game: Game) {
   const round: GameRound = {
     painterIds: getPainterIdsForRound(game.players, game.currentRound),
     buyerIds: getBuyerIdsForRound(game.players, game.currentRound),
-    themes: drawCards(game.deck, 2),
-    originals: [],
-    offeredPictures: [],
-    chosenPictures: [],
+    themes: drawCards(game.deck, themesPerRound),
+    pictures: [],
   };
 
   game.rounds.push(round);
@@ -59,28 +59,38 @@ export function setDemand(game: Game, demand: number) {
 
 export function offerPictures(game: Game) {
   const round = getCurrentRound(game);
-  const originals: string[] = [];
-  game.players.forEach((player) => originals.push(...player.selectedPictures));
-  round.originals = originals;
-  const fakes = drawCards(game.deck, fakesPerRound);
-  round.offeredPictures = shuffleArray([...originals, ...fakes]);
+
+  const originals = game.players.reduce(
+    (currentArr: Picture[], player: Player) =>
+      currentArr.concat(player.pictures.filter(isPictureSelectedFromPainter)),
+    []
+  );
+  const fakes = getFakes(game.deck);
+  round.pictures = shuffleArray([...originals, ...fakes]);
+
   game.phase = GamePhase.Choose;
 }
 
-export function choosePictures(game: Game, pictures: string[]) {
+export function choosePictures(game: Game) {
   const round = getCurrentRound(game);
-  round.chosenPictures = pictures;
-  game.chosenOriginals.push(
-    ...pictures.filter((pic) => round.originals.includes(pic))
+  const selectedPictures = round.pictures.filter(isPictureSelectedFromBuyer);
+  game.teamPoints.push(
+    ...selectedPictures.filter((pic) => pic.buyerTheme === pic.painterTheme)
   );
-  game.chosenFakes.push(
-    ...pictures.filter((pic) => !round.originals.includes(pic))
+  game.neutralCards.push(
+    ...selectedPictures.filter(
+      (pic) => pic.buyerTheme !== pic.painterTheme && !pic.isFake
+    ),
+    ...round.pictures.filter(
+      (pic) => !pic.isFake && !isPictureSelectedFromBuyer(pic)
+    )
   );
+  game.fakePoints.push(...selectedPictures.filter((pic) => pic.isFake));
   game.phase = GamePhase.Evaluate;
 }
 
 export function endRound(game: Game) {
-  if (game.chosenFakes.length >= gameEndCondition) {
+  if (game.fakePoints.length >= gameEndCondition) {
     game.phase = GamePhase.End;
   } else {
     fillUpCards(game);
@@ -104,15 +114,33 @@ function getBuyerIdsForRound(players: Player[], round: number) {
     .filter((_, index: number) => (index + round) % 3 > 0);
 }
 
+function getFakes(deck: string[]): Picture[] {
+  return drawCards(deck, fakesPerRound).map((card) => ({
+    card,
+    isFake: true,
+  }));
+}
+
 function fillUpCards(game: Game) {
   game.players.forEach((player) => {
-    const numOfPlayedCards = player.selectedPictures.length;
+    const numOfCards = player.pictures.length;
+    // remove selected cards
+    player.pictures = player.pictures.filter(
+      (pic) => !isPictureSelectedFromPainter(pic)
+    );
+    const numOfPlayedCards = numOfCards - player.pictures.length;
     if (numOfPlayedCards) {
-      player.pictures = player.pictures.filter(
-        (card) => !player.selectedPictures.includes(card)
+      player.pictures.push(
+        ...drawCards(game.deck, numOfPlayedCards).map((card) => ({ card }))
       );
-      player.selectedPictures = [];
-      player.pictures.push(...drawCards(game.deck, numOfPlayedCards));
     }
   });
+}
+
+function isPictureSelectedFromPainter(pic: Picture): boolean {
+  return pic.painterTheme !== undefined;
+}
+
+function isPictureSelectedFromBuyer(pic: Picture): boolean {
+  return pic.buyerTheme !== undefined;
 }

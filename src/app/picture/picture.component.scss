@@ -1,0 +1,17 @@
+app-card {
+  position: relative;
+
+  .theme {
+    position: absolute;
+    font-size: 20px;
+
+    &.buyer {
+      top: 8px;
+      right: 8px;
+    }
+    &.painter {
+      bottom: 8px;
+      left: 8px;
+    }
+  }
+}

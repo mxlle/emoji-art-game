@@ -21,6 +21,11 @@ export const emojis: string[] = splitEmojis(
     travelAndPlaces
 );
 
+export const masterFaker = "🥸";
+export const painter = "🎨";
+export const buyer = "🔍";
+
+export const themesPerRound = 2;
 export const minDemand = 2;
 export const maxDemand = 7;
 export const fakesPerRound = 4;

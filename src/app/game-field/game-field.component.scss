@@ -3,10 +3,24 @@
   margin: 16px;
 }
 
-.player-hand {
+.picture-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
   grid-auto-rows: 1fr;
   grid-gap: 16px;
   margin: 16px 0;
+}
+
+app-picture {
+  &.correct {
+    --card-border-color: green;
+    --card-background-color: darkgreen;
+  }
+  &.neutral {
+    --card-border-color: yellow;
+  }
+  &.fake {
+    --card-border-color: red;
+    --card-background-color: darkred;
+  }
 }

@@ -1,7 +1,7 @@
 :host {
   &.selected {
     mat-card {
-      background-color: #555;
+      background-color: var(--card-background-color, #555);
     }
   }
 }
@@ -12,4 +12,5 @@ mat-card {
   display: grid;
   place-items: center;
   cursor: pointer;
+  border: 2px solid var(--card-border-color, transparent);
 }

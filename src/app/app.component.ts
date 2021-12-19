@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component } from "@angular/core";
+import { buyer, masterFaker, painter } from "../assets/gameConsts";
 
 @Component({
   selector: "app-root",
@@ -6,4 +7,6 @@ import { ChangeDetectionStrategy, Component } from "@angular/core";
   styleUrls: ["./app.component.scss"],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AppComponent {}
+export class AppComponent {
+  title = `Emoji Art Game ${painter} ${buyer} ${masterFaker}`;
+}
