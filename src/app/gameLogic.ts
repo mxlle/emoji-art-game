@@ -1,6 +1,5 @@
 import { Game, GamePhase, GameRound, Picture, Player } from "./game";
-import { generateId } from "./util";
-import { shuffleArray } from "game-tools-js";
+import { shuffleArray, generateId } from "../game-tools/random-util";
 import {
   emojis,
   fakesPerRound,

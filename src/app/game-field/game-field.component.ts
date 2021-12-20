@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
 
-import { allColors, randomInt } from "game-tools-js";
 import { Game, GamePhase, GameRound, Picture, Player } from "../game";
 import {
   choosePictures,
@@ -10,7 +9,9 @@ import {
   setDemand,
   startRound,
 } from "../gameLogic";
-import { buyer, painter } from "../../assets/gameConsts";
+import { buyer, maxDemand, minDemand, painter } from "../../assets/gameConsts";
+import { allColors } from "../../game-tools/color-util";
+import { randomInt } from "../../game-tools/random-util";
 
 const getInitialPlayers = (): Player[] => [
   {
@@ -115,7 +116,7 @@ export class GameFieldComponent implements OnInit {
         startRound(this.game);
         break;
       case GamePhase.Demand:
-        setDemand(this.game, randomInt(5) + 2);
+        setDemand(this.game, randomInt(maxDemand, minDemand));
         break;
       case GamePhase.Offer:
         offerPictures(this.game);

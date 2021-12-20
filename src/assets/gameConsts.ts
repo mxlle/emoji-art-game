@@ -8,7 +8,7 @@ import {
   splitEmojis,
   travelAndPlaces,
   weatherAndEarth,
-} from "game-tools-js";
+} from "../game-tools/emoji-util";
 
 export const emojis: string[] = splitEmojis(
   bodyParts +
