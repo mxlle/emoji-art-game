@@ -1,5 +1,5 @@
-@use "../mixins";
+@use "../../mixins";
 
-.offer {
+.themes {
   @include mixins.defaultGrid();
 }

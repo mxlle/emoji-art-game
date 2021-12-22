@@ -4,9 +4,9 @@ import {
   Input,
   OnInit,
 } from "@angular/core";
-import { Game, GameRound, Picture, Player } from "../game";
-import { getPictureCssClass } from "../ui-helpers";
-import { buyer, painter } from "../../assets/gameConsts";
+import { Game, GameRound, Picture, Player } from "../../game";
+import { getPictureCssClass } from "../../ui-helpers";
+import { buyer, painter } from "../../../assets/gameConsts";
 
 @Component({
   selector: "app-current-player-hand",

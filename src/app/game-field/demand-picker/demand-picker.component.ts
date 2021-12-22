@@ -6,7 +6,7 @@ import {
   OnInit,
   Output,
 } from "@angular/core";
-import { maxDemand, minDemand } from "../../assets/gameConsts";
+import { maxDemand, minDemand } from "../../../assets/gameConsts";
 
 @Component({
   selector: "app-demand-picker",

@@ -4,8 +4,8 @@ import {
   Input,
   OnInit,
 } from "@angular/core";
-import { Game, Picture } from "../game";
-import { getPictureCssClass } from "../ui-helpers";
+import { Game, Picture } from "../../game";
+import { getPictureCssClass } from "../../ui-helpers";
 
 @Component({
   selector: "app-current-offer",

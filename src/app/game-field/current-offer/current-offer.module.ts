@@ -1,7 +1,7 @@
 import { NgModule } from "@angular/core";
 import { CommonModule } from "@angular/common";
 import { CurrentOfferComponent } from "./current-offer.component";
-import { PictureModule } from "../picture/picture.module";
+import { PictureModule } from "../../picture/picture.module";
 
 @NgModule({
   declarations: [CurrentOfferComponent],
