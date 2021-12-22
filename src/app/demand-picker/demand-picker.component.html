@@ -1,0 +1,6 @@
+<app-card
+  *ngFor="let option of demandOptions"
+  [selected]="demand === option"
+  (click)="demandChange.emit(option)"
+  >{{ option }}</app-card
+>

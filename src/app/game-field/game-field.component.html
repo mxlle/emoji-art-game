@@ -2,12 +2,12 @@
 <mat-card>
   <button mat-flat-button color="primary" (click)="proceed()">Proceed</button>
   <div>Phase: {{ game?.phase }}</div>
-  <div>Current demand: {{ currentRound?.demand }}</div>
   <div>Team Score: {{ game?.teamPoints?.length }}</div>
   <div>Fakes: {{ game?.fakePoints?.length }}</div>
   <div>Neutral: {{ game?.neutralCards?.length }}</div>
   <div *ngIf="game.phase === 5">GAME OVER</div>
 </mat-card>
+
 <h2 *ngIf="currentRound?.themes?.length">Current theme</h2>
 <div class="picture-grid">
   <app-card
@@ -18,6 +18,16 @@
     {{ theme }}
   </app-card>
 </div>
+
+<h2>Current Demand</h2>
+<app-demand-picker
+  *ngIf="GamePhase.Demand === game?.phase"
+  [(demand)]="demand"
+></app-demand-picker>
+<app-card *ngIf="GamePhase.Demand !== game?.phase">
+  {{ currentRound?.demand ?? "?" }}
+</app-card>
+
 <h2 *ngIf="currentRound?.pictures?.length">Current Offer</h2>
 <div class="picture-grid">
   <app-picture
@@ -30,6 +40,7 @@
     >{{ picture.card }}</app-picture
   >
 </div>
+
 <div *ngFor="let player of game.players">
   <h2 [style.color]="player.color">
     {{ player.name }}

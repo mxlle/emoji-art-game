@@ -9,9 +9,8 @@ import {
   setDemand,
   startRound,
 } from "../gameLogic";
-import { buyer, maxDemand, minDemand, painter } from "../../assets/gameConsts";
+import { buyer, painter } from "../../assets/gameConsts";
 import { allColors } from "../../game-tools/color-util";
-import { randomInt } from "../../game-tools/random-util";
 
 const getInitialPlayers = (): Player[] => [
   {
@@ -56,6 +55,8 @@ export class GameFieldComponent implements OnInit {
   }
 
   currentTheme: number = 0;
+
+  demand: number | undefined;
 
   get currentRound(): GameRound {
     return this.game && this.game.rounds[this.game.currentRound];
@@ -116,7 +117,10 @@ export class GameFieldComponent implements OnInit {
         startRound(this.game);
         break;
       case GamePhase.Demand:
-        setDemand(this.game, randomInt(maxDemand, minDemand));
+        if (this.demand) {
+          setDemand(this.game, this.demand);
+          delete this.demand;
+        }
         break;
       case GamePhase.Offer:
         offerPictures(this.game);
@@ -141,5 +145,9 @@ export class GameFieldComponent implements OnInit {
 
   get buyer(): typeof buyer {
     return buyer;
+  }
+
+  get GamePhase(): typeof GamePhase {
+    return GamePhase;
   }
 }

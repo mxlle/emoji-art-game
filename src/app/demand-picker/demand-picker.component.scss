@@ -1,0 +1,7 @@
+:host {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+  grid-auto-rows: 1fr;
+  grid-gap: 16px;
+  --card-font-size: 30px;
+}
