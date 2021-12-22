@@ -1,0 +1,13 @@
+<h2 [style.color]="player.color">{{ player.name }} ({{ getPlayerRole() }})</h2>
+<div class="hand">
+  <app-picture
+    *ngFor="let picture of player.pictures"
+    class="{{ getPictureCssClass(picture) }}"
+    [picture]="picture"
+    [themes]="themes"
+    [selected]="picture.painterTheme !== undefined"
+    (click)="togglePainterSelection(picture)"
+  >
+    {{ picture.card }}
+  </app-picture>
+</div>

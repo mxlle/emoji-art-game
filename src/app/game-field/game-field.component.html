@@ -1,23 +1,10 @@
-<h2>Game info</h2>
-<mat-card>
-  <button mat-flat-button color="primary" (click)="proceed()">Proceed</button>
-  <div>Phase: {{ game?.phase }}</div>
-  <div>Team Score: {{ game?.teamPoints?.length }}</div>
-  <div>Fakes: {{ game?.fakePoints?.length }}</div>
-  <div>Neutral: {{ game?.neutralCards?.length }}</div>
-  <div *ngIf="game.phase === 5">GAME OVER</div>
-</mat-card>
+<app-mock-mode [(game)]="game" [(demand)]="demand"></app-mock-mode>
 
-<h2 *ngIf="currentRound?.themes?.length">Current theme</h2>
-<div class="picture-grid">
-  <app-card
-    *ngFor="let theme of currentRound?.themes; let index = index"
-    [selected]="currentTheme === index"
-    (click)="currentTheme = index"
-  >
-    {{ theme }}
-  </app-card>
-</div>
+<app-current-themes
+  *ngIf="currentRound && currentRound?.themes?.length"
+  [themes]="currentRound.themes"
+  [(currentTheme)]="currentTheme"
+></app-current-themes>
 
 <h2>Current Demand</h2>
 <app-demand-picker
@@ -28,39 +15,16 @@
   {{ currentRound?.demand ?? "?" }}
 </app-card>
 
-<h2 *ngIf="currentRound?.pictures?.length">Current Offer</h2>
-<div class="picture-grid">
-  <app-picture
-    *ngFor="let picture of currentRound?.pictures"
-    class="{{ getPictureCssClass(picture) }}"
-    [picture]="picture"
-    [themes]="currentRound.themes"
-    [selected]="picture.buyerTheme !== undefined"
-    (click)="toggleBuyerSelection(picture)"
-    >{{ picture.card }}</app-picture
-  >
-</div>
+<app-current-offer
+  *ngIf="currentRound && currentRound?.pictures?.length"
+  [game]="game"
+  [pictures]="currentRound.pictures"
+  [currentTheme]="currentTheme"
+></app-current-offer>
 
-<div *ngFor="let player of game.players">
-  <h2 [style.color]="player.color">
-    {{ player.name }}
-    ({{
-      currentRound?.buyerIds?.includes(player.id)
-        ? buyer + " Buyer"
-        : currentRound?.painterIds?.includes(player.id)
-        ? painter + " Painter"
-        : "??"
-    }})
-  </h2>
-  <div class="picture-grid">
-    <app-picture
-      *ngFor="let picture of player.pictures"
-      class="{{ getPictureCssClass(picture) }}"
-      [picture]="picture"
-      [themes]="currentRound.themes"
-      [selected]="picture.painterTheme !== undefined"
-      (click)="togglePainterSelection(picture)"
-      >{{ picture.card }}</app-picture
-    >
-  </div>
-</div>
+<app-current-player-hand
+  *ngFor="let player of game?.players"
+  [game]="game"
+  [player]="player"
+  [currentTheme]="currentTheme"
+></app-current-player-hand>

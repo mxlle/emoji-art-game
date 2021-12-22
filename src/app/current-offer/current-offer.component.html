@@ -1,0 +1,13 @@
+<h2>Current Offer</h2>
+<div class="offer">
+  <app-picture
+    *ngFor="let picture of pictures"
+    class="{{ getPictureCssClass(picture) }}"
+    [picture]="picture"
+    [themes]="themes"
+    [selected]="picture.buyerTheme !== undefined"
+    (click)="toggleBuyerSelection(picture)"
+  >
+    {{ picture.card }}
+  </app-picture>
+</div>

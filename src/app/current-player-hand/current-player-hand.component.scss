@@ -1,0 +1,5 @@
+@use "../mixins";
+
+.hand {
+  @include mixins.defaultGrid();
+}

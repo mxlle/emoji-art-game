@@ -1,0 +1,10 @@
+<h2>Current themes</h2>
+<div class="themes">
+  <app-card
+    *ngFor="let theme of themes; let index = index"
+    [selected]="currentTheme === index"
+    (click)="currentThemeChange.emit(index)"
+  >
+    {{ theme }}
+  </app-card>
+</div>

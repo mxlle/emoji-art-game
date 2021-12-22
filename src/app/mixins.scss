@@ -1,0 +1,6 @@
+@mixin defaultGrid($minValue: 120px) {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax($minValue, 1fr));
+  grid-auto-rows: 1fr;
+  grid-gap: 16px;
+}

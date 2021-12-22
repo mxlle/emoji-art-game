@@ -1,0 +1,8 @@
+<mat-card>
+  <button mat-flat-button color="primary" (click)="proceed()">Proceed</button>
+  <div>Phase: {{ game?.phase }}</div>
+  <div>Team Score: {{ game?.teamPoints?.length }}</div>
+  <div>Fakes: {{ game?.fakePoints?.length }}</div>
+  <div>Neutral: {{ game?.neutralCards?.length }}</div>
+  <div *ngIf="game?.phase === 5">GAME OVER</div>
+</mat-card>

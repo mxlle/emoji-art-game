@@ -1,5 +1,5 @@
 import { Game, GamePhase, GameRound, Picture, Player } from "./game";
-import { shuffleArray, generateId } from "../game-tools/random-util";
+import { generateId, shuffleArray } from "../game-tools/random-util";
 import {
   emojis,
   fakesPerRound,
@@ -14,7 +14,7 @@ export function createGame(players: Player[]): Game {
     id: generateId(),
     name: "My game",
     players,
-    hostId: players[0].id,
+    hostId: players[0]?.id,
     deck: shuffleArray(emojis),
     currentRound: -1,
     phase: GamePhase.Init,

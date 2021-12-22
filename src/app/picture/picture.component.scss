@@ -1,3 +1,17 @@
+:host {
+  &.correct {
+    --card-border-color: green;
+    --card-background-color: darkgreen;
+  }
+  &.neutral {
+    --card-border-color: yellow;
+  }
+  &.fake {
+    --card-border-color: red;
+    --card-background-color: darkred;
+  }
+}
+
 app-card {
   position: relative;
 
