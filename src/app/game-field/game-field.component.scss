@@ -2,7 +2,9 @@
 
 :host {
   display: block;
-  margin: 16px;
+  padding: 16px;
+  height: calc(100% - 32px);
+  overflow-y: auto;
 }
 
 .players {
