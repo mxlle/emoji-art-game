@@ -14,10 +14,22 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CurrentThemesComponent implements OnInit {
-  @Input() themes: string[] = [];
-  @Input() currentTheme?: number;
-  @Output() currentThemeChange: EventEmitter<number> =
-    new EventEmitter<number>();
+  @Input() set themes(themes: string[]) {
+    this._themes = themes;
+    if (!this.currentTheme || !themes.includes(this.currentTheme)) {
+      this.currentThemeChange.emit(themes[0]);
+    }
+  }
+  get themes(): string[] {
+    return this._themes;
+  }
+
+  @Input() currentTheme?: string;
+  @Output() currentThemeChange: EventEmitter<string> =
+    new EventEmitter<string>();
+
+  private _themes: string[] = [];
+
   constructor() {}
 
   ngOnInit(): void {}

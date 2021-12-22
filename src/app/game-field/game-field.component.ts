@@ -13,7 +13,7 @@ import { getInitialPlayers } from "../mock-mode/mock-mode.component";
 export class GameFieldComponent implements OnInit {
   game: Game;
 
-  currentTheme: number = 0;
+  currentTheme: string = "";
 
   demand: number | undefined;
 

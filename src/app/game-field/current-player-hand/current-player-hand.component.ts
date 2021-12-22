@@ -17,7 +17,7 @@ import { buyer, painter } from "../../../assets/gameConsts";
 export class CurrentPlayerHandComponent implements OnInit {
   @Input() game!: Game;
   @Input() player!: Player;
-  @Input() currentTheme!: number;
+  @Input() currentTheme!: string;
 
   get themes(): string[] {
     return this.game.rounds[this.game.currentRound].themes;

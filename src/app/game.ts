@@ -35,8 +35,8 @@ export interface GameRound {
 
 export interface Picture {
   card: string;
-  painterTheme?: number;
-  buyerTheme?: number;
+  painterTheme?: string;
+  buyerTheme?: string;
   isFake?: boolean;
 }
 

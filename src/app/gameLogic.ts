@@ -137,9 +137,9 @@ function fillUpCards(game: Game) {
 }
 
 function isPictureSelectedFromPainter(pic: Picture): boolean {
-  return pic.painterTheme !== undefined;
+  return !!pic.painterTheme;
 }
 
 function isPictureSelectedFromBuyer(pic: Picture): boolean {
-  return pic.buyerTheme !== undefined;
+  return !!pic.buyerTheme;
 }

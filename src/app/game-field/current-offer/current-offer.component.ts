@@ -16,7 +16,7 @@ import { getPictureCssClass } from "../../ui-helpers";
 export class CurrentOfferComponent implements OnInit {
   @Input() game!: Game;
   @Input() pictures: Picture[] = [];
-  @Input() currentTheme!: number;
+  @Input() currentTheme!: string;
 
   get themes(): string[] {
     return this.game.rounds[this.game.currentRound].themes;

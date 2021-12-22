@@ -14,8 +14,7 @@ import { masterFaker } from "../../assets/gameConsts";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PictureComponent implements OnInit {
-  @Input() picture?: Picture;
-  @Input() themes: string[] = [];
+  @Input() picture!: Picture;
   @Input() selected: boolean = false;
 
   constructor() {}

@@ -4,8 +4,7 @@
     *ngFor="let picture of player.pictures"
     class="{{ getPictureCssClass(picture) }}"
     [picture]="picture"
-    [themes]="themes"
-    [selected]="picture.painterTheme !== undefined"
+    [selected]="!!picture.painterTheme"
     (click)="togglePainterSelection(picture)"
   >
     {{ picture.card }}
