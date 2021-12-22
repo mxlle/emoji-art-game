@@ -7,7 +7,7 @@
 }
 
 mat-card {
-  padding: 30px;
+  padding: var(--card-padding, 30px);
   font-size: var(--card-font-size, 60px);
   display: grid;
   place-items: center;

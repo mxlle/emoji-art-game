@@ -59,8 +59,11 @@ export class MockModeComponent implements OnInit {
     return this._game;
   }
   @Input() demand?: number;
+  @Input() currentPlayer?: Player;
   @Output() gameChange: EventEmitter<Game> = new EventEmitter<Game>();
   @Output() demandChange: EventEmitter<number> = new EventEmitter<number>();
+  @Output() currentPlayerChange: EventEmitter<Player> =
+    new EventEmitter<Player>();
 
   private _game: Game;
 

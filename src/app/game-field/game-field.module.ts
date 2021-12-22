@@ -10,6 +10,7 @@ import { CurrentPlayerHandModule } from "./current-player-hand/current-player-ha
 import { CurrentOfferModule } from "./current-offer/current-offer.module";
 import { MockModeModule } from "../mock-mode/mock-mode.module";
 import { CurrentThemesModule } from "./current-themes/current-themes.module";
+import { PlayerInfoModule } from "./player-info/player-info.module";
 
 @NgModule({
   declarations: [GameFieldComponent],
@@ -25,6 +26,7 @@ import { CurrentThemesModule } from "./current-themes/current-themes.module";
     CurrentOfferModule,
     MockModeModule,
     CurrentThemesModule,
+    PlayerInfoModule,
   ],
 })
 export class GameFieldModule {}

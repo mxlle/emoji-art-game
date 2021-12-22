@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
 
-import { Game, GamePhase, GameRound } from "../game";
+import { Game, GamePhase, GameRound, Player } from "../game";
 import { createGame } from "../gameLogic";
 import { getInitialPlayers } from "../mock-mode/mock-mode.component";
 
@@ -12,6 +12,7 @@ import { getInitialPlayers } from "../mock-mode/mock-mode.component";
 })
 export class GameFieldComponent implements OnInit {
   game: Game;
+  currentPlayer?: Player;
 
   currentTheme: string = "";
 

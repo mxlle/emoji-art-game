@@ -1,4 +1,8 @@
-<app-mock-mode [(game)]="game" [(demand)]="demand"></app-mock-mode>
+<app-mock-mode
+  [(game)]="game"
+  [(demand)]="demand"
+  [(currentPlayer)]="currentPlayer"
+></app-mock-mode>
 
 <app-current-themes
   *ngIf="currentRound && currentRound?.themes?.length"
@@ -22,9 +26,19 @@
   [currentTheme]="currentTheme"
 ></app-current-offer>
 
+<h2>Players</h2>
+<div class="players">
+  <app-player-info
+    *ngFor="let player of game?.players"
+    [game]="game"
+    [player]="player"
+  >
+  </app-player-info>
+</div>
+
 <app-current-player-hand
-  *ngFor="let player of game?.players"
+  *ngIf="currentPlayer"
   [game]="game"
-  [player]="player"
+  [player]="currentPlayer"
   [currentTheme]="currentTheme"
 ></app-current-player-hand>
