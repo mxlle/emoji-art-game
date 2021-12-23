@@ -1,4 +1,5 @@
-@use "../mixins";
+@use '../mixins';
+
 :host {
   display: grid;
   grid-template-columns: 1fr 2fr;

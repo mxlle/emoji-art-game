@@ -1,4 +1,4 @@
-import { Role } from "../assets/gameConsts";
+import { Role } from '../assets/gameConsts';
 
 export interface Game {
   id: string;

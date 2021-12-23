@@ -1,16 +1,9 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-} from "@angular/core";
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
-  selector: "app-current-themes",
-  templateUrl: "./current-themes.component.html",
-  styleUrls: ["./current-themes.component.scss"],
+  selector: 'app-current-themes',
+  templateUrl: './current-themes.component.html',
+  styleUrls: ['./current-themes.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CurrentThemesComponent implements OnInit {
@@ -25,8 +18,7 @@ export class CurrentThemesComponent implements OnInit {
   }
 
   @Input() currentTheme?: string;
-  @Output() currentThemeChange: EventEmitter<string> =
-    new EventEmitter<string>();
+  @Output() currentThemeChange: EventEmitter<string> = new EventEmitter<string>();
 
   private _themes: string[] = [];
 

@@ -6,6 +6,5 @@
   "display": "standalone",
   "scope": "./",
   "start_url": "./",
-  "icons": [
- ]
+  "icons": []
 }

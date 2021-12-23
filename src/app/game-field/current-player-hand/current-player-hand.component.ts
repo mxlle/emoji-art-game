@@ -1,16 +1,11 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Input,
-  OnInit,
-} from "@angular/core";
-import { Game, GameRound, Picture, Player } from "../../game";
-import { getPictureCssClass } from "../../ui-helpers";
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { Game, Picture, Player } from '../../game';
+import { getPictureCssClass } from '../../ui-helpers';
 
 @Component({
-  selector: "app-current-player-hand",
-  templateUrl: "./current-player-hand.component.html",
-  styleUrls: ["./current-player-hand.component.scss"],
+  selector: 'app-current-player-hand',
+  templateUrl: './current-player-hand.component.html',
+  styleUrls: ['./current-player-hand.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CurrentPlayerHandComponent implements OnInit {
@@ -20,10 +15,6 @@ export class CurrentPlayerHandComponent implements OnInit {
 
   get themes(): string[] {
     return this.game.rounds[this.game.currentRound].themes;
-  }
-
-  get currentRound(): GameRound {
-    return this.game && this.game.rounds[this.game.currentRound];
   }
 
   constructor() {}

@@ -1,20 +1,20 @@
-import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 
-import { Game, GamePhase, GameRound, Player } from "../game";
-import { createGame, getOfferedPictures } from "../gameLogic";
-import { getInitialPlayers } from "../mock-mode/mock-mode.component";
+import { Game, GamePhase, GameRound, Player } from '../game';
+import { createGame, getOfferedPictures } from '../gameLogic';
+import { getInitialPlayers } from '../mock-mode/mock-mode.component';
 
 @Component({
-  selector: "app-game-field",
-  templateUrl: "./game-field.component.html",
-  styleUrls: ["./game-field.component.scss"],
+  selector: 'app-game-field',
+  templateUrl: './game-field.component.html',
+  styleUrls: ['./game-field.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GameFieldComponent implements OnInit {
   game: Game;
   currentPlayer?: Player;
 
-  currentTheme: string = "";
+  currentTheme: string = '';
 
   demand: number | undefined;
 
@@ -27,10 +27,8 @@ export class GameFieldComponent implements OnInit {
   }
 
   constructor() {
-    const savedGame = localStorage.getItem("game");
-    this.game = savedGame
-      ? JSON.parse(savedGame)
-      : createGame(getInitialPlayers());
+    const savedGame = localStorage.getItem('game');
+    this.game = savedGame ? JSON.parse(savedGame) : createGame(getInitialPlayers());
   }
 
   ngOnInit(): void {}

@@ -1,7 +1,7 @@
-import { NgModule } from "@angular/core";
-import { CommonModule } from "@angular/common";
-import { CurrentThemesComponent } from "./current-themes.component";
-import { CardModule } from "../../card/card.module";
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { CurrentThemesComponent } from './current-themes.component';
+import { CardModule } from '../../card/card.module';
 
 @NgModule({
   declarations: [CurrentThemesComponent],

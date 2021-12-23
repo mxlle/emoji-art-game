@@ -1,4 +1,4 @@
-@use "../../mixins";
+@use '../../mixins';
 
 .hand {
   @include mixins.defaultGrid();

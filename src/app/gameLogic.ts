@@ -1,20 +1,13 @@
-import { Game, GamePhase, GameRound, Picture, Player } from "./game";
-import { shuffleArray } from "../game-tools/random-util";
-import {
-  emojis,
-  fakesPerRound,
-  gameEndCondition,
-  getNumOfCardsPerPlayer,
-  getRoleOrder,
-  themesPerRound,
-} from "../assets/gameConsts";
-import { dealCards, drawCards } from "./gameFunctions";
-import { generateEmojiId } from "../game-tools/emoji-util";
+import { Game, GamePhase, GameRound, Picture, Player } from './game';
+import { shuffleArray } from '../game-tools/random-util';
+import { emojis, fakesPerRound, gameEndCondition, getNumOfCardsPerPlayer, getRoleOrder, themesPerRound } from '../assets/gameConsts';
+import { dealCards, drawCards } from './gameFunctions';
+import { generateEmojiId } from '../game-tools/emoji-util';
 
 export function createGame(players: Player[]): Game {
   return {
     id: generateEmojiId(),
-    name: "My game",
+    name: 'My game',
     players,
     hostId: players[0]?.id,
     deck: shuffleArray(emojis),
@@ -29,11 +22,7 @@ export function createGame(players: Player[]): Game {
 
 export function startGame(game: Game) {
   // deal cards, assign roles and shuffle player order
-  const dealtCards = dealCards(
-    game.deck,
-    game.players.length,
-    getNumOfCardsPerPlayer(game.players.length)
-  );
+  const dealtCards = dealCards(game.deck, game.players.length, getNumOfCardsPerPlayer(game.players.length));
   const roleOrder = getRoleOrder(game.players.length);
   shuffleArray(game.players);
   game.players.forEach((player, index) => {
@@ -66,11 +55,7 @@ export function setDemand(game: Game, demand: number) {
 export function offerPictures(game: Game) {
   const round = getCurrentRound(game);
 
-  const originals = game.players.reduce(
-    (currentArr: Picture[], player: Player) =>
-      currentArr.concat(player.pictures.filter(isPictureSelectedFromPainter)),
-    []
-  );
+  const originals = getOfferedPictures(game);
   const fakes = getFakes(game.deck);
   round.pictures = shuffleArray([...originals, ...fakes]);
 
@@ -80,16 +65,10 @@ export function offerPictures(game: Game) {
 export function choosePictures(game: Game) {
   const round = getCurrentRound(game);
   const selectedPictures = round.pictures.filter(isPictureSelectedFromBuyer);
-  game.teamPoints.push(
-    ...selectedPictures.filter((pic) => pic.buyerTheme === pic.painterTheme)
-  );
+  game.teamPoints.push(...selectedPictures.filter((pic) => pic.buyerTheme === pic.painterTheme));
   game.neutralCards.push(
-    ...selectedPictures.filter(
-      (pic) => pic.buyerTheme !== pic.painterTheme && !pic.isFake
-    ),
-    ...round.pictures.filter(
-      (pic) => !pic.isFake && !isPictureSelectedFromBuyer(pic)
-    )
+    ...selectedPictures.filter((pic) => pic.buyerTheme !== pic.painterTheme && !pic.isFake),
+    ...round.pictures.filter((pic) => !pic.isFake && !isPictureSelectedFromBuyer(pic))
   );
   game.fakePoints.push(...selectedPictures.filter((pic) => pic.isFake));
   game.phase = GamePhase.Evaluate;
@@ -120,14 +99,10 @@ function fillUpCards(game: Game) {
   game.players.forEach((player) => {
     const numOfCards = player.pictures.length;
     // remove selected cards
-    player.pictures = player.pictures.filter(
-      (pic) => !isPictureSelectedFromPainter(pic)
-    );
+    player.pictures = player.pictures.filter((pic) => !isPictureSelectedFromPainter(pic));
     const numOfPlayedCards = numOfCards - player.pictures.length;
     if (numOfPlayedCards) {
-      player.pictures.push(
-        ...drawCards(game.deck, numOfPlayedCards).map((card) => ({ card }))
-      );
+      player.pictures.push(...drawCards(game.deck, numOfPlayedCards).map((card) => ({ card })));
     }
   });
 }
@@ -147,4 +122,11 @@ function isPictureSelectedFromPainter(pic: Picture): boolean {
 
 function isPictureSelectedFromBuyer(pic: Picture): boolean {
   return !!pic.buyerTheme;
+}
+
+export function getOfferedPictures(game: Game): Picture[] {
+  return game.players.reduce(
+    (currentArr: Picture[], player: Player) => currentArr.concat(player.pictures.filter(isPictureSelectedFromPainter)),
+    []
+  );
 }

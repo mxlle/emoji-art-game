@@ -8,25 +8,18 @@ import {
   splitEmojis,
   travelAndPlaces,
   weatherAndEarth,
-} from "../game-tools/emoji-util";
+} from '../game-tools/emoji-util';
 
 export const emojis: string[] = splitEmojis(
-  bodyParts +
-    clothingAndAccessories +
-    animals +
-    nature +
-    weatherAndEarth +
-    foodAndDrink +
-    activityAndSport +
-    travelAndPlaces
+  bodyParts + clothingAndAccessories + animals + nature + weatherAndEarth + foodAndDrink + activityAndSport + travelAndPlaces
 );
 
 export enum Role {
-  BUYER = "🔍",
-  PAINTER = "🎨",
+  BUYER = '🔍',
+  PAINTER = '🎨',
 }
 
-export const masterFaker = "🥸";
+export const masterFaker = '🥸';
 export const painter = Role.PAINTER;
 export const buyer = Role.BUYER;
 
@@ -36,13 +29,7 @@ export const maxDemand = 7;
 export const fakesPerRound = 4;
 export const gameEndCondition = 6;
 
-export const roleOrder: Role[] = [
-  Role.PAINTER,
-  Role.BUYER,
-  Role.BUYER,
-  Role.PAINTER,
-  Role.BUYER,
-];
+export const roleOrder: Role[] = [Role.PAINTER, Role.BUYER, Role.BUYER, Role.PAINTER, Role.BUYER];
 
 export const getRoleOrder = (numOfPlayer: number): Role[] => {
   const order = [];

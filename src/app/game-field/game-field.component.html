@@ -1,8 +1,4 @@
-<app-mock-mode
-  [(game)]="game"
-  [(demand)]="demand"
-  [(currentPlayer)]="currentPlayer"
-></app-mock-mode>
+<app-mock-mode [(game)]="game" [(demand)]="demand" [(currentPlayer)]="currentPlayer"></app-mock-mode>
 
 <app-current-themes
   *ngIf="currentRound && currentRound?.themes?.length"
@@ -11,13 +7,8 @@
 ></app-current-themes>
 
 <h2>Current Demand</h2>
-<app-demand-picker
-  *ngIf="GamePhase.Demand === game?.phase"
-  [(demand)]="demand"
-></app-demand-picker>
-<app-card *ngIf="GamePhase.Demand !== game?.phase">
-  {{ currentOffer }} / {{ currentRound?.demand ?? "?" }}
-</app-card>
+<app-demand-picker *ngIf="GamePhase.Demand === game?.phase" [(demand)]="demand"></app-demand-picker>
+<app-card *ngIf="GamePhase.Demand !== game?.phase"> {{ currentOffer }} / {{ currentRound?.demand ?? "?" }} </app-card>
 
 <app-current-offer
   *ngIf="currentRound && currentRound?.pictures?.length"
@@ -28,12 +19,7 @@
 
 <h2>Players</h2>
 <div class="players">
-  <app-player-info
-    *ngFor="let player of game?.players"
-    [game]="game"
-    [player]="player"
-  >
-  </app-player-info>
+  <app-player-info *ngFor="let player of game?.players" [game]="game" [player]="player"> </app-player-info>
 </div>
 
 <app-current-player-hand

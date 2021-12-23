@@ -1,59 +1,45 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  EventEmitter,
-  Input,
-  OnInit,
-  Output,
-} from "@angular/core";
-import { Game, GamePhase, Player } from "../game";
-import {
-  choosePictures,
-  createGame,
-  endRound,
-  offerPictures,
-  setDemand,
-  startGame,
-} from "../gameLogic";
-import { allColors } from "../../game-tools/color-util";
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Game, GamePhase, Player } from '../game';
+import { choosePictures, createGame, endRound, offerPictures, setDemand, startGame } from '../gameLogic';
+import { allColors } from '../../game-tools/color-util';
 
 export const getInitialPlayers = (): Player[] => [
   {
-    id: "almi",
-    name: "Almi",
+    id: 'almi',
+    name: 'Almi',
     color: allColors[0],
     pictures: [],
   },
   {
-    id: "owi",
-    name: "Owi",
+    id: 'owi',
+    name: 'Owi',
     color: allColors[4],
     pictures: [],
   },
   {
-    id: "wibi",
-    name: "Wibi",
+    id: 'wibi',
+    name: 'Wibi',
     color: allColors[8],
     pictures: [],
   },
   {
-    id: "uli",
-    name: "Uli",
+    id: 'uli',
+    name: 'Uli',
     color: allColors[12],
     pictures: [],
   },
 ];
 
 @Component({
-  selector: "app-mock-mode",
-  templateUrl: "./mock-mode.component.html",
-  styleUrls: ["./mock-mode.component.scss"],
+  selector: 'app-mock-mode',
+  templateUrl: './mock-mode.component.html',
+  styleUrls: ['./mock-mode.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MockModeComponent implements OnInit {
   @Input() set game(game: Game) {
     this._game = game;
-    localStorage.setItem("game", JSON.stringify(game));
+    localStorage.setItem('game', JSON.stringify(game));
   }
   get game(): Game {
     return this._game;
@@ -62,16 +48,13 @@ export class MockModeComponent implements OnInit {
   @Input() currentPlayer?: Player;
   @Output() gameChange: EventEmitter<Game> = new EventEmitter<Game>();
   @Output() demandChange: EventEmitter<number> = new EventEmitter<number>();
-  @Output() currentPlayerChange: EventEmitter<Player> =
-    new EventEmitter<Player>();
+  @Output() currentPlayerChange: EventEmitter<Player> = new EventEmitter<Player>();
 
   private _game: Game;
 
   constructor() {
-    const savedGame = localStorage.getItem("game");
-    this._game = savedGame
-      ? JSON.parse(savedGame)
-      : createGame(getInitialPlayers());
+    const savedGame = localStorage.getItem('game');
+    this._game = savedGame ? JSON.parse(savedGame) : createGame(getInitialPlayers());
     this.gameChange.emit(this._game);
   }
 

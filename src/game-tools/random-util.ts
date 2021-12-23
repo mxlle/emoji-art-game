@@ -22,5 +22,5 @@ export function randomArrayValue<T>(array: T[]): T {
 }
 
 export function generateId() {
-  return Math.random().toString(36).replace("0.", "");
+  return Math.random().toString(36).replace('0.', '');
 }

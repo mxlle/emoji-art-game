@@ -8,11 +8,7 @@
   <div *ngIf="game?.phase === 5">GAME OVER</div>
 </mat-card>
 <div class="players">
-  <app-card
-    *ngFor="let player of game?.players"
-    [selected]="currentPlayer?.id === player.id"
-    (click)="currentPlayerChange.emit(player)"
-  >
+  <app-card *ngFor="let player of game?.players" [selected]="currentPlayer?.id === player.id" (click)="currentPlayerChange.emit(player)">
     <span [style.color]="player.color">{{ player.name }}</span>
   </app-card>
 </div>
