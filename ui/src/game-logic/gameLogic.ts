@@ -1,23 +1,16 @@
-import {DELETE_CLEARANCE_TIME, Game, GamePhase, GameRound, Picture, Player} from './game';
-import {shuffleArray} from '../game-tools/random-util';
-import {
-  emojis,
-  fakesPerRound,
-  gameEndCondition,
-  getNumOfCardsPerPlayer,
-  getRoleOrder,
-  themesPerRound
-} from './gameConsts';
-import {dealCards, drawCards} from '../game-tools/card-game-util';
-import {generateEmojiId} from '../game-tools/emoji-util';
+import { DELETE_CLEARANCE_TIME, Game, GamePhase, GameRound, Picture, Player } from './game';
+import { shuffleArray } from '../game-tools/random-util';
+import { emojis, fakesPerRound, gameEndCondition, getNumOfCardsPerPlayer, getRoleOrder, themesPerRound } from './gameConsts';
+import { dealCards, drawCards } from '../game-tools/card-game-util';
+import { generateEmojiId } from '../game-tools/emoji-util';
 
-export function createGame(players: Player[]): Game {
+export function createGame(players: Player[] = []): Game {
   return {
     id: generateEmojiId(),
-    name: 'My game',
+    name: 'My game ' + generateEmojiId(),
     players,
     hostId: players[0]?.id,
-    deck: shuffleArray(emojis),
+    deck: [],
     currentRound: -1,
     phase: GamePhase.Init,
     rounds: [],
@@ -34,14 +27,14 @@ export function addPlayer(game: Game, player: Player) {
 }
 
 export function updatePlayer(game: Game, player: Player) {
-  let currentUser = game.players.find(p => p.id === player.id);
+  let currentUser = game.players.find((p) => p.id === player.id);
   if (!currentUser) return;
   currentUser.name = player.name;
   currentUser.color = player.color;
 }
 
 export function removePlayerFromGame(game: Game, playerId: string) {
-  const index = game.players.findIndex(p => p.id === playerId);
+  const index = game.players.findIndex((p) => p.id === playerId);
   if (index > -1) {
     game.players.splice(index, 1);
   }
@@ -49,6 +42,7 @@ export function removePlayerFromGame(game: Game, playerId: string) {
 
 export function startGame(game: Game) {
   // deal cards, assign roles and shuffle player order
+  game.deck = shuffleArray(emojis);
   const dealtCards = dealCards(game.deck, game.players.length, getNumOfCardsPerPlayer(game.players.length));
   const roleOrder = getRoleOrder(game.players.length);
   shuffleArray(game.players);
@@ -191,9 +185,11 @@ export function getOfferedPictures(game: Game): Picture[] {
 }
 
 export function getBuyerSelection(game: Game): Picture[] {
-  return game && GamePhase.Choose === game.phase ? game.rounds[game.currentRound].pictures.filter(
-    (pic) => !!pic.buyerTheme || (pic.buyerSelection && !!Object.keys(pic.buyerSelection).length)
-  ) : [];
+  return game && GamePhase.Choose === game.phase
+    ? game.rounds[game.currentRound].pictures.filter(
+        (pic) => !!pic.buyerTheme || (pic.buyerSelection && !!Object.keys(pic.buyerSelection).length)
+      )
+    : [];
 }
 
 export function setBuyerThemeForPicture(picture: Picture) {
@@ -214,9 +210,9 @@ export function getPlayersWithRequiredAction(game: Game): Player[] {
   return game.players;
 }
 
-export function getClearedForDeletion(game: Game, nowTime: number = (new Date()).getTime()): boolean {
+export function getClearedForDeletion(game: Game, nowTime: number = new Date().getTime()): boolean {
   if (game?.creationTime) {
-    const diff = nowTime - (new Date(game.creationTime).getTime());
+    const diff = nowTime - new Date(game.creationTime).getTime();
     return diff > DELETE_CLEARANCE_TIME;
   } else {
     return [GamePhase.Init, GamePhase.End].includes(game.phase);

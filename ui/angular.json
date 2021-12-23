@@ -82,7 +82,8 @@
               "browserTarget": "emoji-art-game:build:production"
             },
             "development": {
-              "browserTarget": "emoji-art-game:build:development"
+              "browserTarget": "emoji-art-game:build:development",
+              "proxyConfig": "proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"

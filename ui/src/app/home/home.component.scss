@@ -1,4 +1,7 @@
 :host {
   display: grid;
-  place-items: center;
+  grid-template-rows: auto auto auto 1fr;
+  justify-items: center;
+  gap: 16px;
+  margin: 16px;
 }
