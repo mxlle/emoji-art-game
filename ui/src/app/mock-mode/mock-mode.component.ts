@@ -2,6 +2,7 @@ import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output}
 import {Game, GamePhase, Player} from '../../game-logic/game';
 import {choosePictures, createGame, endRound, offerPictures, setDemand, startGame} from '../../game-logic/gameLogic';
 import {allColors} from '../../game-tools/color-util';
+import {updateMockGame} from "./mock-service";
 
 export const getInitialPlayers = (): Player[] => [
   {
@@ -46,7 +47,6 @@ export class MockModeComponent implements OnInit {
   }
   @Input() demand?: number;
   @Input() currentPlayer?: Player;
-  @Output() gameChange: EventEmitter<Game> = new EventEmitter<Game>();
   @Output() demandChange: EventEmitter<number> = new EventEmitter<number>();
   @Output() currentPlayerChange: EventEmitter<Player> = new EventEmitter<Player>();
 
@@ -55,7 +55,7 @@ export class MockModeComponent implements OnInit {
   constructor() {
     const savedGame = localStorage.getItem('game');
     this._game = savedGame ? JSON.parse(savedGame) : createGame(getInitialPlayers());
-    this.gameChange.emit(this._game);
+    updateMockGame(this._game);
   }
 
   ngOnInit(): void {}
@@ -90,7 +90,7 @@ export class MockModeComponent implements OnInit {
     }
     // trigger save
     if (this.game) {
-      this.gameChange.emit({ ...this.game });
+      updateMockGame(this.game);
     }
   }
 }

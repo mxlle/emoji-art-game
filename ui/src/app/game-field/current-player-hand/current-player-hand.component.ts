@@ -2,6 +2,7 @@ import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
 import {Game, Picture, Player} from '../../../game-logic/game';
 import {getPictureCssClass} from '../../ui-helpers';
 import {togglePainterSelection} from '../../../game-logic/gameLogic';
+import {updateMockGame} from "../../mock-mode/mock-service";
 
 @Component({
   selector: 'app-current-player-hand',
@@ -24,6 +25,7 @@ export class CurrentPlayerHandComponent implements OnInit {
 
   togglePainterSelection(picture: Picture) {
     togglePainterSelection(this.game, this.player.id, picture.card, this.currentTheme);
+    updateMockGame(this.game);
   }
 
   getPictureCssClass(picture: Picture): string {

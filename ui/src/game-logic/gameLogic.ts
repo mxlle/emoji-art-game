@@ -10,14 +10,6 @@ import {
 } from './gameConsts';
 import {dealCards, drawCards} from '../game-tools/card-game-util';
 import {generateEmojiId} from '../game-tools/emoji-util';
-import {map, Subject} from 'rxjs';
-
-const _game$ = new Subject<Game>();
-export const game$ = _game$.asObservable().pipe(
-  // deep copy to trigger change detection
-  map((game) => JSON.stringify(game)),
-  map((gameString) => JSON.parse(gameString) as Game)
-);
 
 export function createGame(players: Player[]): Game {
   return {
@@ -79,16 +71,12 @@ function startRound(game: Game) {
   game.rounds.push(round);
 
   game.phase = GamePhase.Demand;
-
-  _game$.next(game);
 }
 
 export function setDemand(game: Game, demand: number) {
   const round = getCurrentRound(game);
   round.demand = demand;
   game.phase = GamePhase.Offer;
-
-  _game$.next(game);
 }
 
 export function togglePainterSelection(game: Game, playerId: string, card: string, theme: string) {
@@ -101,8 +89,6 @@ export function togglePainterSelection(game: Game, playerId: string, card: strin
       picture.painterTheme = theme;
     }
   }
-
-  _game$.next(game);
 }
 
 export function offerPictures(game: Game) {
@@ -113,8 +99,6 @@ export function offerPictures(game: Game) {
   round.pictures = shuffleArray([...originals, ...fakes]);
 
   game.phase = GamePhase.Choose;
-
-  _game$.next(game);
 }
 
 export function toggleBuyerPreSelection(game: Game, playerId: string, card: string, theme: string) {
@@ -134,8 +118,6 @@ export function toggleBuyerPreSelection(game: Game, playerId: string, card: stri
       }
     }
   }
-
-  _game$.next(game);
 }
 
 export function choosePictures(game: Game) {
@@ -149,8 +131,6 @@ export function choosePictures(game: Game) {
   );
   game.fakePoints.push(...selectedPictures.filter((pic) => pic.isFake));
   game.phase = GamePhase.Evaluate;
-
-  _game$.next(game);
 }
 
 export function endRound(game: Game) {
@@ -161,8 +141,6 @@ export function endRound(game: Game) {
     rotateRoles(game);
     startRound(game);
   }
-
-  _game$.next({ ...game });
 }
 
 function getCurrentRound(game: Game): GameRound {

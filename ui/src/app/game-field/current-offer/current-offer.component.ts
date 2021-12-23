@@ -2,6 +2,7 @@ import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
 import {Game, Picture, Player} from '../../../game-logic/game';
 import {getPictureCssClass} from '../../ui-helpers';
 import {toggleBuyerPreSelection} from '../../../game-logic/gameLogic';
+import {updateMockGame} from "../../mock-mode/mock-service";
 
 @Component({
   selector: 'app-current-offer',
@@ -30,6 +31,7 @@ export class CurrentOfferComponent implements OnInit {
   toggleBuyerSelection(picture: Picture) {
     if (this.currentPlayer && this.currentTheme) {
       toggleBuyerPreSelection(this.game, this.currentPlayer.id, picture.card, this.currentTheme);
+      updateMockGame(this.game);
     }
   }
 }
