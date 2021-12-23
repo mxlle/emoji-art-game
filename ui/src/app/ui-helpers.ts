@@ -1,4 +1,4 @@
-import { Game, Picture } from './game';
+import {Game, Picture} from '../game-logic/game';
 
 export function getPictureCssClass(game: Game, picture: Picture): string {
   if (game.teamPoints.findIndex((pic) => pic.card === picture.card) > -1) {

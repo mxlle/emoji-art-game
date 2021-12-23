@@ -7,8 +7,8 @@ import {
   getNumOfCardsPerPlayer,
   getRoleOrder,
   themesPerRound
-} from '../assets/gameConsts';
-import {dealCards, drawCards} from './gameFunctions';
+} from './gameConsts';
+import {dealCards, drawCards} from '../game-tools/card-game-util';
 import {generateEmojiId} from '../game-tools/emoji-util';
 import {map, Subject} from 'rxjs';
 
@@ -213,9 +213,9 @@ export function getOfferedPictures(game: Game): Picture[] {
 }
 
 export function getBuyerSelection(game: Game): Picture[] {
-  return game.rounds[game.currentRound].pictures.filter(
+  return game && GamePhase.Choose === game.phase ? game.rounds[game.currentRound].pictures.filter(
     (pic) => !!pic.buyerTheme || (pic.buyerSelection && !!Object.keys(pic.buyerSelection).length)
-  );
+  ) : [];
 }
 
 export function setBuyerThemeForPicture(picture: Picture) {

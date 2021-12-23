@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { Game, Picture, Player } from '../../game';
-import { getPictureCssClass } from '../../ui-helpers';
-import { toggleBuyerPreSelection } from '../../gameLogic';
+import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
+import {Game, Picture, Player} from '../../../game-logic/game';
+import {getPictureCssClass} from '../../ui-helpers';
+import {toggleBuyerPreSelection} from '../../../game-logic/gameLogic';
 
 @Component({
   selector: 'app-current-offer',

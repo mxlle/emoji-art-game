@@ -1,9 +1,9 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import {ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit} from '@angular/core';
 
-import { Game, GamePhase, GameRound, Player } from '../game';
-import { createGame, game$, getBuyerSelection, getOfferedPictures } from '../gameLogic';
-import { getInitialPlayers } from '../mock-mode/mock-mode.component';
-import { Subject, takeUntil } from 'rxjs';
+import {Game, GamePhase, GameRound, Player} from '../../game-logic/game';
+import {createGame, game$, getBuyerSelection, getOfferedPictures} from '../../game-logic/gameLogic';
+import {getInitialPlayers} from '../mock-mode/mock-mode.component';
+import {Subject, takeUntil} from 'rxjs';
 
 @Component({
   selector: 'app-game-field',

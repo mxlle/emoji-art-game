@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { Game, Picture, Player } from '../../game';
-import { getPictureCssClass } from '../../ui-helpers';
-import { togglePainterSelection } from '../../gameLogic';
+import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
+import {Game, Picture, Player} from '../../../game-logic/game';
+import {getPictureCssClass} from '../../ui-helpers';
+import {togglePainterSelection} from '../../../game-logic/gameLogic';
 
 @Component({
   selector: 'app-current-player-hand',

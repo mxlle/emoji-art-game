@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Game, GamePhase, Player } from '../game';
-import { choosePictures, createGame, endRound, offerPictures, setDemand, startGame } from '../gameLogic';
-import { allColors } from '../../game-tools/color-util';
+import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Game, GamePhase, Player} from '../../game-logic/game';
+import {choosePictures, createGame, endRound, offerPictures, setDemand, startGame} from '../../game-logic/gameLogic';
+import {allColors} from '../../game-tools/color-util';
 
 export const getInitialPlayers = (): Player[] => [
   {

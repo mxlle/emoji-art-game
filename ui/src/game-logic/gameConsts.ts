@@ -9,7 +9,7 @@ import {
   travelAndPlaces,
   weatherAndEarth,
 } from '../game-tools/emoji-util';
-import {Role} from "../app/game";
+import {Role} from "./game";
 
 export const emojis: string[] = splitEmojis(
   bodyParts + clothingAndAccessories + animals + nature + weatherAndEarth + foodAndDrink + activityAndSport + travelAndPlaces

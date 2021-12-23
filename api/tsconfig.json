@@ -31,10 +31,10 @@
         "src/Server"
       ],
       "@gameTypes": [
-        "../ui/src/app/game"
+        "../ui/src/game-logic/game"
       ],
       "@gameFunctions": [
-        "../ui/src/app/gameLogic"
+        "../ui/src/game-logic/gameLogic"
       ]
     },
     "types": [

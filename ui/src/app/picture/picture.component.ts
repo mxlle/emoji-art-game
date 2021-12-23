@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { Picture } from '../game';
-import { masterFaker } from '../../assets/gameConsts';
+import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
+import {Picture} from '../../game-logic/game';
+import {masterFaker} from '../../game-logic/gameConsts';
 
 @Component({
   selector: 'app-picture',

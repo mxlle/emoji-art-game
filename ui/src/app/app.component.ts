@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { buyer, masterFaker, painter } from '../assets/gameConsts';
+import {ChangeDetectionStrategy, Component} from '@angular/core';
+import {buyer, masterFaker, painter} from '../game-logic/gameConsts';
 
 @Component({
   selector: 'app-root',
