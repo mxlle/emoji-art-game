@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { Game, Picture, Player } from '../../game';
 import { getPictureCssClass } from '../../ui-helpers';
+import { toggleBuyerPreSelection } from '../../gameLogic';
 
 @Component({
   selector: 'app-current-offer',
@@ -28,21 +29,7 @@ export class CurrentOfferComponent implements OnInit {
 
   toggleBuyerSelection(picture: Picture) {
     if (this.currentPlayer && this.currentTheme) {
-      if (!picture.buyerSelection) {
-        picture.buyerSelection = {};
-      }
-      const selectionForTheme = picture.buyerSelection[this.currentTheme];
-      const playerId = this.currentPlayer.id;
-      if (!selectionForTheme) {
-        picture.buyerSelection[this.currentTheme] = [playerId];
-      } else {
-        if (selectionForTheme.includes(playerId)) {
-          picture.buyerSelection[this.currentTheme] = selectionForTheme.filter((id) => id !== playerId);
-        } else {
-          picture.buyerSelection[this.currentTheme] = [...picture.buyerSelection[this.currentTheme], playerId];
-        }
-      }
-      picture.buyerSelection = { ...picture.buyerSelection }; // to trigger change detection
+      toggleBuyerPreSelection(this.game, this.currentPlayer.id, picture.card, this.currentTheme);
     }
   }
 }

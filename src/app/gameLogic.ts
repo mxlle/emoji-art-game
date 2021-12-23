@@ -3,6 +3,14 @@ import { shuffleArray } from '../game-tools/random-util';
 import { emojis, fakesPerRound, gameEndCondition, getNumOfCardsPerPlayer, getRoleOrder, themesPerRound } from '../assets/gameConsts';
 import { dealCards, drawCards } from './gameFunctions';
 import { generateEmojiId } from '../game-tools/emoji-util';
+import { map, Subject } from 'rxjs';
+
+const _game$ = new Subject<Game>();
+export const game$ = _game$.asObservable().pipe(
+  // deep copy to trigger change detection
+  map((game) => JSON.stringify(game)),
+  map((gameString) => JSON.parse(gameString) as Game)
+);
 
 export function createGame(players: Player[]): Game {
   return {
@@ -44,12 +52,30 @@ export function startRound(game: Game) {
   game.rounds.push(round);
 
   game.phase = GamePhase.Demand;
+
+  _game$.next(game);
 }
 
 export function setDemand(game: Game, demand: number) {
   const round = getCurrentRound(game);
   round.demand = demand;
   game.phase = GamePhase.Offer;
+
+  _game$.next(game);
+}
+
+export function togglePainterSelection(game: Game, playerId: string, card: string, theme: string) {
+  const player = game.players.find((player) => player.id === playerId);
+  const picture = player?.pictures.find((pic) => pic.card === card);
+  if (picture) {
+    if (picture.painterTheme === theme) {
+      picture.painterTheme = undefined;
+    } else {
+      picture.painterTheme = theme;
+    }
+  }
+
+  _game$.next(game);
 }
 
 export function offerPictures(game: Game) {
@@ -60,6 +86,29 @@ export function offerPictures(game: Game) {
   round.pictures = shuffleArray([...originals, ...fakes]);
 
   game.phase = GamePhase.Choose;
+
+  _game$.next(game);
+}
+
+export function toggleBuyerPreSelection(game: Game, playerId: string, card: string, theme: string) {
+  const picture = game.rounds[game.currentRound].pictures.find((pic) => pic.card === card);
+  if (picture) {
+    if (!picture.buyerSelection) {
+      picture.buyerSelection = {};
+    }
+    const selectionForTheme = picture.buyerSelection[theme];
+    if (!selectionForTheme) {
+      picture.buyerSelection[theme] = [playerId];
+    } else {
+      if (selectionForTheme.includes(playerId)) {
+        picture.buyerSelection[theme] = selectionForTheme.filter((id) => id !== playerId);
+      } else {
+        picture.buyerSelection[theme] = [...picture.buyerSelection[theme], playerId];
+      }
+    }
+  }
+
+  _game$.next(game);
 }
 
 export function choosePictures(game: Game) {
@@ -73,6 +122,8 @@ export function choosePictures(game: Game) {
   );
   game.fakePoints.push(...selectedPictures.filter((pic) => pic.isFake));
   game.phase = GamePhase.Evaluate;
+
+  _game$.next(game);
 }
 
 export function endRound(game: Game) {
@@ -83,6 +134,8 @@ export function endRound(game: Game) {
     rotateRoles(game);
     startRound(game);
   }
+
+  _game$.next({ ...game });
 }
 
 function getCurrentRound(game: Game): GameRound {

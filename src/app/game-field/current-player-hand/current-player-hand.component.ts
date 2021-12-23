@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
 import { Game, Picture, Player } from '../../game';
 import { getPictureCssClass } from '../../ui-helpers';
+import { togglePainterSelection } from '../../gameLogic';
 
 @Component({
   selector: 'app-current-player-hand',
@@ -22,11 +23,7 @@ export class CurrentPlayerHandComponent implements OnInit {
   ngOnInit(): void {}
 
   togglePainterSelection(picture: Picture) {
-    if (picture.painterTheme === this.currentTheme) {
-      picture.painterTheme = undefined;
-    } else {
-      picture.painterTheme = this.currentTheme;
-    }
+    togglePainterSelection(this.game, this.player.id, picture.card, this.currentTheme);
   }
 
   getPictureCssClass(picture: Picture): string {
