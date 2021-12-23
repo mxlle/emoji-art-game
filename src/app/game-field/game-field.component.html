@@ -16,7 +16,7 @@
   [(demand)]="demand"
 ></app-demand-picker>
 <app-card *ngIf="GamePhase.Demand !== game?.phase">
-  {{ currentRound?.demand ?? "?" }}
+  {{ currentOffer }} / {{ currentRound?.demand ?? "?" }}
 </app-card>
 
 <app-current-offer

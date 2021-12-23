@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
 
 import { Game, GamePhase, GameRound, Player } from "../game";
-import { createGame } from "../gameLogic";
+import { createGame, getOfferedPictures } from "../gameLogic";
 import { getInitialPlayers } from "../mock-mode/mock-mode.component";
 
 @Component({
@@ -17,6 +17,10 @@ export class GameFieldComponent implements OnInit {
   currentTheme: string = "";
 
   demand: number | undefined;
+
+  get currentOffer() {
+    return getOfferedPictures(this.game).length;
+  }
 
   get currentRound(): GameRound | undefined {
     return this.game && this.game.rounds[this.game.currentRound];
