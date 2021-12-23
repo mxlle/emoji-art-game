@@ -1,7 +1,11 @@
 :host {
   display: grid;
-  grid-template-rows: auto 1fr;
+  grid-template-rows: auto 0 1fr; // 0 for router outlet
   height: 100%;
   width: 100%;
   overflow: hidden;
+}
+
+mat-toolbar {
+  gap: 16px;
 }
