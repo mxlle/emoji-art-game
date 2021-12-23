@@ -10,7 +10,9 @@
   <div class="demand">
     <h2>Current Demand</h2>
     <app-demand-picker *ngIf="GamePhase.Demand === game?.phase" [(demand)]="demand"></app-demand-picker>
-    <app-card *ngIf="GamePhase.Demand !== game?.phase"> {{ currentOffer }} / {{ currentRound?.demand ?? "?" }} </app-card>
+    <app-card *ngIf="GamePhase.Demand !== game?.phase">
+      {{ GamePhase.Offer == game?.phase ? currentOffer : currentBuyerSelection }} / {{ currentRound?.demand ?? "?" }}
+    </app-card>
   </div>
 </div>
 
@@ -19,6 +21,7 @@
   [game]="game"
   [pictures]="currentRound.pictures"
   [currentTheme]="currentTheme"
+  [currentPlayer]="currentPlayer"
 ></app-current-offer>
 
 <h2>Players</h2>

@@ -37,6 +37,7 @@ export interface Picture {
   card: string;
   painterTheme?: string;
   buyerTheme?: string;
+  buyerSelection?: BuyerSelection;
   isFake?: boolean;
 }
 
@@ -46,4 +47,9 @@ export interface Player {
   color?: string;
   role?: Role;
   pictures: Picture[];
+}
+
+export interface BuyerSelection {
+  // playerIds per theme
+  [theme: string]: string[];
 }

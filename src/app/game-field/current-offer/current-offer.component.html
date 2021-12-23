@@ -4,7 +4,7 @@
     *ngFor="let picture of pictures"
     class="{{ getPictureCssClass(picture) }}"
     [picture]="picture"
-    [selected]="!!picture.buyerTheme"
+    [selected]="!!picture.buyerTheme || !!picture.buyerSelection"
     (click)="toggleBuyerSelection(picture)"
   >
     {{ picture.card }}

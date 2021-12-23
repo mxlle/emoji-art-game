@@ -64,6 +64,7 @@ export function offerPictures(game: Game) {
 
 export function choosePictures(game: Game) {
   const round = getCurrentRound(game);
+  round.pictures.forEach(setBuyerThemeForPicture);
   const selectedPictures = round.pictures.filter(isPictureSelectedFromBuyer);
   game.teamPoints.push(...selectedPictures.filter((pic) => pic.buyerTheme === pic.painterTheme));
   game.neutralCards.push(
@@ -129,4 +130,24 @@ export function getOfferedPictures(game: Game): Picture[] {
     (currentArr: Picture[], player: Player) => currentArr.concat(player.pictures.filter(isPictureSelectedFromPainter)),
     []
   );
+}
+
+export function getBuyerSelection(game: Game): Picture[] {
+  return game.rounds[game.currentRound].pictures.filter(
+    (pic) => !!pic.buyerTheme || (pic.buyerSelection && !!Object.keys(pic.buyerSelection).length)
+  );
+}
+
+export function setBuyerThemeForPicture(picture: Picture) {
+  if (picture.buyerSelection) {
+    picture.buyerTheme = Object.keys(picture.buyerSelection).reduce((currentTheme: string, theme: string) => {
+      if (
+        !currentTheme ||
+        (picture.buyerSelection && picture.buyerSelection[theme]?.length > picture.buyerSelection[currentTheme]?.length)
+      ) {
+        return theme;
+      }
+      return currentTheme;
+    }, '');
+  }
 }

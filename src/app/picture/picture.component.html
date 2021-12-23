@@ -3,6 +3,11 @@
   <div *ngIf="picture?.buyerTheme" class="theme buyer">
     {{ picture?.buyerTheme }}
   </div>
+  <app-buyer-selection-marker
+    *ngIf="picture?.buyerSelection && !picture?.buyerTheme"
+    class="theme buyer"
+    [selection]="picture.buyerSelection ?? {}"
+  ></app-buyer-selection-marker>
   <div *ngIf="picture?.painterTheme" class="theme painter">
     {{ picture?.painterTheme }}
   </div>

@@ -1,0 +1,26 @@
+@use '../mixins';
+
+:host {
+  display: flex;
+  gap: 8px;
+  font-size: 16px;
+
+  .theme-group {
+    position: relative;
+
+    // stack effect - up to 3
+    :nth-child(2) {
+      position: absolute;
+      right: 4px;
+      top: 0;
+    }
+    :nth-child(3) {
+      position: absolute;
+      right: 8px;
+      top: 0;
+    }
+    :nth-child(n + 4) {
+      display: none;
+    }
+  }
+}
