@@ -6,6 +6,13 @@
   gap: 16px;
 }
 
+mat-card {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto;
+  gap: 8px;
+}
+
 .players {
   @include mixins.defaultGrid();
   margin: 16px 0;

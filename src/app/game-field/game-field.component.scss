@@ -7,6 +7,15 @@
   overflow-y: auto;
 }
 
+.themes-and-demand {
+  @include mixins.defaultGrid();
+
+  .demand {
+    display: grid;
+    grid-template-rows: auto 1fr;
+  }
+}
+
 .players {
   @include mixins.defaultGrid();
 }

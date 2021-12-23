@@ -1,4 +1,5 @@
 :host {
+  display: flex;
   &.selected {
     mat-card {
       background-color: var(--card-background-color, #555);
@@ -7,6 +8,7 @@
 }
 
 mat-card {
+  width: 100%;
   padding: var(--card-padding, 30px);
   font-size: var(--card-font-size, 60px);
   display: grid;
