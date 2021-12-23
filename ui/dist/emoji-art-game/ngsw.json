@@ -1,0 +1,77 @@
+{
+  "configVersion": 1,
+  "timestamp": 1640300794997,
+  "index": "/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/index.html",
+        "/main.2bf0dadeed5bc6eb.js",
+        "/manifest.webmanifest",
+        "/polyfills.ad9bf2ea8658fc0d.js",
+        "/runtime.ca9b507aa34bf5a5.js",
+        "/styles.abeae6379a207572.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/assets/favicon/android-chrome-96x96.png",
+        "/assets/favicon/apple-touch-icon.png",
+        "/assets/favicon/favicon-16x16.png",
+        "/assets/favicon/favicon-32x32.png",
+        "/assets/favicon/favicon.ico",
+        "/assets/favicon/mstile-150x150.png",
+        "/assets/favicon/safari-pinned-tab.svg"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [],
+  "hashTable": {
+    "/assets/favicon/android-chrome-96x96.png": "e2c1c703a3f7523f2e4be919e162c0fca67cd843",
+    "/assets/favicon/apple-touch-icon.png": "c48325adcd4c4ceff5ff6db50340c2a6968316ab",
+    "/assets/favicon/favicon-16x16.png": "293cd3117bd22bec6e12ae80974330b38327d4e8",
+    "/assets/favicon/favicon-32x32.png": "106b5fb59e2e521f3dc3500e6f6f2b4a3d347833",
+    "/assets/favicon/favicon.ico": "06e7e16fb20bec2c6cbe3bf024841c9a40b1c86a",
+    "/assets/favicon/mstile-150x150.png": "658aee424aed98fa3495bfc4273a416e6e424a65",
+    "/assets/favicon/safari-pinned-tab.svg": "6b4d6497fb010ec971a42faf97f9bf96d5ee3b52",
+    "/index.html": "3043ca80315fe243caaca03356724cd736d118d2",
+    "/main.2bf0dadeed5bc6eb.js": "7e782bda0ca8d1fe0d04901f9ae537a5ffc45ce8",
+    "/manifest.webmanifest": "404b431277e25c8fa379c606c8aeec35b2ee85a2",
+    "/polyfills.ad9bf2ea8658fc0d.js": "a3a83ecc6280314b6c74ced70f90c9713d4ae181",
+    "/runtime.ca9b507aa34bf5a5.js": "8ec135e5c3b8d3cd82627b62f5b458d45677e1a1",
+    "/styles.abeae6379a207572.css": "0a1a0e6836813fa0e09e0ac4247eaf34ccaa1439"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ],
+  "navigationRequestStrategy": "performance"
+}

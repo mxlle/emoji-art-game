@@ -1,0 +1,17 @@
+{
+  "name": "Emoji Art Game",
+  "short_name": "emoji-art-game",
+  "theme_color": "#ffab00",
+  "background_color": "#333",
+  "display": "standalone",
+  "scope": "./",
+  "icons": [
+    {
+      "src": "/assets/favicon/android-chrome-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "https://emoji.okj.ninja",
+  "display": "standalone"
+}
