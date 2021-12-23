@@ -9,15 +9,11 @@ import {
   travelAndPlaces,
   weatherAndEarth,
 } from '../game-tools/emoji-util';
+import {Role} from "../app/game";
 
 export const emojis: string[] = splitEmojis(
   bodyParts + clothingAndAccessories + animals + nature + weatherAndEarth + foodAndDrink + activityAndSport + travelAndPlaces
 );
-
-export enum Role {
-  BUYER = '🔍',
-  PAINTER = '🎨',
-}
 
 export const masterFaker = '🥸';
 export const painter = Role.PAINTER;

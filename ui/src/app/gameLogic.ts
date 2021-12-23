@@ -1,9 +1,16 @@
-import { Game, GamePhase, GameRound, Picture, Player } from './game';
-import { shuffleArray } from '../game-tools/random-util';
-import { emojis, fakesPerRound, gameEndCondition, getNumOfCardsPerPlayer, getRoleOrder, themesPerRound } from '../assets/gameConsts';
-import { dealCards, drawCards } from './gameFunctions';
-import { generateEmojiId } from '../game-tools/emoji-util';
-import { map, Subject } from 'rxjs';
+import {DELETE_CLEARANCE_TIME, Game, GamePhase, GameRound, Picture, Player} from './game';
+import {shuffleArray} from '../game-tools/random-util';
+import {
+  emojis,
+  fakesPerRound,
+  gameEndCondition,
+  getNumOfCardsPerPlayer,
+  getRoleOrder,
+  themesPerRound
+} from '../assets/gameConsts';
+import {dealCards, drawCards} from './gameFunctions';
+import {generateEmojiId} from '../game-tools/emoji-util';
+import {map, Subject} from 'rxjs';
 
 const _game$ = new Subject<Game>();
 export const game$ = _game$.asObservable().pipe(
@@ -28,6 +35,26 @@ export function createGame(players: Player[]): Game {
   };
 }
 
+export function addPlayer(game: Game, player: Player) {
+  if (!game.hostId) game.hostId = player.id; // backup plan
+  if (!player.pictures) player.pictures = [];
+  game.players.push(player);
+}
+
+export function updatePlayer(game: Game, player: Player) {
+  let currentUser = game.players.find(p => p.id === player.id);
+  if (!currentUser) return;
+  currentUser.name = player.name;
+  currentUser.color = player.color;
+}
+
+export function removePlayerFromGame(game: Game, playerId: string) {
+  const index = game.players.findIndex(p => p.id === playerId);
+  if (index > -1) {
+    game.players.splice(index, 1);
+  }
+}
+
 export function startGame(game: Game) {
   // deal cards, assign roles and shuffle player order
   const dealtCards = dealCards(game.deck, game.players.length, getNumOfCardsPerPlayer(game.players.length));
@@ -42,7 +69,7 @@ export function startGame(game: Game) {
   startRound(game);
 }
 
-export function startRound(game: Game) {
+function startRound(game: Game) {
   game.currentRound++;
   const round: GameRound = {
     themes: drawCards(game.deck, themesPerRound),
@@ -202,5 +229,18 @@ export function setBuyerThemeForPicture(picture: Picture) {
       }
       return currentTheme;
     }, '');
+  }
+}
+
+export function getPlayersWithRequiredAction(game: Game): Player[] {
+  return game.players;
+}
+
+export function getClearedForDeletion(game: Game, nowTime: number = (new Date()).getTime()): boolean {
+  if (game?.creationTime) {
+    const diff = nowTime - (new Date(game.creationTime).getTime());
+    return diff > DELETE_CLEARANCE_TIME;
+  } else {
+    return [GamePhase.Init, GamePhase.End].includes(game.phase);
   }
 }
