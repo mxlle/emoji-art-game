@@ -8,5 +8,5 @@ import { buyer, masterFaker, painter } from "../assets/gameConsts";
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
-  title = `Emoji Art Game ${painter} ${buyer} ${masterFaker}`;
+  title = `Emoji Art Game ${masterFaker} ${painter} ${buyer}`;
 }

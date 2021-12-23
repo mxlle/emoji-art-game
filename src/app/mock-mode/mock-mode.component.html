@@ -1,5 +1,6 @@
 <mat-card>
   <button mat-flat-button color="primary" (click)="proceed()">Proceed</button>
+  <div>ID: {{ game?.id }}</div>
   <div>Phase: {{ game?.phase }}</div>
   <div>Team Score: {{ game?.teamPoints?.length }}</div>
   <div>Fakes: {{ game?.fakePoints?.length }}</div>

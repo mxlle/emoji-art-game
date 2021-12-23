@@ -1,5 +1,5 @@
 import { Game, GamePhase, GameRound, Picture, Player } from "./game";
-import { generateId, shuffleArray } from "../game-tools/random-util";
+import { shuffleArray } from "../game-tools/random-util";
 import {
   emojis,
   fakesPerRound,
@@ -8,10 +8,11 @@ import {
   themesPerRound,
 } from "../assets/gameConsts";
 import { dealCards, drawCards } from "./gameFunctions";
+import { generateEmojiId } from "../game-tools/emoji-util";
 
 export function createGame(players: Player[]): Game {
   return {
-    id: generateId(),
+    id: generateEmojiId(),
     name: "My game",
     players,
     hostId: players[0]?.id,

@@ -12,8 +12,13 @@ export function shuffleArray<T>(a: T[]): T[] {
   return a;
 }
 
+/** max is excluded */
 export function randomInt(max: number, min: number = 0): number {
   return Math.floor(Math.random() * (max - min)) + min;
+}
+
+export function randomArrayValue<T>(array: T[]): T {
+  return array[randomInt(array.length)];
 }
 
 export function generateId() {

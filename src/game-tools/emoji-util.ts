@@ -1,4 +1,6 @@
-export function splitEmojis(string: string) {
+import { randomArrayValue } from "./random-util";
+
+export function splitEmojis(string: string): string[] {
   const list = [];
   while (string.length) {
     // @ts-ignore
@@ -13,15 +15,27 @@ export function splitEmojis(string: string) {
   return list;
 }
 
-export function isCharacterEmoji(char: string) {
+export function isCharacterEmoji(char: string): boolean {
   const regexExp = /\p{Emoji}/u;
 
   return regexExp.test(char);
 }
 
+export function generateEmojiId(): string {
+  const e1 = randomArrayValue(splitEmojis(positiveSmileys));
+  const e2 = randomArrayValue(splitEmojis(animals));
+  const e3 = randomArrayValue(splitEmojis(foodAndDrink));
+  const e4 = randomArrayValue(splitEmojis(travelAndPlaces));
+
+  return e1 + e2 + e3 + e4;
+}
+
 // copied from https://getemoji.com/
-export const smileys =
-  "😀 😃 😄 😁 😆 😅 😂 🤣 🥲 ☺️ 😊 😇 🙂 🙃 😉 😌 😍 🥰 😘 😗 😙 😚 😋 😛 😝 😜 🤪 🤨 🧐 🤓 😎 🥸 🤩 🥳 😏 😒 😞 😔 😟 😕 🙁 ☹️ 😣 😖 😫 😩 🥺 😢 😭 😤 😠 😡 🤬 🤯 😳 🥵 🥶 😱 😨 😰 😥 😓 🤗 🤔 🤭 🤫 🤥 😶 😐 😑 😬 🙄 😯 😦 😧 😮 😲 🥱 😴 🤤 😪 😵 🤐 🥴 🤢 🤮 🤧 😷 🤒 🤕 🤑 🤠";
+export const positiveSmileys =
+  "😀 😃 😄 😁 😆 😅 😂 🤣 🥲 ☺️ 😊 😇 🙂 🙃 😉 😌 😍 🥰 😘 😗 😙 😚 😋 😛 😝 😜 🤪 🤓 😎 🥸 🤩 🥳 😏 🤗 🤤 🤑 🤠";
+export const negativeSmileys =
+  "🤨 🧐 😒 😞 😔 😟 😕 🙁 ☹️ 😣 😖 😫 😩 🥺 😢 😭 😤 😠 😡 🤬 🤯 😳 🥵 🥶 😱 😨 😰 😥 😓 🤔 🤭 🤫 🤥 😶 😐 😑 😬 🙄 😯 😦 😧 😮 😲 🥱 😴 😪 😵 🤐 🥴 🤢 🤮 🤧 😷 🤒 🤕";
+export const smileys = positiveSmileys + negativeSmileys;
 export const catSmileys = "😺 😸 😹 😻 😼 😽 🙀 😿 😾";
 export const gestures =
   "👋 🤚 🖐 ✋ 🖖 👌 🤌 🤏 ✌️ 🤞 🤟 🤘 🤙 👈 👉 👆 🖕 👇 ☝️ 👍 👎 ✊ 👊 🤛 🤜 👏 🙌 👐 🤲 🤝 🙏";
