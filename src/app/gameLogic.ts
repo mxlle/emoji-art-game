@@ -5,6 +5,7 @@ import {
   fakesPerRound,
   gameEndCondition,
   getNumOfCardsPerPlayer,
+  getRoleOrder,
   themesPerRound,
 } from "../assets/gameConsts";
 import { dealCards, drawCards } from "./gameFunctions";
@@ -26,22 +27,27 @@ export function createGame(players: Player[]): Game {
   };
 }
 
-export function startRound(game: Game) {
-  if (game.currentRound === -1) {
-    const dealtCards = dealCards(
-      game.deck,
-      game.players.length,
-      getNumOfCardsPerPlayer(game.players.length)
-    );
-    game.players.forEach((player, index) => {
-      player.pictures = dealtCards[index].map((card) => ({ card }));
-    });
-  }
+export function startGame(game: Game) {
+  // deal cards, assign roles and shuffle player order
+  const dealtCards = dealCards(
+    game.deck,
+    game.players.length,
+    getNumOfCardsPerPlayer(game.players.length)
+  );
+  const roleOrder = getRoleOrder(game.players.length);
+  shuffleArray(game.players);
+  game.players.forEach((player, index) => {
+    player.pictures = dealtCards[index].map((card) => ({ card }));
+    player.role = roleOrder[index];
+  });
 
+  // start first round
+  startRound(game);
+}
+
+export function startRound(game: Game) {
   game.currentRound++;
   const round: GameRound = {
-    painterIds: getPainterIdsForRound(game.players, game.currentRound),
-    buyerIds: getBuyerIdsForRound(game.players, game.currentRound),
     themes: drawCards(game.deck, themesPerRound),
     pictures: [],
   };
@@ -94,24 +100,13 @@ export function endRound(game: Game) {
     game.phase = GamePhase.End;
   } else {
     fillUpCards(game);
+    rotateRoles(game);
     startRound(game);
   }
 }
 
 function getCurrentRound(game: Game): GameRound {
   return game.rounds[game.currentRound];
-}
-
-function getPainterIdsForRound(players: Player[], round: number) {
-  return players
-    .map((player: Player) => player.id)
-    .filter((_, index: number) => (index + round) % 3 === 0);
-}
-
-function getBuyerIdsForRound(players: Player[], round: number) {
-  return players
-    .map((player: Player) => player.id)
-    .filter((_, index: number) => (index + round) % 3 > 0);
 }
 
 function getFakes(deck: string[]): Picture[] {
@@ -135,6 +130,15 @@ function fillUpCards(game: Game) {
       );
     }
   });
+}
+
+function rotateRoles(game: Game) {
+  const firstRole = game.players[0].role;
+  for (let i = 0; i < game.players.length; i++) {
+    const player = game.players[i];
+    const nextPlayer = game.players[i + 1];
+    player.role = nextPlayer?.role ?? firstRole;
+  }
 }
 
 function isPictureSelectedFromPainter(pic: Picture): boolean {

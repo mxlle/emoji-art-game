@@ -1,3 +1,5 @@
+import { Role } from "../assets/gameConsts";
+
 export interface Game {
   id: string;
   name: string;
@@ -26,8 +28,6 @@ export enum GamePhase {
 }
 
 export interface GameRound {
-  painterIds: string[];
-  buyerIds: string[];
   themes: string[];
   demand?: number;
   pictures: Picture[];
@@ -44,5 +44,6 @@ export interface Player {
   id: string;
   name: string;
   color?: string;
+  role?: Role;
   pictures: Picture[];
 }

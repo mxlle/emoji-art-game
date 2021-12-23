@@ -6,7 +6,6 @@ import {
 } from "@angular/core";
 import { Game, GameRound, Picture, Player } from "../../game";
 import { getPictureCssClass } from "../../ui-helpers";
-import { buyer, painter } from "../../../assets/gameConsts";
 
 @Component({
   selector: "app-current-player-hand",
@@ -37,14 +36,6 @@ export class CurrentPlayerHandComponent implements OnInit {
     } else {
       picture.painterTheme = this.currentTheme;
     }
-  }
-
-  getPlayerRole(): string {
-    return this.currentRound?.buyerIds?.includes(this.player.id)
-      ? buyer + " Buyer"
-      : this.currentRound?.painterIds?.includes(this.player.id)
-      ? painter + " Painter"
-      : "??";
   }
 
   getPictureCssClass(picture: Picture): string {

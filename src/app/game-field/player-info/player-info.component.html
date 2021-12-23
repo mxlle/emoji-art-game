@@ -1,5 +1,5 @@
 <mat-card>
   <span>{{ player.name }}</span>
-  <span>{{ getPlayerRole() }}</span>
+  <span>{{ player.role ?? "??" }}</span>
   <span>{{ selectedPictures }} / {{ player.pictures.length }}</span>
 </mat-card>

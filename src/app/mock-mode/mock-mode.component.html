@@ -10,7 +10,7 @@
 <div class="players">
   <app-card
     *ngFor="let player of game?.players"
-    [selected]="currentPlayer === player"
+    [selected]="currentPlayer?.id === player.id"
     (click)="currentPlayerChange.emit(player)"
   >
     <span [style.color]="player.color">{{ player.name }}</span>

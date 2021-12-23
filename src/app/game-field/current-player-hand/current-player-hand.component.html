@@ -1,4 +1,6 @@
-<h2 [style.color]="player.color">{{ player.name }} ({{ getPlayerRole() }})</h2>
+<h2 [style.color]="player.color">
+  {{ player.name }} {{ player.role ?? "??" }}
+</h2>
 <div class="hand">
   <app-picture
     *ngFor="let picture of player.pictures"

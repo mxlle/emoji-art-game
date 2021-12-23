@@ -13,7 +13,7 @@ import {
   endRound,
   offerPictures,
   setDemand,
-  startRound,
+  startGame,
 } from "../gameLogic";
 import { allColors } from "../../game-tools/color-util";
 
@@ -84,7 +84,7 @@ export class MockModeComponent implements OnInit {
   proceed() {
     switch (this.game?.phase) {
       case GamePhase.Init:
-        startRound(this.game);
+        startGame(this.game);
         break;
       case GamePhase.Demand:
         if (this.demand) {

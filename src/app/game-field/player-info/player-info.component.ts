@@ -6,7 +6,6 @@ import {
   OnInit,
 } from "@angular/core";
 import { Game, GameRound, Player } from "../../game";
-import { buyer, painter } from "../../../assets/gameConsts";
 
 @Component({
   selector: "app-player-info",
@@ -33,12 +32,4 @@ export class PlayerInfoComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void {}
-
-  getPlayerRole(): string {
-    return this.currentRound?.buyerIds?.includes(this.player.id)
-      ? buyer + " Buyer"
-      : this.currentRound?.painterIds?.includes(this.player.id)
-      ? painter + " Painter"
-      : "??";
-  }
 }
