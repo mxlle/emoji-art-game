@@ -1,4 +1,11 @@
-<button mat-flat-button [disabled]="loading" (click)="loadGames()">Reload</button>
 <button mat-flat-button (click)="createGame()">Create game</button>
 <button mat-flat-button [routerLink]="testGameUrl">To test game</button>
-<app-game-list [games]="allGames" (delete)="deleteGame($event)"></app-game-list>
+<button mat-flat-button [disabled]="loading" (click)="loadGames()">Reload</button>
+<div>
+  <h2>New Games</h2>
+  <app-game-list [games]="newGames" (delete)="deleteGame($event)"></app-game-list>
+  <h2>My ongoing Games</h2>
+  <app-game-list [games]="ongoingGames" (delete)="deleteGame($event)"></app-game-list>
+  <h2>My finished Games</h2>
+  <app-game-list [games]="doneGames" (delete)="deleteGame($event)"></app-game-list>
+</div>

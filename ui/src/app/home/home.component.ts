@@ -1,10 +1,11 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { mockGameId } from '../mock-mode/mock-service';
 import { socket } from '../../data/socket';
-import { Game, GameEvent, ROOM_GAME_LIST, SocketEvent } from '../../game-logic/game';
+import { Game, GameEvent, GamePhase, ROOM_GAME_LIST, SocketEvent } from '../../game-logic/game';
 import apiFunctions from '../../data/apiFunctions';
 import { createGame } from '../../game-logic/gameLogic';
 import { Router } from '@angular/router';
+import { getCurrentUserInGame } from '../../data/functions';
 
 @Component({
   selector: 'app-home',
@@ -15,7 +16,9 @@ import { Router } from '@angular/router';
 export class HomeComponent implements OnInit, OnDestroy {
   readonly testGameUrl = `/${mockGameId}`;
 
-  allGames: Game[] = [];
+  newGames: Game[] = [];
+  ongoingGames: Game[] = [];
+  doneGames: Game[] = [];
   loading: boolean = false;
 
   constructor(private _cdr: ChangeDetectorRef, private _ngZone: NgZone, private _router: Router) {}
@@ -35,8 +38,12 @@ export class HomeComponent implements OnInit, OnDestroy {
   loadGames() {
     this.loading = true;
     this._cdr.markForCheck();
-    apiFunctions.loadGames().then((games: Game[]) => {
-      this.allGames = games;
+    apiFunctions.loadGames().then((allGames: Game[]) => {
+      this.newGames = allGames.filter((game) => game.phase === GamePhase.Init && !getCurrentUserInGame(game));
+      this.ongoingGames = allGames.filter(
+        (game) => ![GamePhase.Init, GamePhase.End].includes(game.phase) || (game.phase === GamePhase.Init && !!getCurrentUserInGame(game))
+      );
+      this.doneGames = allGames.filter((game) => game.phase === GamePhase.End);
       this.loading = false;
       this._cdr.markForCheck();
     });
