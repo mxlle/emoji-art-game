@@ -1,5 +1,3 @@
-<app-mock-mode [game]="game" [(demand)]="demand" [(currentPlayer)]="currentPlayer"></app-mock-mode>
-
 <div class="themes-and-demand">
   <app-current-themes
     *ngIf="currentRound && currentRound?.themes?.length"
@@ -9,10 +7,31 @@
 
   <div class="demand">
     <h2>Current Demand</h2>
-    <app-demand-picker *ngIf="GamePhase.Demand === game?.phase" [(demand)]="demand"></app-demand-picker>
-    <app-card *ngIf="GamePhase.Demand !== game?.phase">
+    <ng-container *ngIf="showDemandPicker">
+      <app-demand-picker [(demand)]="demand"></app-demand-picker>
+      <button mat-flat-button color="primary" [disabled]="!demand" (click)="setDemand()">Confirm</button>
+    </ng-container>
+    <app-card *ngIf="!showDemandPicker">
       {{ GamePhase.Offer == game?.phase ? currentOffer : currentBuyerSelection }} / {{ currentRound?.demand ?? "?" }}
     </app-card>
+    <button
+      *ngIf="showOfferConfirm"
+      mat-flat-button
+      color="primary"
+      [disabled]="currentOffer !== currentRound?.demand"
+      (click)="confirmOffer()"
+    >
+      Confirm offer
+    </button>
+    <button
+      *ngIf="showSelectionConfirm"
+      mat-flat-button
+      color="primary"
+      [disabled]="currentBuyerSelection !== currentRound?.demand"
+      (click)="confirmSelection()"
+    >
+      Confirm selection
+    </button>
   </div>
 </div>
 
@@ -21,8 +40,9 @@
   [game]="game"
   [pictures]="currentRound.pictures"
   [currentTheme]="currentTheme"
-  [currentPlayer]="currentPlayer"
 ></app-current-offer>
+
+<button *ngIf="showEndRoundConfirm" mat-flat-button color="primary" (click)="endRound()">Next round</button>
 
 <h2>Players</h2>
 <div class="players">

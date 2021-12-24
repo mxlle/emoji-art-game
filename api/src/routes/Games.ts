@@ -1,238 +1,237 @@
-import {generateId} from '@shared/functions';
+import { generateId } from '@shared/functions';
 
 import GameDaoImpl from '@daos/Game';
-import {GameController, GamePhase, Player} from '@entities/Game';
-import {forbiddenError, gameNotFoundError, paramMissingError} from '@shared/constants';
-import {Namespace} from 'socket.io';
-import {Game, GameApi, GameEvent, Role, ROOM_GAME, ROOM_GAME_LIST} from '@gameTypes';
+import { GameController, GamePhase, Player } from '@entities/Game';
+import { forbiddenError, gameNotFoundError, paramMissingError } from '@shared/constants';
+import { Namespace } from 'socket.io';
+import { Game, GameApi, GameEvent, Role, ROOM_GAME, ROOM_GAME_LIST } from '@gameTypes';
 
 // Init shared
 const gameDao = new GameDaoImpl();
 
 class GameApiImpl implements GameApi {
-    private socket: Namespace;
-    private readonly userId: string;
+  private socket: Namespace;
+  private readonly userId: string;
 
-    constructor(socket: Namespace, userId: string) {
-        this.socket = socket;
-        this.userId = userId;
+  constructor(socket: Namespace, userId: string) {
+    this.socket = socket;
+    this.userId = userId;
+  }
+
+  async loadGames() {
+    let games = await gameDao.getAll();
+    games = games.filter((game: Game) => {
+      return game.phase === GamePhase.Init || (this.userId && game.players.findIndex((p) => p.id === this.userId) > -1);
+    });
+    return games;
+  }
+
+  loadGame(gameId: string) {
+    return gameDao.getOne(gameId);
+  }
+
+  async addGame(game: Game) {
+    if (!game) {
+      throw new Error(paramMissingError);
     }
 
-    async loadGames() {
-        let games = await gameDao.getAll();
-        games = games.filter((game: Game) => {
-            return game.phase === GamePhase.Init || (this.userId && game.players.findIndex(p => p.id === this.userId) > -1);
-        });
-        return games;
+    if (!game.id) game.id = generateId();
+    if (!game.hostId) game.hostId = this.userId;
+    game.creationTime = new Date();
+
+    const createdGame = await gameDao.add(game);
+
+    this.socket.to(ROOM_GAME_LIST).emit(GameEvent.UpdateList);
+
+    return createdGame.id as string;
+  }
+
+  async addPlayer(gameId: string, player: Player) {
+    const game = await gameDao.getOne(gameId);
+
+    if (!player) throw new Error(paramMissingError);
+    if (!game) throw new Error(gameNotFoundError);
+
+    if (!player.id) player.id = this.userId;
+    GameController.addPlayer(game, player);
+
+    const updatedGame = await gameDao.update(game);
+
+    this.socket.to(ROOM_GAME(game.id)).emit(GameEvent.Update, updatedGame);
+    this.socket.to(ROOM_GAME_LIST).emit(GameEvent.UpdateList);
+
+    return true;
+  }
+
+  async updatePlayer(gameId: string, player: Player) {
+    const game = await gameDao.getOne(gameId);
+
+    if (!player) throw new Error(paramMissingError);
+    if (player.id !== this.userId) throw new Error(forbiddenError);
+    if (!game) throw new Error(gameNotFoundError);
+
+    GameController.updatePlayer(game, player);
+
+    const updatedGame = await gameDao.update(game);
+
+    this.socket.to(ROOM_GAME(game.id)).emit(GameEvent.Update, updatedGame);
+
+    return true;
+  }
+
+  async removePlayerFromGame(gameId: string, playerId: string) {
+    const game = await gameDao.getOne(gameId);
+
+    if (!game) throw new Error(gameNotFoundError);
+    if (!playerId) throw new Error(paramMissingError);
+    if (playerId !== this.userId && this.userId !== game.hostId) throw new Error(forbiddenError);
+
+    GameController.removePlayerFromGame(game, playerId);
+
+    const updatedGame = await gameDao.update(game);
+
+    this.socket.to(ROOM_GAME(game.id)).emit(GameEvent.Update, updatedGame);
+
+    return true;
+  }
+
+  async startGame(gameId: string) {
+    const game = await gameDao.getOne(gameId);
+
+    if (!game) throw new Error(gameNotFoundError);
+    if (game.players.findIndex((p: Player) => p.id === this.userId) === -1) {
+      throw new Error(forbiddenError);
     }
 
-    loadGame(gameId: string) {
-        return gameDao.getOne(gameId);
+    GameController.startGame(game);
+
+    const updatedGame = await gameDao.update(game);
+
+    this.socket.to(ROOM_GAME(game.id)).emit(GameEvent.Update, updatedGame);
+
+    return true;
+  }
+
+  async setDemand(gameId: string, demand: number) {
+    const game = await gameDao.getOne(gameId);
+
+    if (!demand) throw new Error(paramMissingError);
+    if (!game) throw new Error(gameNotFoundError);
+    if (game.players.findIndex((p: Player) => p.id === this.userId && p.role === Role.BUYER) === -1) {
+      throw new Error(forbiddenError);
     }
 
-    async addGame(game: Game) {
-        if (!game) {
-            throw new Error(paramMissingError);
-        }
+    GameController.setDemand(game, demand);
 
-        if (!game.id) game.id = generateId();
-        if (!game.hostId) game.hostId = this.userId;
-        game.creationTime = new Date();
+    const updatedGame = await gameDao.update(game);
 
-        const createdGame = await gameDao.add(game);
+    this.socket.to(ROOM_GAME(game.id)).emit(GameEvent.Update, updatedGame);
 
-        this.socket.to(ROOM_GAME_LIST).emit(GameEvent.UpdateList);
+    return true;
+  }
 
-        return createdGame.id as string;
+  async togglePainterSelections(gameId: string, card: string, theme: string) {
+    const game = await gameDao.getOne(gameId);
+
+    if (!card) throw new Error(paramMissingError);
+    if (!theme) throw new Error(paramMissingError);
+    if (!game) throw new Error(gameNotFoundError);
+    if (game.players.findIndex((p: Player) => p.id === this.userId && p.role === Role.PAINTER) === -1) {
+      throw new Error(forbiddenError);
     }
 
-    async addPlayer(gameId: string, player: Player) {
-        const game = await gameDao.getOne(gameId);
+    GameController.togglePainterSelection(game, this.userId, card, theme);
 
-        if (!player) throw new Error(paramMissingError);
-        if (!game) throw new Error(gameNotFoundError);
+    const updatedGame = await gameDao.update(game);
 
-        if (!player.id) player.id = this.userId;
-        GameController.addPlayer(game, player);
+    this.socket.to(ROOM_GAME(game.id)).emit(GameEvent.Update, updatedGame);
 
-        const updatedGame = await gameDao.update(game);
+    return true;
+  }
 
-        this.socket.to(ROOM_GAME(game.id)).emit(GameEvent.Update, updatedGame);
-        this.socket.to(ROOM_GAME_LIST).emit(GameEvent.UpdateList);
+  async offerPictures(gameId: string) {
+    const game = await gameDao.getOne(gameId);
 
-        return true;
-    };
-
-    async updatePlayer(gameId: string, player: Player) {
-        const game = await gameDao.getOne(gameId);
-
-        if (!player) throw new Error(paramMissingError);
-        if (player.id !== this.userId) throw new Error(forbiddenError);
-        if (!game) throw new Error(gameNotFoundError);
-
-        GameController.updatePlayer(game, player);
-
-        const updatedGame = await gameDao.update(game);
-
-        this.socket.to(ROOM_GAME(game.id)).emit(GameEvent.Update, updatedGame);
-
-        return true;
-    };
-
-    async removePlayerFromGame(gameId: string, playerId: string) {
-        const game = await gameDao.getOne(gameId);
-
-        if (!game) throw new Error(gameNotFoundError);
-        if (!playerId) throw new Error(paramMissingError);
-        if (playerId !== this.userId && this.userId !== game.hostId) throw new Error(forbiddenError);
-
-        GameController.removePlayerFromGame(game, playerId);
-
-        const updatedGame = await gameDao.update(game);
-
-        this.socket.to(ROOM_GAME(game.id)).emit(GameEvent.Update, updatedGame);
-
-        return true;
+    if (!game) throw new Error(gameNotFoundError);
+    if (game.players.findIndex((p: Player) => p.id === this.userId && p.role === Role.PAINTER) === -1) {
+      throw new Error(forbiddenError);
     }
 
-    async startGame(gameId: string,) {
-        const game = await gameDao.getOne(gameId);
+    GameController.offerPictures(game);
 
-        if (!game) throw new Error(gameNotFoundError);
-        if (game.players.findIndex((p: Player) => p.id === this.userId) === -1) {
-            throw new Error(forbiddenError);
-        }
+    const updatedGame = await gameDao.update(game);
 
-        GameController.startGame(game);
+    this.socket.to(ROOM_GAME(game.id)).emit(GameEvent.Update, updatedGame);
 
-        const updatedGame = await gameDao.update(game);
+    return true;
+  }
 
-        this.socket.to(ROOM_GAME(game.id)).emit(GameEvent.Update, updatedGame);
+  async toggleBuyerPreSelections(gameId: string, card: string, theme: string) {
+    const game = await gameDao.getOne(gameId);
 
-        return true;
-    };
+    if (!card) throw new Error(paramMissingError);
+    if (!theme) throw new Error(paramMissingError);
+    if (!game) throw new Error(gameNotFoundError);
+    if (game.players.findIndex((p: Player) => p.id === this.userId && p.role === Role.BUYER) === -1) {
+      throw new Error(forbiddenError);
+    }
 
-    async setDemand(gameId: string, demand: number) {
-        const game = await gameDao.getOne(gameId);
+    GameController.toggleBuyerPreSelection(game, this.userId, card, theme);
 
-        if (!demand) throw new Error(paramMissingError);
-        if (!game) throw new Error(gameNotFoundError);
-        if (game.players.findIndex((p: Player) => p.id === this.userId && p.role === Role.BUYER) === -1) {
-            throw new Error(forbiddenError);
-        }
+    const updatedGame = await gameDao.update(game);
 
-        GameController.setDemand(game, demand);
+    this.socket.to(ROOM_GAME(game.id)).emit(GameEvent.Update, updatedGame);
 
-        const updatedGame = await gameDao.update(game);
+    return true;
+  }
 
-        this.socket.to(ROOM_GAME(game.id)).emit(GameEvent.Update, updatedGame);
+  async choosePictures(gameId: string) {
+    const game = await gameDao.getOne(gameId);
 
-        return true;
-    };
+    if (!game) throw new Error(gameNotFoundError);
+    if (game.players.findIndex((p: Player) => p.id === this.userId && p.role === Role.BUYER) === -1) {
+      throw new Error(forbiddenError);
+    }
 
-    async togglePainterSelections(gameId: string, card: string, theme: string) {
-        const game = await gameDao.getOne(gameId);
+    GameController.choosePictures(game);
 
-        if (!card) throw new Error(paramMissingError);
-        if (!theme) throw new Error(paramMissingError);
-        if (!game) throw new Error(gameNotFoundError);
-        if (game.players.findIndex((p: Player) => p.id === this.userId && p.role === Role.PAINTER) === -1) {
-            throw new Error(forbiddenError);
-        }
+    const updatedGame = await gameDao.update(game);
 
-        GameController.togglePainterSelection(game, this.userId, card, theme);
+    this.socket.to(ROOM_GAME(game.id)).emit(GameEvent.Update, updatedGame);
 
-        const updatedGame = await gameDao.update(game);
+    return true;
+  }
 
-        this.socket.to(ROOM_GAME(game.id)).emit(GameEvent.Update, updatedGame);
+  async endOfRound(gameId: string) {
+    const game = await gameDao.getOne(gameId);
 
-        return true;
-    };
+    if (!game) throw new Error(gameNotFoundError);
+    if (game.players.findIndex((p: Player) => p.id === this.userId) === -1) {
+      throw new Error(forbiddenError);
+    }
 
-    async offerPictures(gameId: string) {
-        const game = await gameDao.getOne(gameId);
+    GameController.endRound(game);
 
-        if (!game) throw new Error(gameNotFoundError);
-        if (game.players.findIndex((p: Player) => p.id === this.userId && p.role === Role.PAINTER) === -1) {
-            throw new Error(forbiddenError);
-        }
+    const updatedGame = await gameDao.update(game);
 
-        GameController.offerPictures(game);
+    this.socket.to(ROOM_GAME(game.id)).emit(GameEvent.Update, updatedGame);
 
-        const updatedGame = await gameDao.update(game);
+    return true;
+  }
 
-        this.socket.to(ROOM_GAME(game.id)).emit(GameEvent.Update, updatedGame);
+  async deleteGame(gameId: string) {
+    const game = await gameDao.getOne(gameId);
 
-        return true;
-    };
+    if (!game) throw new Error(gameNotFoundError);
+    if (game.hostId !== this.userId && !GameController.getClearedForDeletion(game)) throw new Error(forbiddenError);
 
-    async toggleBuyerPreSelections(gameId: string, card: string, theme: string) {
-        const game = await gameDao.getOne(gameId);
+    await gameDao.delete(gameId);
 
-        if (!card) throw new Error(paramMissingError);
-        if (!theme) throw new Error(paramMissingError);
-        if (!game) throw new Error(gameNotFoundError);
-        if (game.players.findIndex((p: Player) => p.id === this.userId && p.role === Role.BUYER) === -1) {
-            throw new Error(forbiddenError);
-        }
+    this.socket.to(ROOM_GAME_LIST).emit(GameEvent.UpdateList);
 
-        GameController.toggleBuyerPreSelection(game, this.userId, card, theme);
-
-        const updatedGame = await gameDao.update(game);
-
-        this.socket.to(ROOM_GAME(game.id)).emit(GameEvent.Update, updatedGame);
-
-        return true;
-    };
-
-    async choosePictures(gameId: string) {
-        const game = await gameDao.getOne(gameId);
-
-        if (!game) throw new Error(gameNotFoundError);
-        if (game.players.findIndex((p: Player) => p.id === this.userId && p.role === Role.BUYER) === -1) {
-            throw new Error(forbiddenError);
-        }
-
-        GameController.choosePictures(game);
-
-        const updatedGame = await gameDao.update(game);
-
-        this.socket.to(ROOM_GAME(game.id)).emit(GameEvent.Update, updatedGame);
-
-        return true;
-    };
-
-    async endOfRound(gameId: string) {
-        const game = await gameDao.getOne(gameId);
-
-        if (!game) throw new Error(gameNotFoundError);
-        if (game.players.findIndex((p: Player) => p.id === this.userId)) {
-            throw new Error(forbiddenError);
-        }
-
-        GameController.endRound(game);
-
-        const updatedGame = await gameDao.update(game);
-
-        this.socket.to(ROOM_GAME(game.id)).emit(GameEvent.Update, updatedGame);
-
-        return true;
-    };
-
-    async deleteGame(gameId: string) {
-        const game = await gameDao.getOne(gameId);
-
-        if (!game) throw new Error(gameNotFoundError);
-        if (game.hostId !== this.userId && !GameController.getClearedForDeletion(game)) throw new Error(forbiddenError);
-
-        await gameDao.delete(gameId);
-
-        this.socket.to(ROOM_GAME_LIST).emit(GameEvent.UpdateList);
-
-        return true;
-    };
+    return true;
+  }
 }
-
 
 /******************************************************************************
  *                                     Export

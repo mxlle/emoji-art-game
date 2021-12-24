@@ -1,0 +1,16 @@
+@use '../../mixins';
+
+:host {
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(3, auto) 1fr;
+  gap: 32px;
+  justify-items: center;
+  padding: 16px;
+  height: calc(100% - 32px);
+  overflow-y: auto;
+}
+
+.players {
+  @include mixins.defaultGrid();
+}

@@ -1,5 +1,5 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {maxDemand, minDemand} from '../../../game-logic/gameConsts';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { maxDemand, minDemand } from '../../../../game-logic/gameConsts';
 
 @Component({
   selector: 'app-demand-picker',

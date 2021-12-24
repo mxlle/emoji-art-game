@@ -1,0 +1,5 @@
+<ng-container *ngIf="game">
+  <app-lobby *ngIf="GamePhase.Init === game.phase" [game]="game" [currentPlayer]="currentPlayer"></app-lobby>
+  <app-game-field *ngIf="GamePhase.Init !== game.phase" [game]="game" [currentPlayer]="currentPlayer"></app-game-field>
+  <app-status-bar *ngIf="GamePhase.Init !== game.phase" [game]="game"></app-status-bar>
+</ng-container>

@@ -1,32 +1,48 @@
-import {Schema} from 'mongoose';
-import {getPlayersWithRequiredAction} from '@gameFunctions';
+import { Schema } from 'mongoose';
+import { getPlayersWithRequiredAction } from '@gameFunctions';
 
-export const PictureSchema: Schema = new Schema({
+export const PictureSchema: Schema = new Schema(
+  {
     card: String,
-    painterTheme: {type: String, required: false},
-    buyerTheme: {type: String, required: false},
-    buyerSelection: {type: [{
-            theme: String,
-            players: [String]
-        }], required: false},
-    isFake: {type: Boolean, required: false}
-});
+    painterTheme: { type: String, required: false },
+    buyerTheme: { type: String, required: false },
+    buyerSelection: {
+      type: [
+        {
+          theme: String,
+          playerIds: [String],
+        },
+      ],
+      required: false,
+      default: undefined,
+    },
+    isFake: { type: Boolean, required: false },
+  },
+  { _id: false }
+);
 
-export const PlayerSchema: Schema = new Schema({
+export const PlayerSchema: Schema = new Schema(
+  {
     id: String,
     name: String,
-    color: {type: String, required: false},
-    role: {type: String, required: false},
-    pictures: [PictureSchema]
-});
+    color: { type: String, required: false },
+    role: { type: String, required: false },
+    pictures: [PictureSchema],
+  },
+  { _id: false }
+);
 
-export const RoundSchema: Schema = new Schema({
+export const RoundSchema: Schema = new Schema(
+  {
     themes: [String],
-    demand: {type: Number, required: false},
-    pictures: [PictureSchema]
-});
+    demand: { type: Number, required: false },
+    pictures: [PictureSchema],
+  },
+  { _id: false }
+);
 
-const GameSchema: Schema = new Schema({
+const GameSchema: Schema = new Schema(
+  {
     id: String,
     name: String,
     players: [PlayerSchema],
@@ -46,11 +62,13 @@ const GameSchema: Schema = new Schema({
     creationTime: Date,
     startTime: Date,
     endTime: Date,
-}, { toJSON: { virtuals: true } });
+  },
+  { toJSON: { virtuals: true } }
+);
 
-GameSchema.virtual('actionRequiredFrom').get(function() {
-    // @ts-ignore
-    return getPlayersWithRequiredAction(this);
+GameSchema.virtual('actionRequiredFrom').get(function () {
+  // @ts-ignore
+  return getPlayersWithRequiredAction(this);
 });
 
-export {GameSchema};
+export { GameSchema };

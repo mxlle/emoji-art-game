@@ -1,4 +1,4 @@
-@use '../../mixins';
+@use '../../../mixins';
 
 :host {
   @include mixins.defaultGrid(60px);

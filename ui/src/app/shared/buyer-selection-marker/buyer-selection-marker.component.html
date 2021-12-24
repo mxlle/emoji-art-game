@@ -1,5 +1,5 @@
-<div *ngFor="let theme of themes" class="theme-group">
-  <div *ngFor="let playerIds of selection[theme]">
-    {{ theme }}
+<div *ngFor="let selection of selections" class="theme-group">
+  <div *ngFor="let playerIds of selection.playerIds">
+    {{ selection.theme }}
   </div>
 </div>

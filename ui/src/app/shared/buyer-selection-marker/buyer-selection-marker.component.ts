@@ -1,5 +1,5 @@
-import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
-import {BuyerSelection} from '../../../game-logic/game';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { BuyerSelection } from '../../../game-logic/game';
 
 @Component({
   selector: 'app-buyer-selection-marker',
@@ -8,11 +8,7 @@ import {BuyerSelection} from '../../../game-logic/game';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BuyerSelectionMarkerComponent implements OnInit {
-  @Input() selection: BuyerSelection = {};
-
-  get themes(): string[] {
-    return Object.keys(this.selection);
-  }
+  @Input() selections: BuyerSelection[] = [];
 
   constructor() {}
 

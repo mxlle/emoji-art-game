@@ -1,0 +1,9 @@
+@use '../../../mixins';
+
+:host {
+  display: block;
+}
+
+.offer {
+  @include mixins.defaultGrid();
+}

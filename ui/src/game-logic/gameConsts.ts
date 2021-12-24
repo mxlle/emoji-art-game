@@ -9,7 +9,7 @@ import {
   travelAndPlaces,
   weatherAndEarth,
 } from '../game-tools/emoji-util';
-import {Role} from "./game";
+import { Role } from './game';
 
 export const emojis: string[] = splitEmojis(
   bodyParts + clothingAndAccessories + animals + nature + weatherAndEarth + foodAndDrink + activityAndSport + travelAndPlaces
@@ -19,6 +19,7 @@ export const masterFaker = '🥸';
 export const painter = Role.PAINTER;
 export const buyer = Role.BUYER;
 
+export const minNumPlayers = 3;
 export const themesPerRound = 2;
 export const minDemand = 2;
 export const maxDemand = 7;

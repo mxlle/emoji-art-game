@@ -1,4 +1,4 @@
-import { DELETE_CLEARANCE_TIME, Game, GamePhase, GameRound, Picture, Player } from './game';
+import { BuyerSelection, DELETE_CLEARANCE_TIME, Game, GamePhase, GameRound, Picture, Player } from './game';
 import { shuffleArray } from '../game-tools/random-util';
 import { emojis, fakesPerRound, gameEndCondition, getNumOfCardsPerPlayer, getRoleOrder, themesPerRound } from './gameConsts';
 import { dealCards, drawCards } from '../game-tools/card-game-util';
@@ -99,16 +99,24 @@ export function toggleBuyerPreSelection(game: Game, playerId: string, card: stri
   const picture = game.rounds[game.currentRound].pictures.find((pic) => pic.card === card);
   if (picture) {
     if (!picture.buyerSelection) {
-      picture.buyerSelection = {};
+      picture.buyerSelection = [];
     }
-    const selectionForTheme = picture.buyerSelection[theme];
+    const selectionIndex = picture.buyerSelection.findIndex((sel) => sel.theme === theme);
+    const selectionForTheme = picture.buyerSelection[selectionIndex];
     if (!selectionForTheme) {
-      picture.buyerSelection[theme] = [playerId];
+      picture.buyerSelection.push({ theme, playerIds: [playerId] });
     } else {
-      if (selectionForTheme.includes(playerId)) {
-        picture.buyerSelection[theme] = selectionForTheme.filter((id) => id !== playerId);
+      const index = selectionForTheme.playerIds.findIndex((id) => id === playerId);
+      if (index >= 0) {
+        selectionForTheme.playerIds.splice(index, 1);
+        if (!selectionForTheme.playerIds.length) {
+          picture.buyerSelection.splice(selectionIndex, 1);
+          if (picture.buyerSelection.length === 0) {
+            picture.buyerSelection = undefined;
+          }
+        }
       } else {
-        picture.buyerSelection[theme] = [...picture.buyerSelection[theme], playerId];
+        selectionForTheme.playerIds.push(playerId);
       }
     }
   }
@@ -194,20 +202,18 @@ export function getBuyerSelection(game: Game): Picture[] {
 
 export function setBuyerThemeForPicture(picture: Picture) {
   if (picture.buyerSelection) {
-    picture.buyerTheme = Object.keys(picture.buyerSelection).reduce((currentTheme: string, theme: string) => {
-      if (
-        !currentTheme ||
-        (picture.buyerSelection && picture.buyerSelection[theme]?.length > picture.buyerSelection[currentTheme]?.length)
-      ) {
-        return theme;
+    const bestSelection = picture.buyerSelection.reduce((currentSelection: BuyerSelection | undefined, selection: BuyerSelection) => {
+      if (!currentSelection || selection.playerIds?.length > currentSelection.playerIds?.length) {
+        return selection;
       }
-      return currentTheme;
-    }, '');
+      return currentSelection;
+    }, undefined);
+    picture.buyerTheme = bestSelection?.theme;
   }
 }
 
-export function getPlayersWithRequiredAction(game: Game): Player[] {
-  return game.players;
+export function getPlayersWithRequiredAction(_game: Game): Player[] {
+  return []; // todo
 }
 
 export function getClearedForDeletion(game: Game, nowTime: number = new Date().getTime()): boolean {
@@ -217,4 +223,8 @@ export function getClearedForDeletion(game: Game, nowTime: number = new Date().g
   } else {
     return [GamePhase.Init, GamePhase.End].includes(game.phase);
   }
+}
+
+export function getPlayerInGame(game: Game, playerId?: string): Player | undefined {
+  return game.players.find((player: Player) => player.id === playerId);
 }

@@ -41,7 +41,7 @@ export interface Picture {
   card: string;
   painterTheme?: string;
   buyerTheme?: string;
-  buyerSelection?: BuyerSelection;
+  buyerSelection?: BuyerSelection[];
   isFake?: boolean;
 }
 
@@ -60,20 +60,21 @@ export interface Player {
 
 export interface BuyerSelection {
   // playerIds per theme
-  [theme: string]: string[];
+  theme: string;
+  playerIds: string[];
 }
 
 // API related interfaces
 
 export interface GameApi {
   loadGames: () => Promise<Game[]>;
-  loadGame: (gameId: string) => Promise<Game|null>;
+  loadGame: (gameId: string) => Promise<Game | null>;
   addGame: (game: Game) => Promise<string>;
   addPlayer: (gameId: string, player: Player) => Promise<boolean>;
   updatePlayer: (gameId: string, player: Player) => Promise<boolean>;
   removePlayerFromGame: (gameId: string, playerId: string) => Promise<boolean>;
   startGame: (gameId: string) => Promise<boolean>;
-  setDemand: (gameId: string,  demand: number) => Promise<boolean>;
+  setDemand: (gameId: string, demand: number) => Promise<boolean>;
   togglePainterSelections: (gameId: string, card: string, theme: string) => Promise<boolean>;
   offerPictures: (gameId: string) => Promise<boolean>;
   toggleBuyerPreSelections: (gameId: string, card: string, theme: string) => Promise<boolean>;
@@ -86,7 +87,7 @@ export interface NotificationEventOptions {
   transKey: string;
   audience?: string[];
   tOptions?: any;
-  variant?: 'success'|'info'|'warning'|'error';
+  variant?: 'success' | 'info' | 'warning' | 'error';
 }
 
 export enum GameEvent {
@@ -96,7 +97,7 @@ export enum GameEvent {
   Update = 'updateGame',
   ApiCall = 'apiCall.games',
   Notification = 'notification',
-  Confetti = 'confetti'
+  Confetti = 'confetti',
 }
 
 // Event values from socket-io

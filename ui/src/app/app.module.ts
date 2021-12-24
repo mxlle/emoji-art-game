@@ -7,10 +7,10 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { GameFieldModule } from './game-field/game-field.module';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { HomeModule } from './home/home.module';
+import { GameViewModule } from './game-view/game-view.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,10 +25,10 @@ import { HomeModule } from './home/home.module';
       registrationStrategy: 'registerWhenStable:30000',
     }),
     MatToolbarModule,
-    GameFieldModule,
-    HomeModule,
     MatButtonModule,
     MatIconModule,
+    GameViewModule,
+    HomeModule,
   ],
   providers: [],
   bootstrap: [AppComponent],
