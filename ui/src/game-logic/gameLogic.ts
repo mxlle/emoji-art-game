@@ -185,14 +185,14 @@ function isPictureSelectedFromBuyer(pic: Picture): boolean {
   return !!pic.buyerTheme;
 }
 
-export function getOfferedPictures(game: Game | PlayerGame): Picture[] {
+export function getOfferedPictures(game: Game): Picture[] {
   return game.players.reduce(
     (currentArr: Picture[], player: Player) => currentArr.concat((player.pictures ?? []).filter(isPictureSelectedFromPainter)),
     []
   );
 }
 
-export function getBuyerSelection(game: Game | PlayerGame): Picture[] {
+export function getBuyerSelection(game: Game): Picture[] {
   return game && GamePhase.Choose === game.phase
     ? game.rounds[game.currentRound].pictures.filter(
         (pic) => !!pic.buyerTheme || (pic.buyerSelection && !!Object.keys(pic.buyerSelection).length)
@@ -232,6 +232,7 @@ export function getPlayerInGame(game: Game | GameInfo, playerId?: string): Playe
 export function toPlayerGame(game: Game, playerId: string): PlayerGame {
   const { id, name, hostId, players, phase, currentRound, rounds, teamPoints, fakePoints, neutralCards } = game;
   const currentPlayer = game.players.find((player: Player) => player.id === playerId);
+  const round = rounds[currentRound];
 
   return {
     id,
@@ -239,9 +240,20 @@ export function toPlayerGame(game: Game, playerId: string): PlayerGame {
     hostId,
     players,
     currentPlayer,
+    playerIsHost: hostId === playerId,
+    currentOffer:
+      round?.pictures.map(({ card, isFake, buyerTheme, painterTheme, buyerSelection }) => {
+        if (GamePhase.Evaluate === phase) {
+          return { card, isFake, buyerTheme, painterTheme };
+        } else {
+          return { card, buyerSelection };
+        }
+      }) ?? [],
+    currentThemes: round?.themes ?? [],
+    currentDemand: round?.demand ?? 0,
+    offerCount: getOfferedPictures(game).length,
+    selectionCount: getBuyerSelection(game).length,
     phase,
-    currentRound,
-    rounds,
     teamPoints,
     fakePoints,
     neutralCards,

@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 
-import { GamePhase, GameRound, PlayerGame, Role } from '../../../game-logic/game';
-import { getBuyerSelection, getOfferedPictures } from '../../../game-logic/gameLogic';
+import { GamePhase, PlayerGame, Role } from '../../../game-logic/game';
 // @ts-ignore todo
 import { Subject } from 'rxjs';
 import apiFunctions from '../../../data/apiFunctions';
@@ -33,18 +32,6 @@ export class GameFieldComponent implements OnInit, OnDestroy {
 
   get showEndRoundConfirm(): boolean {
     return GamePhase.Evaluate === this.game.phase;
-  }
-
-  get currentBuyerSelection() {
-    return getBuyerSelection(this.game).length;
-  }
-
-  get currentOffer() {
-    return getOfferedPictures(this.game).length;
-  }
-
-  get currentRound(): GameRound | undefined {
-    return this.game && this.game.rounds[this.game.currentRound];
   }
 
   private _destroy$: Subject<void> = new Subject<void>();

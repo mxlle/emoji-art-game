@@ -14,10 +14,6 @@ export class CurrentPlayerHandComponent implements OnInit {
   @Input() player!: Player;
   @Input() currentTheme!: string;
 
-  get themes(): string[] {
-    return this.game.rounds[this.game.currentRound].themes;
-  }
-
   constructor() {}
 
   ngOnInit(): void {}

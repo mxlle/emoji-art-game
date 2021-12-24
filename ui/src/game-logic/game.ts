@@ -29,11 +29,16 @@ export interface PlayerGame {
   hostId: string;
 
   currentPlayer?: Player;
+  playerIsHost: boolean;
 
-  currentRound: number;
+  currentOffer: Picture[];
+  currentThemes: string[];
+
+  currentDemand?: number;
+  offerCount: number;
+  selectionCount: number;
+
   phase: GamePhase;
-
-  rounds: GameRound[];
 
   teamPoints: Picture[];
   fakePoints: Picture[];

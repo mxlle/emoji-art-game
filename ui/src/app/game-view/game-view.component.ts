@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { socket } from '../../data/socket';
-import { Game, GameEvent, GamePhase, PlayerGame, SocketEvent } from '../../game-logic/game';
+import { GameEvent, GamePhase, PlayerGame, SocketEvent } from '../../game-logic/game';
 import apiFunctions from '../../data/apiFunctions';
 import { getCurrentUserId } from '../../data/functions';
 
@@ -36,7 +36,7 @@ export class GameViewComponent implements OnInit, OnDestroy {
         setTimeout(() => this._ngZone.run(() => this._setupConnection()), 1000);
       }
     });
-    socket.on(GameEvent.Update, (game: Game) => this._ngZone.run(() => this.setGameAfterUpdate(game)));
+    socket.on(GameEvent.Update, (game: PlayerGame) => this._ngZone.run(() => this.setGameAfterUpdate(game)));
     this.game = await apiFunctions.loadGame(this._gameId);
     this._cdr.markForCheck();
   }
@@ -46,7 +46,7 @@ export class GameViewComponent implements OnInit, OnDestroy {
     socket.off(GameEvent.Update);
   }
 
-  setGameAfterUpdate(game: Game) {
+  setGameAfterUpdate(game: PlayerGame) {
     if (this._gameId !== game.id) return;
     this.game = game;
     this._cdr.markForCheck();
