@@ -1,4 +1,4 @@
-import { BuyerSelection, DELETE_CLEARANCE_TIME, Game, GamePhase, GameRound, Picture, Player, PlayerGame } from './game';
+import { BuyerSelection, DELETE_CLEARANCE_TIME, Game, GameInfo, GamePhase, GameRound, Picture, Player, PlayerGame } from './game';
 import { shuffleArray } from '../game-tools/random-util';
 import { emojis, fakesPerRound, gameEndCondition, getNumOfCardsPerPlayer, getRoleOrder, themesPerRound } from './gameConsts';
 import { dealCards, drawCards } from '../game-tools/card-game-util';
@@ -75,7 +75,7 @@ export function setDemand(game: Game, demand: number) {
 
 export function togglePainterSelection(game: Game, playerId: string, card: string, theme: string) {
   const player = game.players.find((player) => player.id === playerId);
-  const picture = player?.pictures.find((pic) => pic.card === card);
+  const picture = player?.pictures?.find((pic) => pic.card === card);
   if (picture) {
     if (picture.painterTheme === theme) {
       picture.painterTheme = undefined;
@@ -158,11 +158,11 @@ function getFakes(deck: string[]): Picture[] {
 
 function fillUpCards(game: Game) {
   game.players.forEach((player) => {
-    const numOfCards = player.pictures.length;
+    const numOfCards = player.pictures?.length ?? 0;
     // remove selected cards
-    player.pictures = player.pictures.filter((pic) => !isPictureSelectedFromPainter(pic));
-    const numOfPlayedCards = numOfCards - player.pictures.length;
-    if (numOfPlayedCards) {
+    player.pictures = player.pictures?.filter((pic) => !isPictureSelectedFromPainter(pic));
+    const numOfPlayedCards = numOfCards - (player.pictures?.length ?? 0);
+    if (numOfPlayedCards && player.pictures) {
       player.pictures.push(...drawCards(game.deck, numOfPlayedCards).map((card) => ({ card })));
     }
   });
@@ -187,7 +187,7 @@ function isPictureSelectedFromBuyer(pic: Picture): boolean {
 
 export function getOfferedPictures(game: Game | PlayerGame): Picture[] {
   return game.players.reduce(
-    (currentArr: Picture[], player: Player) => currentArr.concat(player.pictures.filter(isPictureSelectedFromPainter)),
+    (currentArr: Picture[], player: Player) => currentArr.concat((player.pictures ?? []).filter(isPictureSelectedFromPainter)),
     []
   );
 }
@@ -216,7 +216,7 @@ export function getPlayersWithRequiredAction(_game: Game): Player[] {
   return []; // todo
 }
 
-export function getClearedForDeletion(game: Game, nowTime: number = new Date().getTime()): boolean {
+export function getClearedForDeletion(game: Game | GameInfo, nowTime: number = new Date().getTime()): boolean {
   if (game?.creationTime) {
     const diff = nowTime - new Date(game.creationTime).getTime();
     return diff > DELETE_CLEARANCE_TIME;
@@ -225,7 +225,7 @@ export function getClearedForDeletion(game: Game, nowTime: number = new Date().g
   }
 }
 
-export function getPlayerInGame(game: Game, playerId?: string): Player | undefined {
+export function getPlayerInGame(game: Game | GameInfo, playerId?: string): Player | undefined {
   return game.players.find((player: Player) => player.id === playerId);
 }
 
@@ -245,5 +245,18 @@ export function toPlayerGame(game: Game, playerId: string): PlayerGame {
     teamPoints,
     fakePoints,
     neutralCards,
+  };
+}
+
+export function toGameInfo(game: Game): GameInfo {
+  const { id, name, hostId, players, phase, creationTime } = game;
+
+  return {
+    id,
+    name,
+    hostId,
+    players: players.map(({ id, name, color }) => ({ id, name, color })),
+    phase,
+    creationTime,
   };
 }

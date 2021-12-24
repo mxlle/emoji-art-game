@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, TrackByFunction } from '@angular/core';
-import { Game } from '../../../game-logic/game';
+import { GameInfo } from '../../../game-logic/game';
 import { trackByObjectId } from '../../ui-helpers';
 import { getCurrentUserId } from '../../../data/functions';
 import { getClearedForDeletion } from '../../../game-logic/gameLogic';
@@ -11,17 +11,17 @@ import { getClearedForDeletion } from '../../../game-logic/gameLogic';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GameListComponent implements OnInit {
-  @Input() games: Game[] = [];
+  @Input() games: GameInfo[] = [];
   @Output() delete: EventEmitter<string> = new EventEmitter<string>();
 
-  readonly trackByGameId: TrackByFunction<Game> = trackByObjectId;
+  readonly trackByGameId: TrackByFunction<GameInfo> = trackByObjectId;
   readonly currentUserId: string = getCurrentUserId();
 
   constructor() {}
 
   ngOnInit(): void {}
 
-  isDeleteAllowed(game: Game): boolean {
+  isDeleteAllowed(game: GameInfo): boolean {
     return game.hostId === this.currentUserId || getClearedForDeletion(game);
   }
 

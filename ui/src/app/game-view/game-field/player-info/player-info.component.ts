@@ -15,7 +15,7 @@ export class PlayerInfoComponent implements OnInit {
   }
 
   get selectedPictures(): number {
-    return this.player.pictures.filter((pic: Picture) => !!pic.painterTheme).length;
+    return this.player.pictures?.filter((pic: Picture) => !!pic.painterTheme).length ?? 0;
   }
 
   constructor() {}

@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { mockGameId } from '../mock-mode/mock-service';
 import { socket } from '../../data/socket';
-import { Game, GameEvent, GamePhase, SocketEvent } from '../../game-logic/game';
+import { Game, GameEvent, GameInfo, GamePhase, SocketEvent } from '../../game-logic/game';
 import apiFunctions from '../../data/apiFunctions';
 import { createGame } from '../../game-logic/gameLogic';
 import { Router } from '@angular/router';
@@ -16,9 +16,9 @@ import { getCurrentUserInGame } from '../../data/functions';
 export class HomeComponent implements OnInit, OnDestroy {
   readonly testGameUrl = `/${mockGameId}`;
 
-  newGames: Game[] = [];
-  ongoingGames: Game[] = [];
-  doneGames: Game[] = [];
+  newGames: GameInfo[] = [];
+  ongoingGames: GameInfo[] = [];
+  doneGames: GameInfo[] = [];
   loading: boolean = false;
 
   constructor(private _cdr: ChangeDetectorRef, private _ngZone: NgZone, private _router: Router) {}
@@ -38,7 +38,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   loadGames() {
     this.loading = true;
     this._cdr.markForCheck();
-    apiFunctions.loadGames().then((allGames: Game[]) => {
+    apiFunctions.loadGames().then((allGames: GameInfo[]) => {
       this.newGames = allGames.filter((game) => game.phase === GamePhase.Init && !getCurrentUserInGame(game));
       this.ongoingGames = allGames.filter(
         (game) => ![GamePhase.Init, GamePhase.End].includes(game.phase) || (game.phase === GamePhase.Init && !!getCurrentUserInGame(game))

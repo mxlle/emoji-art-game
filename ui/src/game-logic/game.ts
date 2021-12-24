@@ -40,6 +40,15 @@ export interface PlayerGame {
   neutralCards: Picture[];
 }
 
+export interface GameInfo {
+  id: string;
+  name: string;
+  players: Player[];
+  hostId: string;
+  phase: GamePhase;
+  creationTime?: Date;
+}
+
 export enum GamePhase {
   Init,
   Demand,
@@ -73,7 +82,7 @@ export interface Player {
   name: string;
   color?: string;
   role?: Role;
-  pictures: Picture[];
+  pictures?: Picture[];
 }
 
 export interface BuyerSelection {
@@ -85,7 +94,7 @@ export interface BuyerSelection {
 // API related interfaces
 
 export interface GameApi {
-  loadGames: () => Promise<Game[]>;
+  loadGames: () => Promise<GameInfo[]>;
   loadGame: (gameId: string) => Promise<PlayerGame | null>;
   addGame: (game: Game) => Promise<string>;
   addPlayer: (gameId: string, player: Player) => Promise<boolean>;

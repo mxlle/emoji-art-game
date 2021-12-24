@@ -5,7 +5,7 @@ import { docToPlain, GameController, GameDocument, GamePhase, Player } from '@en
 import { forbiddenError, gameNotFoundError, paramMissingError } from '@shared/constants';
 import { Namespace } from 'socket.io';
 import { Game, GameApi, GameEvent, Role, ROOM_GAME_LIST, ROOM_GAME_PLAYER } from '@gameTypes';
-import { toPlayerGame } from '@gameFunctions';
+import { toGameInfo, toPlayerGame } from '@gameFunctions';
 
 // Init shared
 const gameDao = new GameDaoImpl();
@@ -20,11 +20,14 @@ class GameApiImpl implements GameApi {
   }
 
   async loadGames() {
-    let games = await gameDao.getAll();
-    games = games.filter((game: Game) => {
-      return game.phase === GamePhase.Init || (this.userId && game.players.findIndex((p) => p.id === this.userId) > -1);
-    });
-    return games;
+    const games = await gameDao.getAll();
+
+    // filter and convert to instance
+    return games
+      .filter((game: Game) => {
+        return game.phase === GamePhase.Init || (this.userId && game.players.findIndex((p) => p.id === this.userId) > -1);
+      })
+      .map((game: Game) => toGameInfo(game));
   }
 
   async loadGame(gameId: string) {
