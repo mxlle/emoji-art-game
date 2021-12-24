@@ -1,0 +1,30 @@
+@use '../../mixins';
+
+:host {
+  display: grid;
+  grid-template-columns: repeat(2, 50%);
+  grid-template-rows: 1fr;
+  justify-items: center;
+  gap: 32px;
+  padding: 16px;
+  padding-inline-end: 48px; // gap + padding // for weird padding collapse behavior
+  overflow-x: hidden;
+  overflow-y: auto;
+  text-align: center;
+
+  .team-points,
+  .fake-points {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    width: 100%;
+    max-width: 500px;
+
+    :nth-child(2n + 1) {
+      font-size: 100px;
+    }
+    :nth-child(2n) {
+      @include mixins.defaultGrid();
+      grid-auto-rows: min-content;
+    }
+  }
+}

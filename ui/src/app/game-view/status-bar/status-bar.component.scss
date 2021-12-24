@@ -1,5 +1,16 @@
-@use '../../mixins';
-
 mat-toolbar {
-  @include mixins.defaultGrid();
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(40px, auto));
+
+  div {
+    text-align: center;
+
+    &:first-child {
+      text-align: start;
+    }
+
+    &:last-child {
+      text-align: end;
+    }
+  }
 }

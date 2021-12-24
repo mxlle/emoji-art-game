@@ -4,9 +4,10 @@ import { GameViewComponent } from './game-view.component';
 import { LobbyModule } from './lobby/lobby.module';
 import { GameFieldModule } from './game-field/game-field.module';
 import { StatusBarModule } from './status-bar/status-bar.module';
+import { EndViewModule } from './end-view/end-view.module';
 
 @NgModule({
   declarations: [GameViewComponent],
-  imports: [CommonModule, LobbyModule, GameFieldModule, StatusBarModule],
+  imports: [CommonModule, LobbyModule, GameFieldModule, StatusBarModule, EndViewModule],
 })
 export class GameViewModule {}

@@ -1,0 +1,12 @@
+<div class="team-points">
+  <div>{{ trophy }} {{ game.teamPoints.length }}</div>
+  <div>
+    <app-picture *ngFor="let picture of game.teamPoints" [picture]="picture"></app-picture>
+  </div>
+</div>
+<div class="fake-points">
+  <div>{{ masterFaker }} {{ game.fakePoints.length }}</div>
+  <div>
+    <app-picture *ngFor="let picture of game.fakePoints" [picture]="picture"></app-picture>
+  </div>
+</div>
