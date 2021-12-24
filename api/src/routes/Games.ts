@@ -1,10 +1,11 @@
 import { generateId } from '@shared/functions';
 
 import GameDaoImpl from '@daos/Game';
-import { GameController, GamePhase, Player } from '@entities/Game';
+import { docToPlain, GameController, GameDocument, GamePhase, Player } from '@entities/Game';
 import { forbiddenError, gameNotFoundError, paramMissingError } from '@shared/constants';
 import { Namespace } from 'socket.io';
-import { Game, GameApi, GameEvent, Role, ROOM_GAME, ROOM_GAME_LIST } from '@gameTypes';
+import { Game, GameApi, GameEvent, Role, ROOM_GAME_LIST, ROOM_GAME_PLAYER } from '@gameTypes';
+import { toPlayerGame } from '@gameFunctions';
 
 // Init shared
 const gameDao = new GameDaoImpl();
@@ -26,8 +27,9 @@ class GameApiImpl implements GameApi {
     return games;
   }
 
-  loadGame(gameId: string) {
-    return gameDao.getOne(gameId);
+  async loadGame(gameId: string) {
+    const game = await gameDao.getOne(gameId);
+    return game && toPlayerGame(docToPlain(game), this.userId);
   }
 
   async addGame(game: Game) {
@@ -57,7 +59,7 @@ class GameApiImpl implements GameApi {
 
     const updatedGame = await gameDao.update(game);
 
-    this.socket.to(ROOM_GAME(game.id)).emit(GameEvent.Update, updatedGame);
+    this.emitPlayerGame(updatedGame);
     this.socket.to(ROOM_GAME_LIST).emit(GameEvent.UpdateList);
 
     return true;
@@ -74,7 +76,7 @@ class GameApiImpl implements GameApi {
 
     const updatedGame = await gameDao.update(game);
 
-    this.socket.to(ROOM_GAME(game.id)).emit(GameEvent.Update, updatedGame);
+    this.emitPlayerGame(updatedGame);
 
     return true;
   }
@@ -90,7 +92,7 @@ class GameApiImpl implements GameApi {
 
     const updatedGame = await gameDao.update(game);
 
-    this.socket.to(ROOM_GAME(game.id)).emit(GameEvent.Update, updatedGame);
+    this.emitPlayerGame(updatedGame);
 
     return true;
   }
@@ -107,7 +109,7 @@ class GameApiImpl implements GameApi {
 
     const updatedGame = await gameDao.update(game);
 
-    this.socket.to(ROOM_GAME(game.id)).emit(GameEvent.Update, updatedGame);
+    this.emitPlayerGame(updatedGame);
 
     return true;
   }
@@ -125,7 +127,7 @@ class GameApiImpl implements GameApi {
 
     const updatedGame = await gameDao.update(game);
 
-    this.socket.to(ROOM_GAME(game.id)).emit(GameEvent.Update, updatedGame);
+    this.emitPlayerGame(updatedGame);
 
     return true;
   }
@@ -144,7 +146,7 @@ class GameApiImpl implements GameApi {
 
     const updatedGame = await gameDao.update(game);
 
-    this.socket.to(ROOM_GAME(game.id)).emit(GameEvent.Update, updatedGame);
+    this.emitPlayerGame(updatedGame);
 
     return true;
   }
@@ -161,7 +163,7 @@ class GameApiImpl implements GameApi {
 
     const updatedGame = await gameDao.update(game);
 
-    this.socket.to(ROOM_GAME(game.id)).emit(GameEvent.Update, updatedGame);
+    this.emitPlayerGame(updatedGame);
 
     return true;
   }
@@ -180,7 +182,7 @@ class GameApiImpl implements GameApi {
 
     const updatedGame = await gameDao.update(game);
 
-    this.socket.to(ROOM_GAME(game.id)).emit(GameEvent.Update, updatedGame);
+    this.emitPlayerGame(updatedGame);
 
     return true;
   }
@@ -197,7 +199,7 @@ class GameApiImpl implements GameApi {
 
     const updatedGame = await gameDao.update(game);
 
-    this.socket.to(ROOM_GAME(game.id)).emit(GameEvent.Update, updatedGame);
+    this.emitPlayerGame(updatedGame);
 
     return true;
   }
@@ -214,7 +216,7 @@ class GameApiImpl implements GameApi {
 
     const updatedGame = await gameDao.update(game);
 
-    this.socket.to(ROOM_GAME(game.id)).emit(GameEvent.Update, updatedGame);
+    this.emitPlayerGame(updatedGame);
 
     return true;
   }
@@ -230,6 +232,14 @@ class GameApiImpl implements GameApi {
     this.socket.to(ROOM_GAME_LIST).emit(GameEvent.UpdateList);
 
     return true;
+  }
+
+  emitPlayerGame(game: GameDocument) {
+    const plainGame = docToPlain(game);
+    plainGame.players.forEach((player) => {
+      const playerGame = toPlayerGame(docToPlain(game), player.id);
+      this.socket.to(ROOM_GAME_PLAYER(game.id, player.id)).emit(GameEvent.Update, playerGame);
+    });
   }
 }
 

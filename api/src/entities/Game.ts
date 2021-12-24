@@ -1,7 +1,11 @@
-import {Document} from 'mongoose';
-import {Game as GameBase, GamePhase, Player} from '@gameTypes';
+import { Document } from 'mongoose';
+import { Game, GamePhase, Player } from '@gameTypes';
 
-type Game = GameBase & Document;
-export { GameBase, Game, GamePhase, Player };
+type GameDocument = Game & Document;
+export { Game, GameDocument, GamePhase, Player };
 
 export * as GameController from '@gameFunctions';
+
+export function docToPlain(gameDoc: GameDocument): Game {
+  return gameDoc.toObject();
+}

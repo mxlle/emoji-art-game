@@ -46,12 +46,12 @@
 
 <h2>Players</h2>
 <div class="players">
-  <app-player-info *ngFor="let player of game?.players" [game]="game" [player]="player"> </app-player-info>
+  <app-player-info *ngFor="let player of game?.players" [player]="player"> </app-player-info>
 </div>
 
 <app-current-player-hand
-  *ngIf="currentPlayer"
+  *ngIf="game.currentPlayer"
   [game]="game"
-  [player]="currentPlayer"
+  [player]="game.currentPlayer"
   [currentTheme]="currentTheme"
 ></app-current-player-hand>

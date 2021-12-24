@@ -1,4 +1,4 @@
-<div *ngIf="!currentPlayer" class="current-player">
+<div *ngIf="!game.currentPlayer" class="current-player">
   <h2>Join the game</h2>
   <mat-form-field class="example-full-width" appearance="fill">
     <mat-label>Name</mat-label>
@@ -9,11 +9,11 @@
 <div *ngIf="game.players.length">
   <h2>Players</h2>
   <div class="players">
-    <app-player-info *ngFor="let player of game.players" [game]="game" [player]="player"> </app-player-info>
+    <app-player-info *ngFor="let player of game.players" [player]="player"> </app-player-info>
   </div>
 </div>
 <button
-  *ngIf="currentPlayer && currentPlayer.id === game.hostId && game.players.length >= minNumPlayers"
+  *ngIf="game.currentPlayer && game.currentPlayer.id === game.hostId && game.players.length >= minNumPlayers"
   mat-flat-button
   color="primary"
   (click)="startGame()"

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, HostBinding, Input, OnInit } from '@angular/core';
-import { Game, Picture, Player } from '../../../../game-logic/game';
+import { Picture, Player } from '../../../../game-logic/game';
 
 @Component({
   selector: 'app-player-info',
@@ -8,7 +8,6 @@ import { Game, Picture, Player } from '../../../../game-logic/game';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PlayerInfoComponent implements OnInit {
-  @Input() game!: Game;
   @Input() player!: Player;
 
   @HostBinding('style.--border-color') get color(): string {

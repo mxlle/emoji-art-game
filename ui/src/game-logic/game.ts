@@ -22,6 +22,24 @@ export interface Game {
   endTime?: Date;
 }
 
+export interface PlayerGame {
+  id: string;
+  name: string;
+  players: Player[];
+  hostId: string;
+
+  currentPlayer?: Player;
+
+  currentRound: number;
+  phase: GamePhase;
+
+  rounds: GameRound[];
+
+  teamPoints: Picture[];
+  fakePoints: Picture[];
+  neutralCards: Picture[];
+}
+
 export enum GamePhase {
   Init,
   Demand,
@@ -68,7 +86,7 @@ export interface BuyerSelection {
 
 export interface GameApi {
   loadGames: () => Promise<Game[]>;
-  loadGame: (gameId: string) => Promise<Game | null>;
+  loadGame: (gameId: string) => Promise<PlayerGame | null>;
   addGame: (game: Game) => Promise<string>;
   addPlayer: (gameId: string, player: Player) => Promise<boolean>;
   updatePlayer: (gameId: string, player: Player) => Promise<boolean>;
@@ -91,8 +109,10 @@ export interface NotificationEventOptions {
 }
 
 export enum GameEvent {
-  Subscribe = 'subscribe',
-  Unsubscribe = 'unsubscribe',
+  GameSubscribe = 'subscribe',
+  GameUnsubscribe = 'unsubscribe',
+  ListSubscribe = 'list_subscribe',
+  ListUnsubscribe = 'list_unsubscribe',
   UpdateList = 'updateGameList',
   Update = 'updateGame',
   ApiCall = 'apiCall.games',
@@ -119,3 +139,4 @@ export enum SocketEvent {
 
 export const ROOM_GAME_LIST = 'gameList';
 export const ROOM_GAME = (id: string) => `game.${id}`;
+export const ROOM_GAME_PLAYER = (id: string, playerId: string) => `game.${id}.${playerId}`;

@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { socket } from '../../data/socket';
-import { Game, GameEvent, GamePhase, Player, ROOM_GAME, SocketEvent } from '../../game-logic/game';
+import { Game, GameEvent, GamePhase, PlayerGame, SocketEvent } from '../../game-logic/game';
 import apiFunctions from '../../data/apiFunctions';
-import { getCurrentUserInGame } from '../../data/functions';
+import { getCurrentUserId } from '../../data/functions';
 
 @Component({
   selector: 'app-game-view',
@@ -12,8 +12,7 @@ import { getCurrentUserInGame } from '../../data/functions';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GameViewComponent implements OnInit, OnDestroy {
-  game: Game | null = null;
-  currentPlayer: Player | undefined;
+  game: PlayerGame | null = null;
   readonly _gameId: string;
 
   constructor(private _activatedRoute: ActivatedRoute, private _cdr: ChangeDetectorRef, private _ngZone: NgZone) {
@@ -32,28 +31,24 @@ export class GameViewComponent implements OnInit, OnDestroy {
 
   private async _setupConnection() {
     this._unsubscribeFromGame();
-    socket.emit(GameEvent.Subscribe, ROOM_GAME(this._gameId), (error: any) => {
+    socket.emit(GameEvent.GameSubscribe, this._gameId, getCurrentUserId(), (error: any) => {
       if (error !== null) {
         setTimeout(() => this._ngZone.run(() => this._setupConnection()), 1000);
       }
     });
     socket.on(GameEvent.Update, (game: Game) => this._ngZone.run(() => this.setGameAfterUpdate(game)));
     this.game = await apiFunctions.loadGame(this._gameId);
-    if (this.game) {
-      this.currentPlayer = getCurrentUserInGame(this.game);
-      this._cdr.markForCheck();
-    }
+    this._cdr.markForCheck();
   }
 
   private _unsubscribeFromGame() {
-    socket.emit(GameEvent.Unsubscribe, ROOM_GAME(this._gameId));
+    socket.emit(GameEvent.GameUnsubscribe, this._gameId, getCurrentUserId());
     socket.off(GameEvent.Update);
   }
 
   setGameAfterUpdate(game: Game) {
     if (this._gameId !== game.id) return;
     this.game = game;
-    this.currentPlayer = getCurrentUserInGame(game);
     this._cdr.markForCheck();
   }
 

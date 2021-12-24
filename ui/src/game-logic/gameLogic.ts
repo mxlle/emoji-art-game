@@ -1,4 +1,4 @@
-import { BuyerSelection, DELETE_CLEARANCE_TIME, Game, GamePhase, GameRound, Picture, Player } from './game';
+import { BuyerSelection, DELETE_CLEARANCE_TIME, Game, GamePhase, GameRound, Picture, Player, PlayerGame } from './game';
 import { shuffleArray } from '../game-tools/random-util';
 import { emojis, fakesPerRound, gameEndCondition, getNumOfCardsPerPlayer, getRoleOrder, themesPerRound } from './gameConsts';
 import { dealCards, drawCards } from '../game-tools/card-game-util';
@@ -185,14 +185,14 @@ function isPictureSelectedFromBuyer(pic: Picture): boolean {
   return !!pic.buyerTheme;
 }
 
-export function getOfferedPictures(game: Game): Picture[] {
+export function getOfferedPictures(game: Game | PlayerGame): Picture[] {
   return game.players.reduce(
     (currentArr: Picture[], player: Player) => currentArr.concat(player.pictures.filter(isPictureSelectedFromPainter)),
     []
   );
 }
 
-export function getBuyerSelection(game: Game): Picture[] {
+export function getBuyerSelection(game: Game | PlayerGame): Picture[] {
   return game && GamePhase.Choose === game.phase
     ? game.rounds[game.currentRound].pictures.filter(
         (pic) => !!pic.buyerTheme || (pic.buyerSelection && !!Object.keys(pic.buyerSelection).length)
@@ -227,4 +227,23 @@ export function getClearedForDeletion(game: Game, nowTime: number = new Date().g
 
 export function getPlayerInGame(game: Game, playerId?: string): Player | undefined {
   return game.players.find((player: Player) => player.id === playerId);
+}
+
+export function toPlayerGame(game: Game, playerId: string): PlayerGame {
+  const { id, name, hostId, players, phase, currentRound, rounds, teamPoints, fakePoints, neutralCards } = game;
+  const currentPlayer = game.players.find((player: Player) => player.id === playerId);
+
+  return {
+    id,
+    name,
+    hostId,
+    players,
+    currentPlayer,
+    phase,
+    currentRound,
+    rounds,
+    teamPoints,
+    fakePoints,
+    neutralCards,
+  };
 }

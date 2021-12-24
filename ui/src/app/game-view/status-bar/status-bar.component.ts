@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { Game, GamePhase, Role } from '../../../game-logic/game';
+import { GamePhase, PlayerGame, Role } from '../../../game-logic/game';
 import { masterFaker } from '../../../game-logic/gameConsts';
 
 @Component({
@@ -9,7 +9,7 @@ import { masterFaker } from '../../../game-logic/gameConsts';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StatusBarComponent implements OnInit {
-  @Input() game!: Game;
+  @Input() game!: PlayerGame;
 
   readonly trophy = '🏆';
   readonly bin = '🗑️';

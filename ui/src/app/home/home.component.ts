@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { mockGameId } from '../mock-mode/mock-service';
 import { socket } from '../../data/socket';
-import { Game, GameEvent, GamePhase, ROOM_GAME_LIST, SocketEvent } from '../../game-logic/game';
+import { Game, GameEvent, GamePhase, SocketEvent } from '../../game-logic/game';
 import apiFunctions from '../../data/apiFunctions';
 import { createGame } from '../../game-logic/gameLogic';
 import { Router } from '@angular/router';
@@ -30,7 +30,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    socket.emit(GameEvent.Unsubscribe, ROOM_GAME_LIST);
+    socket.emit(GameEvent.ListUnsubscribe);
     socket.off(GameEvent.UpdateList);
     socket.off(SocketEvent.Reconnect);
   }
@@ -59,7 +59,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   private _setupConnection() {
-    socket.emit(GameEvent.Subscribe, ROOM_GAME_LIST);
+    socket.emit(GameEvent.ListSubscribe);
     this.loadGames();
   }
 }
