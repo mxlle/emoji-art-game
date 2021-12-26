@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1640543279728,
+  "timestamp": 1640551996415,
   "index": "/index.html",
   "assetGroups": [
     {
@@ -16,7 +16,7 @@
         "/manifest.webmanifest",
         "/polyfills.54b2b18ebb2375ae.js",
         "/runtime.ca9b507aa34bf5a5.js",
-        "/styles.4eb55b7443a48fd7.css"
+        "/styles.7c8d9fd7a5d3e987.css"
       ],
       "patterns": []
     },
@@ -28,8 +28,8 @@
         "ignoreVary": true
       },
       "urls": [
-        "/NotoColorEmoji.301e2cc8a00e08e7.ttf",
-        "/assets/NotoColorEmoji.ttf",
+        "/Twemoji.580f65dc6ef8f5c3.ttf",
+        "/assets/Twemoji.ttf",
         "/assets/favicon/android-chrome-96x96.png",
         "/assets/favicon/apple-touch-icon.png",
         "/assets/favicon/favicon-16x16.png",
@@ -43,8 +43,8 @@
   ],
   "dataGroups": [],
   "hashTable": {
-    "/NotoColorEmoji.301e2cc8a00e08e7.ttf": "a1fd9cd7fae23f65acf4ac83d2178a0eafb95e10",
-    "/assets/NotoColorEmoji.ttf": "a1fd9cd7fae23f65acf4ac83d2178a0eafb95e10",
+    "/Twemoji.580f65dc6ef8f5c3.ttf": "76e22017296b673eb8a12ad9553e517aaaa8ce23",
+    "/assets/Twemoji.ttf": "76e22017296b673eb8a12ad9553e517aaaa8ce23",
     "/assets/favicon/android-chrome-96x96.png": "e2c1c703a3f7523f2e4be919e162c0fca67cd843",
     "/assets/favicon/apple-touch-icon.png": "c48325adcd4c4ceff5ff6db50340c2a6968316ab",
     "/assets/favicon/favicon-16x16.png": "293cd3117bd22bec6e12ae80974330b38327d4e8",
@@ -52,12 +52,12 @@
     "/assets/favicon/favicon.ico": "06e7e16fb20bec2c6cbe3bf024841c9a40b1c86a",
     "/assets/favicon/mstile-150x150.png": "658aee424aed98fa3495bfc4273a416e6e424a65",
     "/assets/favicon/safari-pinned-tab.svg": "6b4d6497fb010ec971a42faf97f9bf96d5ee3b52",
-    "/index.html": "fa61bf0168c623db9651fa9d5bfa391090f747c8",
+    "/index.html": "8f1c7e19b6f121f4cb87c9f19a56119b5ac06620",
     "/main.28ab54f8839153aa.js": "5dfbd81c376e04d5e89d58b0725434326f9bfae6",
     "/manifest.webmanifest": "404b431277e25c8fa379c606c8aeec35b2ee85a2",
     "/polyfills.54b2b18ebb2375ae.js": "e88d8a1ffe9de3fee899e06f83543b959a56bf45",
     "/runtime.ca9b507aa34bf5a5.js": "8ec135e5c3b8d3cd82627b62f5b458d45677e1a1",
-    "/styles.4eb55b7443a48fd7.css": "d9b70ae2bc26699344d442462585137368703b44"
+    "/styles.7c8d9fd7a5d3e987.css": "875012717eba36e225faa43087317c3afb48b764"
   },
   "navigationUrls": [
     {
