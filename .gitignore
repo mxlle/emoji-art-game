@@ -11,6 +11,7 @@
 # build
 /.angular
 /ui/.angular
+/ui/dist
 
 # logs
 /ui/*.log
