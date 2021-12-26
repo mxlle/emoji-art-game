@@ -14,21 +14,3 @@
     {{ picture.card }}
   </app-picture>
 </div>
-<button
-  *ngIf="showOfferConfirm"
-  mat-flat-button
-  color="primary"
-  [disabled]="game.offerCount !== game.currentDemand"
-  (click)="confirmOffer()"
->
-  Confirm offer
-</button>
-<button
-  *ngIf="showSelectionConfirm"
-  mat-flat-button
-  color="primary"
-  [disabled]="game.selectionCount !== game.currentDemand"
-  (click)="confirmSelection()"
->
-  Confirm selection
-</button>

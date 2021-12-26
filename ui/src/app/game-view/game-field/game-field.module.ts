@@ -12,6 +12,7 @@ import { MockModeModule } from '../../mock-mode/mock-mode.module';
 import { CurrentThemesModule } from './current-themes/current-themes.module';
 import { PlayerInfoModule } from './player-info/player-info.module';
 import { OfferPreviewModule } from './offer-preview/offer-preview.module';
+import { QuickAccessBarModule } from './quick-access-bar/quick-access-bar.module';
 
 @NgModule({
   declarations: [GameFieldComponent],
@@ -29,6 +30,7 @@ import { OfferPreviewModule } from './offer-preview/offer-preview.module';
     CurrentThemesModule,
     PlayerInfoModule,
     OfferPreviewModule,
+    QuickAccessBarModule,
   ],
 })
 export class GameFieldModule {}

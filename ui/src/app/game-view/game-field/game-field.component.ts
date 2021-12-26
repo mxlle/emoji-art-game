@@ -18,16 +18,15 @@ export class GameFieldComponent implements OnInit, OnDestroy {
 
   demand: number | undefined;
 
+  get showQuickAccess(): boolean {
+    return (
+      (GamePhase.Offer === this.game.phase && Role.PAINTER === this.game.currentPlayer?.role) ||
+      (GamePhase.Choose === this.game.phase && Role.BUYER === this.game.currentPlayer?.role)
+    );
+  }
+
   get showDemandPicker(): boolean {
-    return GamePhase.Demand === this.game.phase && this.game.currentPlayer?.role === Role.BUYER;
-  }
-
-  get showOfferConfirm(): boolean {
-    return GamePhase.Offer === this.game.phase && this.game.currentPlayer?.role === Role.PAINTER;
-  }
-
-  get showSelectionConfirm(): boolean {
-    return GamePhase.Choose === this.game.phase && this.game.currentPlayer?.role === Role.BUYER;
+    return GamePhase.Demand === this.game.phase && Role.BUYER === this.game.currentPlayer?.role;
   }
 
   get showEndRoundConfirm(): boolean {
@@ -51,14 +50,6 @@ export class GameFieldComponent implements OnInit, OnDestroy {
         this._cdr.markForCheck();
       });
     }
-  }
-
-  confirmOffer() {
-    apiFunctions.offerPictures(this.game.id);
-  }
-
-  confirmSelection() {
-    apiFunctions.choosePictures(this.game.id);
   }
 
   endRound() {

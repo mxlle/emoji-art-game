@@ -1,3 +1,5 @@
+<app-quick-access-bar *ngIf="showQuickAccess" [game]="game" [(currentTheme)]="currentTheme"></app-quick-access-bar>
+
 <app-current-themes *ngIf="game.currentThemes" [themes]="game.currentThemes" [(currentTheme)]="currentTheme"></app-current-themes>
 
 <div *ngIf="showDemandPicker" class="demand">
@@ -17,7 +19,8 @@
 
 <h2>Players</h2>
 <div class="players">
-  <app-player-info *ngFor="let player of game?.players" [player]="player"> </app-player-info>
+  <app-player-info *ngFor="let player of game?.players" [player]="player" [isCurrentPlayer]="player.id === game.currentPlayer?.id">
+  </app-player-info>
 </div>
 
 <app-current-player-hand

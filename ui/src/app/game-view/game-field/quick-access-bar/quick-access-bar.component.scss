@@ -1,0 +1,21 @@
+:host {
+  padding: 16px;
+  display: grid;
+  grid-template-columns: 1fr auto auto;
+  gap: 16px;
+  align-items: center;
+}
+
+.themes {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  gap: 8px;
+  --card-padding: 4px 12px;
+  --card-font-size: 24px;
+}
+
+button {
+  padding: 0 8px;
+  min-width: auto;
+  background: green;
+}

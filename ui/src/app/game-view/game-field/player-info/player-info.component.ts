@@ -9,7 +9,7 @@ import { Picture, Player } from '../../../../game-logic/game';
 })
 export class PlayerInfoComponent implements OnInit {
   @Input() player!: Player;
-
+  @HostBinding('class.isCurrent') @Input() isCurrentPlayer: boolean = false;
   @HostBinding('style.--border-color') get color(): string {
     return this.player.color ?? 'transparent';
   }

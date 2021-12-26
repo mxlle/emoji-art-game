@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { GamePhase, Picture, PlayerGame, Role } from '../../../../game-logic/game';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { Picture, PlayerGame } from '../../../../game-logic/game';
 import { getPictureCssClass } from '../../../ui-helpers';
 import apiFunctions from '../../../../data/apiFunctions';
 
@@ -9,33 +9,13 @@ import apiFunctions from '../../../../data/apiFunctions';
   styleUrls: ['./current-offer.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CurrentOfferComponent implements OnInit {
+export class CurrentOfferComponent {
   @Input() game!: PlayerGame;
   @Input() pictures: Picture[] = [];
   @Input() currentTheme!: string;
 
-  get showOfferConfirm(): boolean {
-    return GamePhase.Offer === this.game.phase && this.game.currentPlayer?.role === Role.PAINTER;
-  }
-
-  get showSelectionConfirm(): boolean {
-    return GamePhase.Choose === this.game.phase && this.game.currentPlayer?.role === Role.BUYER;
-  }
-
-  constructor() {}
-
-  ngOnInit(): void {}
-
   getPictureCssClass(picture: Picture): string {
     return getPictureCssClass(this.game, picture);
-  }
-
-  confirmOffer() {
-    apiFunctions.offerPictures(this.game.id);
-  }
-
-  confirmSelection() {
-    apiFunctions.choosePictures(this.game.id);
   }
 
   toggleBuyerSelection(picture: Picture) {
