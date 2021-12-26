@@ -45,7 +45,6 @@ export function startGame(game: Game) {
   game.deck = shuffleArray(emojis);
   const dealtCards = dealCards(game.deck, game.players.length, getNumOfCardsPerPlayer(game.players.length));
   const roleOrder = getRoleOrder(game.players.length);
-  game.players = [...shuffleArray(game.players)];
   game.players.forEach((player, index) => {
     player.pictures = dealtCards[index].map((card) => ({ card }));
     player.role = roleOrder[index];
