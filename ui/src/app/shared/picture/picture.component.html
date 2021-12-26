@@ -1,5 +1,5 @@
-<app-card [selected]="selected" [useEmojiFont]="true">
-  {{ picture?.card }}
+<app-card [selected]="selected">
+  <span class="emoji">{{ picture?.card }}</span>
 
   <div *ngIf="picture?.buyerTheme" class="theme buyer">
     {{ picture?.buyerTheme }}

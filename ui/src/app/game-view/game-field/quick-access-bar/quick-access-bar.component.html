@@ -1,11 +1,6 @@
 <div class="themes">
-  <app-card
-    *ngFor="let theme of game.currentThemes"
-    [selected]="currentTheme === theme"
-    [useEmojiFont]="true"
-    (click)="currentThemeChange.emit(theme)"
-  >
-    {{ theme }}
+  <app-card *ngFor="let theme of game.currentThemes" [selected]="currentTheme === theme" (click)="currentThemeChange.emit(theme)">
+    <span class="emoji">{{ theme }}</span>
   </app-card>
 </div>
 <app-counter [game]="game"></app-counter>

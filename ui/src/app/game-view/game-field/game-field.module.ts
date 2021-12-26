@@ -13,6 +13,7 @@ import { CurrentThemesModule } from './current-themes/current-themes.module';
 import { PlayerInfoModule } from './player-info/player-info.module';
 import { OfferPreviewModule } from './offer-preview/offer-preview.module';
 import { QuickAccessBarModule } from './quick-access-bar/quick-access-bar.module';
+import { PhaseInfoModule } from './phase-info/phase-info.module';
 
 @NgModule({
   declarations: [GameFieldComponent],
@@ -31,6 +32,7 @@ import { QuickAccessBarModule } from './quick-access-bar/quick-access-bar.module
     PlayerInfoModule,
     OfferPreviewModule,
     QuickAccessBarModule,
+    PhaseInfoModule,
   ],
 })
 export class GameFieldModule {}

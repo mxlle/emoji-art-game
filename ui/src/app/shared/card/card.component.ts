@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, HostBinding, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostBinding, Input } from '@angular/core';
 
 @Component({
   selector: 'app-card',
@@ -6,11 +6,6 @@ import { ChangeDetectionStrategy, Component, HostBinding, Input, OnInit } from '
   styleUrls: ['./card.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CardComponent implements OnInit {
+export class CardComponent {
   @Input() @HostBinding('class.selected') selected?: boolean;
-  @Input() @HostBinding('class.emoji') useEmojiFont?: boolean;
-
-  constructor() {}
-
-  ngOnInit(): void {}
 }

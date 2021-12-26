@@ -14,7 +14,7 @@ import {
   travelAndPlaces,
   weatherAndEarth,
 } from '../game-tools/emoji-util';
-import { Role } from './game';
+import { GamePhase, Role } from './game';
 
 export const emojis: string[] = splitEmojis(
   bodyParts +
@@ -37,6 +37,9 @@ export const painter = Role.PAINTER;
 export const buyer = Role.BUYER;
 
 export const gameEmojis = masterFaker + painter + buyer;
+
+export const pointsEmoji = '🏆';
+export const discardedEmoji = '🗑️';
 
 export const minNumPlayers = 2;
 export const themesPerRound = 2;
@@ -62,5 +65,24 @@ export const getNumOfCardsPerPlayer = (numOfPlayers: number): number => {
     return 9;
   } else {
     return 6;
+  }
+};
+
+export const getPhaseEmojis = (phase: GamePhase) => {
+  switch (phase) {
+    case GamePhase.Init:
+      return `👥`;
+    case GamePhase.Demand:
+      return `${Role.BUYER}🔢`;
+    case GamePhase.Offer:
+      return `${Role.PAINTER}🖼️`;
+    case GamePhase.Choose:
+      return `${Role.BUYER}💰`;
+    case GamePhase.Evaluate:
+      return `📊`;
+    case GamePhase.End:
+      return `${pointsEmoji}⌛`;
+    default:
+      return '?';
   }
 };

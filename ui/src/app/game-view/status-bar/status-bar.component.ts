@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { GamePhase, PlayerGame, Role } from '../../../game-logic/game';
-import { masterFaker } from '../../../game-logic/gameConsts';
+import { PlayerGame } from '../../../game-logic/game';
+import { discardedEmoji, getPhaseEmojis, masterFaker, pointsEmoji } from '../../../game-logic/gameConsts';
 
 @Component({
   selector: 'app-status-bar',
@@ -11,33 +11,15 @@ import { masterFaker } from '../../../game-logic/gameConsts';
 export class StatusBarComponent implements OnInit {
   @Input() game!: PlayerGame;
 
-  readonly trophy = '🏆';
-  readonly bin = '🗑️';
+  readonly pointsEmoji = pointsEmoji;
+  readonly discardedEmoji = discardedEmoji;
+  readonly masterFaker = masterFaker;
 
   get currentPhase(): string {
-    switch (this.game.phase) {
-      case GamePhase.Init:
-        return `👥`;
-      case GamePhase.Demand:
-        return `${Role.BUYER}🔢`;
-      case GamePhase.Offer:
-        return `${Role.PAINTER}🖼️`;
-      case GamePhase.Choose:
-        return `${Role.BUYER}💰`;
-      case GamePhase.Evaluate:
-        return `📊`;
-      case GamePhase.End:
-        return `${this.trophy}⌛`;
-      default:
-        return '?';
-    }
+    return getPhaseEmojis(this.game.phase);
   }
 
   constructor() {}
 
   ngOnInit(): void {}
-
-  get masterFaker(): typeof masterFaker {
-    return masterFaker;
-  }
 }

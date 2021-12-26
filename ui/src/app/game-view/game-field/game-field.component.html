@@ -1,5 +1,7 @@
 <app-quick-access-bar *ngIf="showQuickAccess" [game]="game" [(currentTheme)]="currentTheme"></app-quick-access-bar>
 
+<app-phase-info [game]="game"></app-phase-info>
+
 <app-current-themes *ngIf="game.currentThemes" [themes]="game.currentThemes" [(currentTheme)]="currentTheme"></app-current-themes>
 
 <div *ngIf="showDemandPicker" class="demand">
@@ -16,12 +18,6 @@
 ></app-current-offer>
 
 <button *ngIf="showEndRoundConfirm" mat-flat-button color="primary" (click)="endRound()">Next round</button>
-
-<h2>Players</h2>
-<div class="players">
-  <app-player-info *ngFor="let player of game?.players" [player]="player" [isCurrentPlayer]="player.id === game.currentPlayer?.id">
-  </app-player-info>
-</div>
 
 <app-current-player-hand
   *ngIf="game.currentPlayer"
