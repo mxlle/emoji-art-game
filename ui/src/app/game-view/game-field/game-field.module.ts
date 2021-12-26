@@ -11,6 +11,7 @@ import { CurrentOfferModule } from './current-offer/current-offer.module';
 import { MockModeModule } from '../../mock-mode/mock-mode.module';
 import { CurrentThemesModule } from './current-themes/current-themes.module';
 import { PlayerInfoModule } from './player-info/player-info.module';
+import { OfferPreviewModule } from './offer-preview/offer-preview.module';
 
 @NgModule({
   declarations: [GameFieldComponent],
@@ -27,6 +28,7 @@ import { PlayerInfoModule } from './player-info/player-info.module';
     MockModeModule,
     CurrentThemesModule,
     PlayerInfoModule,
+    OfferPreviewModule,
   ],
 })
 export class GameFieldModule {}

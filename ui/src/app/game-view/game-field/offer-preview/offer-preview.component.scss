@@ -1,0 +1,19 @@
+@use '../../../mixins';
+
+:host {
+  @include mixins.defaultGrid();
+
+  app-picture {
+    --card-cursor: default;
+
+    &.too-much {
+      --card-border-color: red;
+    }
+
+    &.missing {
+      --card-border-color: #555;
+      --card-border-style: dashed;
+      --card-background-color: transparent;
+    }
+  }
+}

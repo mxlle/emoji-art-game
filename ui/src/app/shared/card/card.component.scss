@@ -1,5 +1,6 @@
 :host {
   display: flex;
+  height: 100%;
   &.selected {
     mat-card {
       background-color: var(--card-background-color, #555);
@@ -13,6 +14,7 @@ mat-card {
   font-size: var(--card-font-size, 60px);
   display: grid;
   place-items: center;
-  cursor: pointer;
-  border: 2px solid var(--card-border-color, transparent);
+  cursor: var(--card-cursor, pointer);
+  border: 2px var(--card-border-style, solid) var(--card-border-color, transparent);
+  background-color: var(--card-background-color, #424242);
 }

@@ -2,6 +2,14 @@
 
 :host {
   display: block;
+
+  button {
+    margin-top: 16px; // todo ?
+  }
+}
+
+.bad {
+  color: red;
 }
 
 .offer {

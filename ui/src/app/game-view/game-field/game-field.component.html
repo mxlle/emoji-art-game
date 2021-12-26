@@ -1,37 +1,17 @@
-<div class="themes-and-demand">
-  <app-current-themes *ngIf="game.currentThemes" [themes]="game.currentThemes" [(currentTheme)]="currentTheme"></app-current-themes>
+<app-current-themes *ngIf="game.currentThemes" [themes]="game.currentThemes" [(currentTheme)]="currentTheme"></app-current-themes>
 
-  <div class="demand">
-    <h2>Current Demand</h2>
-    <ng-container *ngIf="showDemandPicker">
-      <app-demand-picker [(demand)]="demand"></app-demand-picker>
-      <button mat-flat-button color="primary" [disabled]="!demand" (click)="setDemand()">Confirm</button>
-    </ng-container>
-    <app-card *ngIf="!showDemandPicker">
-      {{ GamePhase.Offer == game?.phase ? game.offerCount : game.selectionCount }} / {{ game.currentDemand ?? "?" }}
-    </app-card>
-    <button
-      *ngIf="showOfferConfirm"
-      mat-flat-button
-      color="primary"
-      [disabled]="game.offerCount !== game.currentDemand"
-      (click)="confirmOffer()"
-    >
-      Confirm offer
-    </button>
-    <button
-      *ngIf="showSelectionConfirm"
-      mat-flat-button
-      color="primary"
-      [disabled]="game.selectionCount !== game.currentDemand"
-      (click)="confirmSelection()"
-    >
-      Confirm selection
-    </button>
-  </div>
+<div *ngIf="showDemandPicker" class="demand">
+  <h2>Set demand</h2>
+  <app-demand-picker [(demand)]="demand"></app-demand-picker>
+  <button mat-flat-button color="primary" [disabled]="!demand" (click)="setDemand()">Confirm</button>
 </div>
 
-<app-current-offer *ngIf="game.currentOffer" [game]="game" [pictures]="game.currentOffer" [currentTheme]="currentTheme"></app-current-offer>
+<app-current-offer
+  *ngIf="GamePhase.Demand !== game.phase"
+  [game]="game"
+  [pictures]="game.currentOffer"
+  [currentTheme]="currentTheme"
+></app-current-offer>
 
 <button *ngIf="showEndRoundConfirm" mat-flat-button color="primary" (click)="endRound()">Next round</button>
 

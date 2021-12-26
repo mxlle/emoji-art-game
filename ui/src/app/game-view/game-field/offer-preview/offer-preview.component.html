@@ -1,0 +1,8 @@
+<app-picture
+  *ngFor="let picture of offerPreview; let index = index"
+  [picture]="picture"
+  [class.too-much]="index >= demand"
+  [class.missing]="!picture.card"
+>
+  {{ picture.card }}
+</app-picture>

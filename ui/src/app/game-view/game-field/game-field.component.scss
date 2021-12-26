@@ -8,15 +8,12 @@
   overflow-x: hidden;
 }
 
-.themes-and-demand {
-  @include mixins.defaultGrid();
-
-  .demand {
-    display: grid;
-    grid-template-rows: auto 1fr auto;
-    button {
-      margin-top: 16px; // todo ?
-    }
+.demand {
+  display: grid;
+  grid-template-rows: repeat(3, auto);
+  --card-padding: 20px;
+  button {
+    margin-top: 16px; // todo ?
   }
 }
 

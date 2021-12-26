@@ -1,16 +1,23 @@
 <app-card [selected]="selected">
   {{ picture?.card }}
+
+  <!-- if no text, use non-breaking space to have correct height -->
+  <ng-container *ngIf="!picture?.card">&nbsp;</ng-container>
+
   <div *ngIf="picture?.buyerTheme" class="theme buyer">
     {{ picture?.buyerTheme }}
   </div>
+
   <app-buyer-selection-marker
     *ngIf="picture?.buyerSelection && !picture?.buyerTheme"
     class="theme buyer"
     [selections]="picture.buyerSelection ?? []"
   ></app-buyer-selection-marker>
+
   <div *ngIf="picture?.painterTheme" class="theme painter">
     {{ picture?.painterTheme }}
   </div>
+
   <div *ngIf="picture?.isFake" class="theme painter fake">
     {{ masterFaker }}
   </div>
