@@ -1,12 +1,8 @@
 <h2>
   <span>Art exhibition </span>
-  <span
-    >(<span [class.bad]="count > demand">{{ count }}</span
-    >/<span>{{ demand || "?" }}</span
-    >)</span
-  >
+  <span>(<app-counter [game]="game"></app-counter>)</span>
 </h2>
-<app-offer-preview *ngIf="!game.currentOffer.length" [demand]="demand" [offerCount]="game.offerCount"></app-offer-preview>
+<app-offer-preview *ngIf="!game.currentOffer.length" [demand]="game.currentDemand ?? 0" [offerCount]="game.offerCount"></app-offer-preview>
 <div *ngIf="game.currentOffer" class="offer">
   <app-picture
     *ngFor="let picture of pictures"
@@ -18,9 +14,21 @@
     {{ picture.card }}
   </app-picture>
 </div>
-<button *ngIf="showOfferConfirm" mat-flat-button color="primary" [disabled]="count !== demand" (click)="confirmOffer()">
+<button
+  *ngIf="showOfferConfirm"
+  mat-flat-button
+  color="primary"
+  [disabled]="game.offerCount !== game.currentDemand"
+  (click)="confirmOffer()"
+>
   Confirm offer
 </button>
-<button *ngIf="showSelectionConfirm" mat-flat-button color="primary" [disabled]="count !== demand" (click)="confirmSelection()">
+<button
+  *ngIf="showSelectionConfirm"
+  mat-flat-button
+  color="primary"
+  [disabled]="game.selectionCount !== game.currentDemand"
+  (click)="confirmSelection()"
+>
   Confirm selection
 </button>

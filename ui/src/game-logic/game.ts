@@ -37,6 +37,7 @@ export interface PlayerGame {
   currentDemand?: number;
   offerCount: number;
   selectionCount: number;
+  correctCount: number;
 
   phase: GamePhase;
 

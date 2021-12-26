@@ -269,6 +269,7 @@ export function toPlayerGame(game: Game, playerId: string): PlayerGame {
     currentDemand: round?.demand ?? 0,
     offerCount: getOfferedPictures(game).length,
     selectionCount: getBuyerSelection(game).length,
+    correctCount: round?.pictures.filter((pic) => game.teamPoints.findIndex((p) => pic.card === p.card) > -1).length,
     phase,
     teamPoints,
     fakePoints,

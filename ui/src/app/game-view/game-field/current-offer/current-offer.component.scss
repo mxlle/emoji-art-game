@@ -8,10 +8,6 @@
   }
 }
 
-.bad {
-  color: red;
-}
-
 .offer {
   @include mixins.defaultGrid();
 }

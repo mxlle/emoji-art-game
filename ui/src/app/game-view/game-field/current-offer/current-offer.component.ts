@@ -14,14 +14,6 @@ export class CurrentOfferComponent implements OnInit {
   @Input() pictures: Picture[] = [];
   @Input() currentTheme!: string;
 
-  get count(): number {
-    return GamePhase.Offer == this.game?.phase ? this.game.offerCount : this.game.selectionCount;
-  }
-
-  get demand(): number {
-    return this.game.currentDemand ?? 0;
-  }
-
   get showOfferConfirm(): boolean {
     return GamePhase.Offer === this.game.phase && this.game.currentPlayer?.role === Role.PAINTER;
   }
@@ -50,9 +42,5 @@ export class CurrentOfferComponent implements OnInit {
     if (this.currentTheme) {
       apiFunctions.toggleBuyerPreSelections(this.game.id, picture.card, this.currentTheme);
     }
-  }
-
-  get GamePhase(): typeof GamePhase {
-    return GamePhase;
   }
 }
