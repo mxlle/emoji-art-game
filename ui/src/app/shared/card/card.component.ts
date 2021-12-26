@@ -8,6 +8,7 @@ import { ChangeDetectionStrategy, Component, HostBinding, Input, OnInit } from '
 })
 export class CardComponent implements OnInit {
   @Input() @HostBinding('class.selected') selected?: boolean;
+  @Input() @HostBinding('class.emoji') useEmojiFont?: boolean;
 
   constructor() {}
 

@@ -1,4 +1,6 @@
 <mat-card>
-  <span>{{ player.role }}&nbsp;&nbsp;{{ player.name }}</span>
+  <span
+    ><span *ngIf="player.role" class="emoji">{{ player.role }}</span> {{ player.name }}</span
+  >
   <span *ngIf="player.pictures?.length">{{ selectedPictures }} / {{ player.pictures?.length }}</span>
 </mat-card>

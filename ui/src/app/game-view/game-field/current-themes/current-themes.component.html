@@ -1,6 +1,6 @@
 <h2>Exhibition themes</h2>
 <div class="themes">
-  <app-card *ngFor="let theme of themes" [selected]="currentTheme === theme" (click)="currentThemeChange.emit(theme)">
+  <app-card *ngFor="let theme of themes" [selected]="currentTheme === theme" [useEmojiFont]="true" (click)="currentThemeChange.emit(theme)">
     {{ theme }}
   </app-card>
 </div>

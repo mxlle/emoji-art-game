@@ -19,15 +19,15 @@ export class StatusBarComponent implements OnInit {
       case GamePhase.Init:
         return `👥`;
       case GamePhase.Demand:
-        return `${Role.BUYER} 🔢`;
+        return `${Role.BUYER}🔢`;
       case GamePhase.Offer:
-        return `${Role.PAINTER} 🖼️`;
+        return `${Role.PAINTER}🖼️`;
       case GamePhase.Choose:
-        return `${Role.BUYER} 💰`;
+        return `${Role.BUYER}💰`;
       case GamePhase.Evaluate:
-        return `${Role.BUYER}${Role.PAINTER} ${this.trophy}${masterFaker}`;
+        return `📊`;
       case GamePhase.End:
-        return `${Role.BUYER}${Role.PAINTER} ${this.trophy}${masterFaker}`;
+        return `${this.trophy}⌛`;
       default:
         return '?';
     }

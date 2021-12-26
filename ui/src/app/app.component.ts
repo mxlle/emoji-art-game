@@ -1,5 +1,5 @@
-import {ChangeDetectionStrategy, Component} from '@angular/core';
-import {buyer, masterFaker, painter} from '../game-logic/gameConsts';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { buyer, masterFaker, painter } from '../game-logic/gameConsts';
 
 @Component({
   selector: 'app-root',
@@ -8,5 +8,6 @@ import {buyer, masterFaker, painter} from '../game-logic/gameConsts';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class AppComponent {
-  title = `Emoji Art Game ${masterFaker} ${painter} ${buyer}`;
+  title = `Emoji Art Game`;
+  titleEmojis = `${masterFaker}${painter}${buyer}`;
 }

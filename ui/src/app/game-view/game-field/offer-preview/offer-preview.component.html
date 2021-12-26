@@ -1,8 +1,6 @@
-<app-picture
-  *ngFor="let picture of offerPreview; let index = index"
-  [picture]="picture"
-  [class.too-much]="index >= demand"
-  [class.missing]="!picture.card"
->
+<app-card *ngFor="let picture of offerPreview; let index = index" [class.too-much]="index >= demand" [class.missing]="!picture.card">
   {{ picture.card }}
-</app-picture>
+
+  <!-- if no text, use non-breaking space to have correct height -->
+  <ng-container *ngIf="!picture?.card">&nbsp;</ng-container>
+</app-card>

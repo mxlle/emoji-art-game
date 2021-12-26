@@ -1,8 +1,5 @@
-<app-card [selected]="selected">
+<app-card [selected]="selected" [useEmojiFont]="true">
   {{ picture?.card }}
-
-  <!-- if no text, use non-breaking space to have correct height -->
-  <ng-container *ngIf="!picture?.card">&nbsp;</ng-container>
 
   <div *ngIf="picture?.buyerTheme" class="theme buyer">
     {{ picture?.buyerTheme }}

@@ -3,7 +3,7 @@
 :host {
   @include mixins.defaultGrid();
 
-  app-picture {
+  app-card {
     --card-cursor: default;
 
     &.too-much {

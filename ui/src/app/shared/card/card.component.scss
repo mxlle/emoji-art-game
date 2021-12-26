@@ -17,4 +17,5 @@ mat-card {
   cursor: var(--card-cursor, pointer);
   border: 2px var(--card-border-style, solid) var(--card-border-color, transparent);
   background-color: var(--card-background-color, #424242);
+  font-family: inherit;
 }

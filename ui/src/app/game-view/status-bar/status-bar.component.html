@@ -1,7 +1,13 @@
 <mat-toolbar>
-  <div>{{ currentPhase }}</div>
-  <div>{{ trophy }} {{ game?.teamPoints?.length }}</div>
-  <div>{{ masterFaker }} {{ game?.fakePoints?.length }}</div>
-  <div>{{ bin }} {{ game?.neutralCards?.length }}</div>
+  <div class="emoji">{{ currentPhase }}</div>
+  <div>
+    <span class="emoji">{{ trophy }}</span> {{ game?.teamPoints?.length }}
+  </div>
+  <div>
+    <span class="emoji">{{ masterFaker }}</span> {{ game?.fakePoints?.length }}
+  </div>
+  <div>
+    <span class="emoji">{{ bin }}</span> {{ game?.neutralCards?.length }}
+  </div>
   <div *ngIf="game?.phase === 5">GAME OVER</div>
 </mat-toolbar>

@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { OfferPreviewComponent } from './offer-preview.component';
-import { PictureModule } from '../../../shared/picture/picture.module';
+import { CardModule } from '../../../shared/card/card.module';
 
 @NgModule({
   declarations: [OfferPreviewComponent],
-  imports: [CommonModule, PictureModule],
+  imports: [CommonModule, CardModule],
   exports: [OfferPreviewComponent],
 })
 export class OfferPreviewModule {}
