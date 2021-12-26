@@ -58,7 +58,7 @@ class GameApiImpl implements GameApi {
     if (!game) throw new Error(gameNotFoundError);
 
     if (!player.id) player.id = this.userId;
-    GameController.addPlayer(game, player);
+    GameController.addOrUpdatePlayer(game, player);
 
     const updatedGame = await gameDao.update(game);
 
@@ -75,7 +75,7 @@ class GameApiImpl implements GameApi {
     if (player.id !== this.userId) throw new Error(forbiddenError);
     if (!game) throw new Error(gameNotFoundError);
 
-    GameController.updatePlayer(game, player);
+    GameController.addOrUpdatePlayer(game, player);
 
     const updatedGame = await gameDao.update(game);
 

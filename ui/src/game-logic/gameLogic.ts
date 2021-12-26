@@ -22,20 +22,21 @@ export function createGame(players: Player[] = []): Game {
   };
 }
 
-export function addPlayer(game: Game, player: Player) {
-  if (!game.hostId) game.hostId = player.id; // backup plan
-  if (!player.pictures) player.pictures = [];
-  game.players.push(player);
-}
+export function addOrUpdatePlayer(game: Game, newPlayer: Player) {
+  if (GamePhase.Init !== game.phase) return;
 
-export function updatePlayer(game: Game, player: Player) {
-  let currentUser = game.players.find((p) => p.id === player.id);
-  if (!currentUser) return;
-  currentUser.name = player.name;
-  currentUser.color = player.color;
+  if (!game.hostId) game.hostId = newPlayer.id; // whoever joins first, becomes host
+  const index = game.players.findIndex((player: Player) => player.id === newPlayer.id);
+  if (index === -1) {
+    game.players.push(newPlayer);
+  } else {
+    game.players.splice(index, 1, newPlayer); // replace existing player
+  }
 }
 
 export function removePlayerFromGame(game: Game, playerId: string) {
+  if (GamePhase.Init !== game.phase) return;
+
   const index = game.players.findIndex((p) => p.id === playerId);
   if (index > -1) {
     game.players.splice(index, 1);
@@ -43,7 +44,9 @@ export function removePlayerFromGame(game: Game, playerId: string) {
 }
 
 export function startGame(game: Game) {
-  // deal cards, assign roles and shuffle player order
+  if (GamePhase.Init !== game.phase) return;
+
+  // deal cards and assign roles
   game.deck = shuffleArray(emojis);
   const dealtCards = dealCards(game.deck, game.players.length, getNumOfCardsPerPlayer(game.players.length));
   const roleOrder = getRoleOrder(game.players.length);
@@ -69,12 +72,16 @@ function startRound(game: Game) {
 }
 
 export function setDemand(game: Game, demand: number) {
+  if (GamePhase.Demand !== game.phase) return;
+
   const round = getCurrentRound(game);
   round.demand = demand;
   game.phase = GamePhase.Offer;
 }
 
 export function togglePainterSelection(game: Game, playerId: string, card: string, theme: string) {
+  if (GamePhase.Offer !== game.phase) return;
+
   const player = game.players.find((player) => player.id === playerId);
   const picture = player?.pictures?.find((pic) => pic.card === card);
   if (picture) {
@@ -87,6 +94,8 @@ export function togglePainterSelection(game: Game, playerId: string, card: strin
 }
 
 export function offerPictures(game: Game) {
+  if (GamePhase.Offer !== game.phase) return;
+
   const round = getCurrentRound(game);
 
   const originals = getOfferedPictures(game);
@@ -97,6 +106,8 @@ export function offerPictures(game: Game) {
 }
 
 export function toggleBuyerPreSelection(game: Game, playerId: string, card: string, theme: string) {
+  if (GamePhase.Choose !== game.phase) return;
+
   const picture = game.rounds[game.currentRound].pictures.find((pic) => pic.card === card);
   if (picture) {
     if (!picture.buyerSelection) {
@@ -124,6 +135,8 @@ export function toggleBuyerPreSelection(game: Game, playerId: string, card: stri
 }
 
 export function choosePictures(game: Game) {
+  if (GamePhase.Choose !== game.phase) return;
+
   const round = getCurrentRound(game);
   round.pictures.forEach(setBuyerThemeForPicture);
   const selectedPictures = round.pictures.filter(isPictureSelectedFromBuyer);
@@ -137,6 +150,8 @@ export function choosePictures(game: Game) {
 }
 
 export function endRound(game: Game) {
+  if (GamePhase.Evaluate !== game.phase) return;
+
   if (game.fakePoints.length >= gameEndCondition) {
     game.phase = GamePhase.End;
   } else {
