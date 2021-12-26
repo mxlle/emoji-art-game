@@ -10,8 +10,8 @@
 
 mat-card {
   width: 100%;
-  padding: var(--card-padding, 30px);
-  font-size: var(--card-font-size, 60px);
+  padding: var(--card-padding, 16px);
+  font-size: var(--card-font-size, 48px);
   display: grid;
   place-items: center;
   cursor: var(--card-cursor, pointer);
