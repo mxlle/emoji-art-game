@@ -1,10 +1,15 @@
 import {
   activityAndSport,
+  animalFaces,
   animals,
   bodyParts,
   clothingAndAccessories,
   foodAndDrink,
   nature,
+  objects1,
+  objects2,
+  objects3,
+  objects4,
   splitEmojis,
   travelAndPlaces,
   weatherAndEarth,
@@ -12,7 +17,19 @@ import {
 import { Role } from './game';
 
 export const emojis: string[] = splitEmojis(
-  bodyParts + clothingAndAccessories + animals + nature + weatherAndEarth + foodAndDrink + activityAndSport + travelAndPlaces
+  bodyParts +
+    clothingAndAccessories +
+    animalFaces +
+    animals +
+    nature +
+    weatherAndEarth +
+    foodAndDrink +
+    activityAndSport +
+    travelAndPlaces +
+    objects1 +
+    objects2 +
+    objects3 +
+    objects4
 );
 
 export const masterFaker = '🥸';
