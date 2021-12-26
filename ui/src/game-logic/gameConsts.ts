@@ -36,6 +36,8 @@ export const masterFaker = '🥸';
 export const painter = Role.PAINTER;
 export const buyer = Role.BUYER;
 
+export const gameEmojis = masterFaker + painter + buyer;
+
 export const minNumPlayers = 2;
 export const themesPerRound = 2;
 export const minDemand = 2;

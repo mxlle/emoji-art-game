@@ -1,2 +1,3 @@
+<app-card *ngFor="let card of gameEmojis" [useEmojiFont]="true">{{ card }}</app-card>
 <app-card [style.--card-font-size]="'30px'">{{ cards.length }}</app-card>
 <app-card *ngFor="let card of cards" [useEmojiFont]="true">{{ card }}</app-card>

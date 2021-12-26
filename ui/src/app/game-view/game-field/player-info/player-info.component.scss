@@ -3,8 +3,4 @@ mat-card {
   display: grid;
   grid-template-columns: 1fr;
   gap: 8px;
-
-  span:first-child {
-    font-weight: bold;
-  }
 }
