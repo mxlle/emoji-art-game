@@ -5,9 +5,11 @@ import { dealCards, drawCards } from '../game-tools/card-game-util';
 import { generateEmojiId } from '../game-tools/emoji-util';
 
 export function createGame(players: Player[] = []): Game {
+  const id = generateEmojiId();
+
   return {
-    id: generateEmojiId(),
-    name: 'My game ' + generateEmojiId(),
+    id,
+    name: `Game ${id}`,
     players,
     hostId: players[0]?.id,
     deck: [],
