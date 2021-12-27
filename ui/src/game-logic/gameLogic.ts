@@ -304,7 +304,7 @@ export function toPublicGame(game: Game): PublicGame {
     id,
     name,
     hostId,
-    players,
+    players: players.map(mapToPublicPlayer),
     currentOffer:
       round?.pictures.map(({ card, isFake, buyerTheme, painterTheme, buyerSelection }) => {
         if (GamePhase.Evaluate === phase) {
@@ -333,8 +333,12 @@ export function toGameInfo(game: Game): GameInfo {
     id,
     name,
     hostId,
-    players: players.map(({ id, name, color }) => ({ id, name, color })),
+    players: players.map(mapToPublicPlayer),
     phase,
     creationTime,
   };
+}
+
+function mapToPublicPlayer({ id, name, color, role }: Player): Player {
+  return { id, name, color, role };
 }
