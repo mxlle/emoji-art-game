@@ -16,8 +16,6 @@ export class GameFieldComponent implements OnInit, OnDestroy {
 
   currentTheme: string = '';
 
-  demand: number | undefined;
-
   get showQuickAccess(): boolean {
     return (
       (GamePhase.Offer === this.game.phase && Role.PAINTER === this.game.currentPlayer?.role) ||
@@ -27,6 +25,10 @@ export class GameFieldComponent implements OnInit, OnDestroy {
 
   get showDemandPicker(): boolean {
     return GamePhase.Demand === this.game.phase && Role.BUYER === this.game.currentPlayer?.role;
+  }
+
+  get allowDemandConfirm(): boolean {
+    return this.showDemandPicker && this.game.currentDemandSuggestions.length === 1;
   }
 
   get showEndRoundConfirm(): boolean {
@@ -44,12 +46,7 @@ export class GameFieldComponent implements OnInit, OnDestroy {
   }
 
   setDemand() {
-    if (this.demand) {
-      apiFunctions.setDemand(this.game.id, this.demand).then(() => {
-        delete this.demand;
-        this._cdr.markForCheck();
-      });
-    }
+    apiFunctions.setDemand(this.game.id);
   }
 
   endRound() {

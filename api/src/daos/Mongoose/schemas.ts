@@ -36,6 +36,16 @@ export const RoundSchema: Schema = new Schema(
   {
     themes: [String],
     demand: { type: Number, required: false },
+    demandSuggestions: {
+      type: [
+        {
+          demand: Number,
+          playerIds: [String],
+        },
+      ],
+      required: false,
+      default: undefined,
+    },
     pictures: [PictureSchema],
   },
   { _id: false }

@@ -2,7 +2,7 @@
   <span>Market </span>
   <span>(<app-counter [game]="game"></app-counter>)</span>
 </h2>
-<app-offer-preview *ngIf="!game.currentOffer.length" [demand]="game.currentDemand ?? 0" [offerCount]="game.offerCount"></app-offer-preview>
+<app-offer-preview *ngIf="!game.currentOffer.length" [demand]="game.currentDemand" [offerCount]="game.offerCount"></app-offer-preview>
 <div *ngIf="game.currentOffer" class="offer">
   <app-picture
     *ngFor="let picture of pictures; trackBy: trackByPictureCard"

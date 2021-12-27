@@ -11,7 +11,7 @@
     }
 
     &.missing {
-      --card-border-color: var(--border-color);
+      --card-border-color: var(--border-color-secondary);
       --card-border-style: dashed;
       --card-background: transparent;
     }

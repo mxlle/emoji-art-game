@@ -46,11 +46,11 @@ export class PhaseInfoComponent {
       case GamePhase.Init:
         return `Teammates joining`;
       case GamePhase.Demand:
-        return `Managers set demand`;
+        return `Buyers set demand`;
       case GamePhase.Offer:
         return `Painters provide pictures`;
       case GamePhase.Choose:
-        return `Managers select pictures`;
+        return `Buyers select pictures`;
       case GamePhase.Evaluate:
         return `Review (all)`;
       case GamePhase.End:

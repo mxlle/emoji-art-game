@@ -34,7 +34,8 @@ export interface PlayerGame {
   currentOffer: Picture[];
   currentThemes: string[];
 
-  currentDemand?: number;
+  currentDemand: number;
+  currentDemandSuggestions: DemandSuggestion[];
   offerCount: number;
   selectionCount: number;
   correctCount: number;
@@ -67,6 +68,7 @@ export enum GamePhase {
 export interface GameRound {
   themes: string[];
   demand?: number;
+  demandSuggestions?: DemandSuggestion[];
   pictures: Picture[];
 }
 
@@ -97,6 +99,12 @@ export interface BuyerSelection {
   playerIds: string[];
 }
 
+export interface DemandSuggestion {
+  // playerIds per demand
+  demand: number;
+  playerIds: string[];
+}
+
 // API related interfaces
 
 export interface GameApi {
@@ -107,7 +115,8 @@ export interface GameApi {
   updatePlayer: (gameId: string, player: Player) => Promise<boolean>;
   removePlayerFromGame: (gameId: string, playerId: string) => Promise<boolean>;
   startGame: (gameId: string) => Promise<boolean>;
-  setDemand: (gameId: string, demand: number) => Promise<boolean>;
+  suggestDemand: (gameId: string, demand: number) => Promise<boolean>;
+  setDemand: (gameId: string) => Promise<boolean>;
   togglePainterSelections: (gameId: string, card: string, theme: string) => Promise<boolean>;
   offerPictures: (gameId: string) => Promise<boolean>;
   toggleBuyerPreSelections: (gameId: string, card: string, theme: string) => Promise<boolean>;

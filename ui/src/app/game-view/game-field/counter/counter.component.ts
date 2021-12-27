@@ -17,8 +17,4 @@ export class CounterComponent {
       ? this.game.selectionCount
       : this.game.correctCount;
   }
-
-  get demand(): number {
-    return this.game.currentDemand ?? 0;
-  }
 }

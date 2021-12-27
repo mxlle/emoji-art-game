@@ -6,8 +6,8 @@
 
 <div *ngIf="showDemandPicker" class="demand">
   <h2>Set demand</h2>
-  <app-demand-picker [(demand)]="demand"></app-demand-picker>
-  <button mat-flat-button color="primary" [disabled]="!demand" (click)="setDemand()">Confirm</button>
+  <app-demand-picker [game]="game"></app-demand-picker>
+  <button mat-flat-button color="primary" [disabled]="!allowDemandConfirm" (click)="setDemand()">Confirm</button>
 </div>
 
 <app-current-offer

@@ -4,3 +4,23 @@
   @include mixins.defaultGrid(calc(#{var(--font-size-card-number)} + 2 * #{var(--spacer-lg)}));
   --card-font-size: var(--font-size-card-number);
 }
+
+app-card {
+  position: relative;
+
+  .suggestions {
+    position: absolute;
+    --indicator-spacer: var(--spacer-xs);
+    top: var(--indicator-spacer);
+    right: var(--indicator-spacer);
+    @include mixins.stackEffect(var(--spacer-sm));
+
+    > div {
+      height: var(--emoji-size-xs);
+      width: var(--emoji-size-xs);
+      background: var(--color);
+      border: 1px solid var(--border-color);
+      border-radius: 50%;
+    }
+  }
+}

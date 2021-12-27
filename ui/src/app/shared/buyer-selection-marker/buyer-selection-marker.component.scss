@@ -7,19 +7,6 @@
   .theme-group {
     position: relative;
 
-    // stack effect - up to 3
-    :nth-child(2) {
-      position: absolute;
-      right: var(--spacer-xs);
-      top: 0;
-    }
-    :nth-child(3) {
-      position: absolute;
-      right: calc(2 * #{var(--spacer-xs)});
-      top: 0;
-    }
-    :nth-child(n + 4) {
-      display: none;
-    }
+    @include mixins.stackEffect();
   }
 }

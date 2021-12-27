@@ -1,2 +1,2 @@
-<span [class.bad]="count > demand">{{ count }}</span
->/<span>{{ demand || "?" }}</span>
+<span [class.bad]="count > game.currentDemand">{{ count }}</span
+>/<span>{{ game.currentDemand || "?" }}</span>

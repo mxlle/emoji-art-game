@@ -4,3 +4,20 @@
   grid-auto-rows: 1fr;
   gap: var(--spacer-lg);
 }
+
+@mixin stackEffect($shiftValue: var(--spacer-xs)) {
+  // stack effect - up to 3
+  :nth-child(2) {
+    position: absolute;
+    right: $shiftValue;
+    top: 0;
+  }
+  :nth-child(3) {
+    position: absolute;
+    right: calc(2 * #{$shiftValue});
+    top: 0;
+  }
+  :nth-child(n + 4) {
+    display: none;
+  }
+}

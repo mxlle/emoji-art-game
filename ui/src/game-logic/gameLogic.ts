@@ -1,6 +1,17 @@
-import { BuyerSelection, DELETE_CLEARANCE_TIME, Game, GameInfo, GamePhase, GameRound, Picture, Player, PlayerGame } from './game';
+import {
+  BuyerSelection,
+  DELETE_CLEARANCE_TIME,
+  DemandSuggestion,
+  Game,
+  GameInfo,
+  GamePhase,
+  GameRound,
+  Picture,
+  Player,
+  PlayerGame,
+} from './game';
 import { shuffleArray } from '../game-tools/random-util';
-import { emojis, fakesPerRound, gameEndCondition, getNumOfCardsPerPlayer, getRoleOrder, themesPerRound } from './gameConsts';
+import { emojis, fakesPerRound, gameEndCondition, getNumOfCardsPerPlayer, getRoleOrder, minDemand, themesPerRound } from './gameConsts';
 import { dealCards, drawCards } from '../game-tools/card-game-util';
 import { generateEmojiId } from '../game-tools/emoji-util';
 
@@ -71,11 +82,41 @@ function startRound(game: Game) {
   game.phase = GamePhase.Demand;
 }
 
-export function setDemand(game: Game, demand: number) {
+export function suggestDemand(game: Game, playerId: string, demand: number) {
   if (GamePhase.Demand !== game.phase) return;
 
   const round = getCurrentRound(game);
-  round.demand = demand;
+  if (!round.demandSuggestions) {
+    round.demandSuggestions = [];
+  }
+
+  const demandIndex = round.demandSuggestions.findIndex((sug) => sug.demand === demand);
+  const suggestionForDemand = round.demandSuggestions[demandIndex];
+  if (!suggestionForDemand) {
+    round.demandSuggestions.push({ demand, playerIds: [playerId] });
+  } else {
+    const index = suggestionForDemand.playerIds.findIndex((id) => id === playerId);
+    if (index >= 0) {
+      suggestionForDemand.playerIds.splice(index, 1);
+      if (!suggestionForDemand.playerIds.length) {
+        round.demandSuggestions.splice(demandIndex, 1);
+        if (round.demandSuggestions.length === 0) {
+          round.demandSuggestions = undefined;
+        }
+      }
+    } else {
+      suggestionForDemand.playerIds.push(playerId);
+    }
+  }
+}
+
+export function setDemand(game: Game) {
+  if (GamePhase.Demand !== game.phase) return;
+
+  const round = getCurrentRound(game);
+  if (!round?.demandSuggestions?.length) return; // TODO
+
+  round.demand = getDemandFromSuggestions(round.demandSuggestions);
   game.phase = GamePhase.Offer;
 }
 
@@ -216,6 +257,16 @@ export function getBuyerSelection(game: Game): Picture[] {
     : [];
 }
 
+export function getDemandFromSuggestions(suggestions: DemandSuggestion[] = []): number {
+  const bestSelection = suggestions.reduce((currentSuggestion: DemandSuggestion | undefined, suggestion: DemandSuggestion) => {
+    if (!currentSuggestion || suggestion.playerIds?.length > currentSuggestion.playerIds?.length) {
+      return suggestion;
+    }
+    return currentSuggestion;
+  }, undefined);
+  return bestSelection?.demand ?? minDemand;
+}
+
 export function setBuyerThemeForPicture(picture: Picture) {
   if (picture.buyerSelection) {
     const bestSelection = picture.buyerSelection.reduce((currentSelection: BuyerSelection | undefined, selection: BuyerSelection) => {
@@ -267,6 +318,7 @@ export function toPlayerGame(game: Game, playerId: string): PlayerGame {
       }) ?? [],
     currentThemes: round?.themes ?? [],
     currentDemand: round?.demand ?? 0,
+    currentDemandSuggestions: round?.demandSuggestions ?? [],
     offerCount: getOfferedPictures(game).length,
     selectionCount: getBuyerSelection(game).length,
     correctCount: round?.pictures.filter((pic) => game.teamPoints.findIndex((p) => pic.card === p.card) > -1).length,

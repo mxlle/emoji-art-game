@@ -117,7 +117,7 @@ class GameApiImpl implements GameApi {
     return true;
   }
 
-  async setDemand(gameId: string, demand: number) {
+  async suggestDemand(gameId: string, demand: number) {
     const game = await gameDao.getOne(gameId);
 
     if (!demand) throw new Error(paramMissingError);
@@ -126,7 +126,24 @@ class GameApiImpl implements GameApi {
       throw new Error(forbiddenError);
     }
 
-    GameController.setDemand(game, demand);
+    GameController.suggestDemand(game, this.userId, demand);
+
+    const updatedGame = await gameDao.update(game);
+
+    this.emitPlayerGame(updatedGame);
+
+    return true;
+  }
+
+  async setDemand(gameId: string) {
+    const game = await gameDao.getOne(gameId);
+
+    if (!game) throw new Error(gameNotFoundError);
+    if (game.players.findIndex((p: Player) => p.id === this.userId && p.role === Role.BUYER) === -1) {
+      throw new Error(forbiddenError);
+    }
+
+    GameController.setDemand(game);
 
     const updatedGame = await gameDao.update(game);
 
