@@ -9,4 +9,14 @@
   h2 {
     margin: var(--spacer-xxl) 0 var(--spacer-sm);
   }
+
+  .create-game {
+    display: grid;
+    padding: var(--spacer-lg);
+  }
+
+  app-game-list {
+    width: 320px;
+    max-width: 100vw;
+  }
 }

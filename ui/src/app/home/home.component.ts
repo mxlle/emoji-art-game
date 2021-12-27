@@ -5,6 +5,9 @@ import apiFunctions from '../../data/apiFunctions';
 import { createGame } from '../../game-logic/gameLogic';
 import { Router } from '@angular/router';
 import { getCurrentUserInGame } from '../../data/functions';
+import { SETTING_NAME } from '../../data/constants';
+import { randomArrayValue } from '../../game-tools/random-util';
+import { positiveSmileys, splitEmojis } from '../../game-tools/emoji-util';
 
 @Component({
   selector: 'app-home',
@@ -17,6 +20,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   ongoingGames: GameInfo[] = [];
   doneGames: GameInfo[] = [];
   loading: boolean = false;
+  gameName: string = this._getDefaultGameNameForPlayer();
+  defaultGameName: string = this._getDefaultGameName();
 
   constructor(private _cdr: ChangeDetectorRef, private _ngZone: NgZone, private _router: Router) {}
 
@@ -47,7 +52,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   createGame() {
-    const game: Game = createGame();
+    const game: Game = createGame(this.gameName || this.defaultGameName);
     apiFunctions.addGame(game).then((gameId: string) => this._router.navigate(['/' + gameId]));
   }
 
@@ -58,5 +63,14 @@ export class HomeComponent implements OnInit, OnDestroy {
   private _setupConnection() {
     socket.emit(GameEvent.ListSubscribe);
     this.loadGames();
+  }
+
+  private _getDefaultGameNameForPlayer() {
+    const playerName = localStorage.getItem(SETTING_NAME);
+    return playerName ? `${playerName}'s game` : '';
+  }
+
+  private _getDefaultGameName(): string {
+    return `New game ${randomArrayValue(splitEmojis(positiveSmileys))}`;
   }
 }

@@ -1,3 +1,23 @@
-.delete-btn {
-  margin-inline-start: var(--spacer-lg);
+:host {
+  display: block;
+}
+
+.inner-list-item {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: repeat(2, auto);
+  grid-auto-flow: column;
+  gap: var(--spacer-xs);
+  align-items: center;
+  width: 100%;
+
+  div:nth-child(2) {
+    color: var(--foreground-secondary);
+    font-size: var(--font-size-sm);
+    font-style: italic;
+  }
+
+  .delete-btn {
+    grid-row: 1 / 3;
+  }
 }

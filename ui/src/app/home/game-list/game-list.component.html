@@ -1,14 +1,17 @@
 <mat-action-list>
   <button mat-list-item *ngFor="let game of games; trackBy: trackByGameId" [routerLink]="'/' + game.id">
-    {{ game.name }}
-    <button
-      *ngIf="isDeleteAllowed(game)"
-      mat-icon-button
-      class="delete-btn"
-      (click)="deleteClick($event, game.id)"
-      (mouseover)="deleteHover($event)"
-    >
-      <mat-icon>delete</mat-icon>
-    </button>
+    <div class="inner-list-item">
+      <div>{{ game.name }}</div>
+      <div>{{ getPlayersString(game) }}</div>
+      <button
+        *ngIf="isDeleteAllowed(game)"
+        mat-icon-button
+        class="delete-btn"
+        (click)="deleteClick($event, game.id)"
+        (mouseover)="deleteHover($event)"
+      >
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
   </button>
 </mat-action-list>

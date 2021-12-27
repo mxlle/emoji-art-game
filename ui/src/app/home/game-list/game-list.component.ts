@@ -21,6 +21,10 @@ export class GameListComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  getPlayersString(game: GameInfo): string {
+    return game.players.map((pl) => pl.name).join(', ') || '-';
+  }
+
   isDeleteAllowed(game: GameInfo): boolean {
     return game.hostId === this.currentUserId || getClearedForDeletion(game);
   }

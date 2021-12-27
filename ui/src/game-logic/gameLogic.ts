@@ -15,14 +15,14 @@ import { emojis, fakesPerRound, gameEndCondition, getNumOfCardsPerPlayer, getRol
 import { dealCards, drawCards } from '../game-tools/card-game-util';
 import { generateEmojiId } from '../game-tools/emoji-util';
 
-export function createGame(players: Player[] = []): Game {
+export function createGame(name: string): Game {
   const id = generateEmojiId();
 
   return {
     id,
-    name: `Game ${id}`,
-    players,
-    hostId: players[0]?.id,
+    name,
+    players: [],
+    hostId: '',
     deck: [],
     currentRound: -1,
     phase: GamePhase.Init,

@@ -1,11 +1,23 @@
-<button mat-flat-button (click)="createGame()">Create game</button>
+<div class="create-game">
+  <mat-form-field>
+    <mat-label>Game name</mat-label>
+    <input type="text" spellcheck="false" matInput [(ngModel)]="gameName" />
+  </mat-form-field>
+  <button mat-flat-button (click)="createGame()">Create game</button>
+</div>
 <button mat-flat-button routerLink="/cards">Show all cards</button>
 <button mat-flat-button [disabled]="loading" (click)="loadGames()">Reload</button>
 <div>
-  <h2>New Games</h2>
-  <app-game-list [games]="newGames" (delete)="deleteGame($event)"></app-game-list>
-  <h2>My ongoing Games</h2>
-  <app-game-list [games]="ongoingGames" (delete)="deleteGame($event)"></app-game-list>
-  <h2>My finished Games</h2>
-  <app-game-list [games]="doneGames" (delete)="deleteGame($event)"></app-game-list>
+  <ng-container *ngIf="newGames.length">
+    <h2>New Games ({{ newGames.length }})</h2>
+    <app-game-list [games]="newGames" (delete)="deleteGame($event)"></app-game-list>
+  </ng-container>
+  <ng-container *ngIf="ongoingGames.length">
+    <h2>My ongoing Games ({{ ongoingGames.length }})</h2>
+    <app-game-list [games]="ongoingGames" (delete)="deleteGame($event)"></app-game-list>
+  </ng-container>
+  <ng-container *ngIf="doneGames.length">
+    <h2>My finished Games ({{ doneGames.length }})</h2>
+    <app-game-list [games]="doneGames" (delete)="deleteGame($event)"></app-game-list>
+  </ng-container>
 </div>
