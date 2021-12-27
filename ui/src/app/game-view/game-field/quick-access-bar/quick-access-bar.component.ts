@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { GamePhase, PlayerGame, Role } from '../../../../game-logic/game';
+import { GamePhase, Player, PlayerGame, Role } from '../../../../game-logic/game';
 import apiFunctions from '../../../../data/apiFunctions';
 
 @Component({
@@ -10,16 +10,17 @@ import apiFunctions from '../../../../data/apiFunctions';
 })
 export class QuickAccessBarComponent {
   @Input() game!: PlayerGame;
+  @Input() currentPlayer?: Player;
 
   @Input() currentTheme?: string;
   @Output() currentThemeChange: EventEmitter<string> = new EventEmitter<string>();
 
   get showOfferConfirm(): boolean {
-    return GamePhase.Offer === this.game.phase && this.game.currentPlayer?.role === Role.PAINTER;
+    return GamePhase.Offer === this.game.phase && this.currentPlayer?.role === Role.PAINTER;
   }
 
   get showSelectionConfirm(): boolean {
-    return GamePhase.Choose === this.game.phase && this.game.currentPlayer?.role === Role.BUYER;
+    return GamePhase.Choose === this.game.phase && this.currentPlayer?.role === Role.BUYER;
   }
 
   confirmOffer() {

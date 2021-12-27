@@ -1,4 +1,9 @@
-<app-quick-access-bar *ngIf="showQuickAccess" [game]="game" [(currentTheme)]="currentTheme"></app-quick-access-bar>
+<app-quick-access-bar
+  *ngIf="showQuickAccess"
+  [game]="game"
+  [currentPlayer]="currentPlayer"
+  [(currentTheme)]="currentTheme"
+></app-quick-access-bar>
 
 <app-phase-info [game]="game"></app-phase-info>
 
@@ -20,8 +25,8 @@
 <button *ngIf="showEndRoundConfirm" mat-flat-button color="primary" (click)="endRound()">Next round</button>
 
 <app-current-player-hand
-  *ngIf="game.currentPlayer"
+  *ngIf="currentPlayer"
   [game]="game"
-  [player]="game.currentPlayer"
+  [player]="currentPlayer"
   [currentTheme]="currentTheme"
 ></app-current-player-hand>

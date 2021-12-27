@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, NgZone, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { socket } from '../../data/socket';
-import { GameEvent, GamePhase, PlayerGame, SocketEvent } from '../../game-logic/game';
+import { GameEvent, GamePhase, Player, PlayerGame, SocketEvent } from '../../game-logic/game';
 import apiFunctions from '../../data/apiFunctions';
 import { getCurrentUserId } from '../../data/functions';
 
@@ -13,6 +13,7 @@ import { getCurrentUserId } from '../../data/functions';
 })
 export class GameViewComponent implements OnInit, OnDestroy {
   game: PlayerGame | null = null;
+  currentPlayer: Player | undefined;
   readonly _gameId: string;
 
   constructor(private _activatedRoute: ActivatedRoute, private _cdr: ChangeDetectorRef, private _ngZone: NgZone) {
@@ -37,6 +38,7 @@ export class GameViewComponent implements OnInit, OnDestroy {
       }
     });
     socket.on(GameEvent.Update, (game: PlayerGame) => this._ngZone.run(() => this.setGameAfterUpdate(game)));
+    socket.on(GameEvent.UpdatePlayerData, (player: Player) => this._ngZone.run(() => this.setPlayerAfterUpdate(player)));
     this.game = await apiFunctions.loadGame(this._gameId);
     this._cdr.markForCheck();
   }
@@ -44,11 +46,17 @@ export class GameViewComponent implements OnInit, OnDestroy {
   private _unsubscribeFromGame() {
     socket.emit(GameEvent.GameUnsubscribe, this._gameId, getCurrentUserId());
     socket.off(GameEvent.Update);
+    socket.off(GameEvent.UpdatePlayerData);
   }
 
   setGameAfterUpdate(game: PlayerGame) {
-    if (this._gameId !== game.id) return;
+    if (this._gameId !== game?.id) return;
     this.game = game;
+    this._cdr.markForCheck();
+  }
+
+  setPlayerAfterUpdate(player: Player) {
+    this.currentPlayer = player;
     this._cdr.markForCheck();
   }
 

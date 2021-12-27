@@ -3,6 +3,7 @@ import { maxDemand, minDemand } from '../../../../game-logic/gameConsts';
 import { DemandSuggestion, Player, PlayerGame } from '../../../../game-logic/game';
 import apiFunctions from '../../../../data/apiFunctions';
 import { getPlayerInGame } from '../../../../game-logic/gameLogic';
+import { getCurrentUserId } from '../../../../data/functions';
 
 @Component({
   selector: 'app-demand-picker',
@@ -13,12 +14,13 @@ import { getPlayerInGame } from '../../../../game-logic/gameLogic';
 export class DemandPickerComponent {
   @Input() game!: PlayerGame;
 
-  demandOptions: number[] = [...Array(maxDemand - minDemand + 1).keys()].map((val) => val + minDemand);
+  readonly currentPlayerId = getCurrentUserId();
+
+  readonly demandOptions: number[] = [...Array(maxDemand - minDemand + 1).keys()].map((val) => val + minDemand);
 
   getDemandIsSelected(demand: number): boolean {
     const suggestion = this.getSuggestionForDemand(demand);
-    const playerId = this.game.currentPlayer?.id;
-    return !!suggestion && !!playerId && suggestion.playerIds.includes(playerId);
+    return !!suggestion && suggestion.playerIds.includes(this.currentPlayerId);
   }
 
   getSuggestionForDemand(demand: number): DemandSuggestion | undefined {

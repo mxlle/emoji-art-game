@@ -296,9 +296,8 @@ export function getPlayerInGame(game: Game | GameInfo, playerId?: string): Playe
   return game.players.find((player: Player) => player.id === playerId);
 }
 
-export function toPlayerGame(game: Game, playerId: string): PlayerGame {
+export function toPlayerGame(game: Game): PlayerGame {
   const { id, name, hostId, players, phase, currentRound, rounds, teamPoints, fakePoints, neutralCards } = game;
-  const currentPlayer = game.players.find((player: Player) => player.id === playerId);
   const round = rounds[currentRound];
 
   return {
@@ -306,8 +305,6 @@ export function toPlayerGame(game: Game, playerId: string): PlayerGame {
     name,
     hostId,
     players,
-    currentPlayer,
-    playerIsHost: hostId === playerId,
     currentOffer:
       round?.pictures.map(({ card, isFake, buyerTheme, painterTheme, buyerSelection }) => {
         if (GamePhase.Evaluate === phase) {

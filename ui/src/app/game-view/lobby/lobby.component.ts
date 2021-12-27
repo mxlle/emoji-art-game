@@ -15,12 +15,13 @@ import { minNumPlayers } from '../../../game-logic/gameConsts';
 })
 export class LobbyComponent {
   @Input() game!: PlayerGame;
+  @Input() currentPlayer?: Player;
 
   name: string = window.localStorage.getItem(SETTING_NAME) ?? '';
   color: string = window.localStorage.getItem(SETTING_COLOR) ?? randomArrayValue(allColors);
 
   get allowDelete(): boolean {
-    return this.game.playerIsHost;
+    return this.game.hostId === this.currentPlayer?.id;
   }
 
   constructor() {}
@@ -31,7 +32,7 @@ export class LobbyComponent {
     apiFunctions.addPlayer(this.game.id, { id: getCurrentUserId(), name: this.name, color: this.color, pictures: [] });
   }
 
-  removePlayer(player: Player | undefined = this.game.currentPlayer) {
+  removePlayer(player: Player | undefined = this.currentPlayer) {
     if (player) {
       apiFunctions.removePlayerFromGame(this.game.id, player?.id);
     }

@@ -4,8 +4,8 @@ import GameDaoImpl from '@daos/Game';
 import { docToPlain, GameController, GameDocument, GamePhase, Player } from '@entities/Game';
 import { forbiddenError, gameNotFoundError, paramMissingError } from '@shared/constants';
 import { Namespace } from 'socket.io';
-import { Game, GameApi, GameEvent, Role, ROOM_GAME_LIST, ROOM_GAME_PLAYER } from '@gameTypes';
-import { toGameInfo, toPlayerGame } from '@gameFunctions';
+import { Game, GameApi, GameEvent, Role, ROOM_GAME, ROOM_GAME_LIST, ROOM_GAME_PLAYER } from '@gameTypes';
+import { getPlayerInGame, toGameInfo, toPlayerGame } from '@gameFunctions';
 
 // Init shared
 const gameDao = new GameDaoImpl();
@@ -32,7 +32,8 @@ class GameApiImpl implements GameApi {
 
   async loadGame(gameId: string) {
     const game = await gameDao.getOne(gameId);
-    return game && toPlayerGame(docToPlain(game), this.userId);
+    game && this.emitPlayerData(game, this.userId);
+    return game && toPlayerGame(docToPlain(game));
   }
 
   async addGame(game: Game) {
@@ -63,6 +64,7 @@ class GameApiImpl implements GameApi {
     const updatedGame = await gameDao.update(game);
 
     this.emitPlayerGame(updatedGame);
+    this.emitPlayerData(updatedGame, player.id);
     this.socket.to(ROOM_GAME_LIST).emit(GameEvent.UpdateList);
 
     return true;
@@ -80,6 +82,7 @@ class GameApiImpl implements GameApi {
     const updatedGame = await gameDao.update(game);
 
     this.emitPlayerGame(updatedGame);
+    this.emitPlayerData(updatedGame, player.id);
 
     return true;
   }
@@ -95,7 +98,8 @@ class GameApiImpl implements GameApi {
 
     const updatedGame = await gameDao.update(game);
 
-    this.emitPlayerGame(updatedGame, playerId);
+    this.emitPlayerGame(updatedGame);
+    this.emitPlayerData(updatedGame, playerId);
 
     return true;
   }
@@ -113,6 +117,7 @@ class GameApiImpl implements GameApi {
     const updatedGame = await gameDao.update(game);
 
     this.emitPlayerGame(updatedGame);
+    this.emitPlayerData(updatedGame);
 
     return true;
   }
@@ -167,6 +172,7 @@ class GameApiImpl implements GameApi {
     const updatedGame = await gameDao.update(game);
 
     this.emitPlayerGame(updatedGame);
+    this.emitPlayerData(updatedGame, this.userId);
 
     return true;
   }
@@ -237,6 +243,7 @@ class GameApiImpl implements GameApi {
     const updatedGame = await gameDao.update(game);
 
     this.emitPlayerGame(updatedGame);
+    this.emitPlayerData(updatedGame);
 
     return true;
   }
@@ -254,16 +261,20 @@ class GameApiImpl implements GameApi {
     return true;
   }
 
-  emitPlayerGame(game: GameDocument, additionalPlayerId?: string) {
-    const plainGame = docToPlain(game);
-    // player games
-    plainGame.players.forEach((player) => {
-      const playerGame = toPlayerGame(plainGame, player.id);
-      this.socket.to(ROOM_GAME_PLAYER(game.id, player.id)).emit(GameEvent.Update, playerGame);
-    });
-    if (additionalPlayerId) {
-      const playerGame = toPlayerGame(plainGame, additionalPlayerId);
-      this.socket.to(ROOM_GAME_PLAYER(game.id, additionalPlayerId)).emit(GameEvent.Update, playerGame);
+  emitPlayerGame(game: GameDocument) {
+    const playerGame = toPlayerGame(docToPlain(game));
+    this.socket.to(ROOM_GAME(game.id)).emit(GameEvent.Update, playerGame);
+  }
+
+  emitPlayerData(game: GameDocument, onlyPlayerId?: string) {
+    if (onlyPlayerId) {
+      // only one player
+      this.socket.to(ROOM_GAME_PLAYER(game.id, onlyPlayerId)).emit(GameEvent.UpdatePlayerData, getPlayerInGame(game, onlyPlayerId));
+    } else {
+      // update all players
+      game.players.forEach((player) => {
+        this.socket.to(ROOM_GAME_PLAYER(game.id, player.id)).emit(GameEvent.UpdatePlayerData, getPlayerInGame(game, player.id));
+      });
     }
   }
 }

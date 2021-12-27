@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 
-import { GamePhase, PlayerGame, Role } from '../../../game-logic/game';
+import { GamePhase, Player, PlayerGame, Role } from '../../../game-logic/game';
 // @ts-ignore todo
 import { Subject } from 'rxjs';
 import apiFunctions from '../../../data/apiFunctions';
@@ -13,18 +13,19 @@ import apiFunctions from '../../../data/apiFunctions';
 })
 export class GameFieldComponent implements OnInit, OnDestroy {
   @Input() game!: PlayerGame;
+  @Input() currentPlayer?: Player;
 
   currentTheme: string = '';
 
   get showQuickAccess(): boolean {
     return (
-      (GamePhase.Offer === this.game.phase && Role.PAINTER === this.game.currentPlayer?.role) ||
-      (GamePhase.Choose === this.game.phase && Role.BUYER === this.game.currentPlayer?.role)
+      (GamePhase.Offer === this.game.phase && Role.PAINTER === this.currentPlayer?.role) ||
+      (GamePhase.Choose === this.game.phase && Role.BUYER === this.currentPlayer?.role)
     );
   }
 
   get showDemandPicker(): boolean {
-    return GamePhase.Demand === this.game.phase && Role.BUYER === this.game.currentPlayer?.role;
+    return GamePhase.Demand === this.game.phase && Role.BUYER === this.currentPlayer?.role;
   }
 
   get allowDemandConfirm(): boolean {

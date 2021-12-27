@@ -28,9 +28,6 @@ export interface PlayerGame {
   players: Player[];
   hostId: string;
 
-  currentPlayer?: Player;
-  playerIsHost: boolean;
-
   currentOffer: Picture[];
   currentThemes: string[];
 
@@ -139,6 +136,7 @@ export enum GameEvent {
   ListUnsubscribe = 'list_unsubscribe',
   UpdateList = 'updateGameList',
   Update = 'updateGame',
+  UpdatePlayerData = 'updateGamePlayer',
   ApiCall = 'apiCall.games',
   Notification = 'notification',
   Confetti = 'confetti',
