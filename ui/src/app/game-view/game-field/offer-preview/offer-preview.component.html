@@ -1,4 +1,8 @@
-<app-card *ngFor="let picture of offerPreview; let index = index" [class.too-much]="index >= demand" [class.missing]="!picture.card">
+<app-card
+  *ngFor="let picture of offerPreview; trackBy: trackByPictureCard; let index = index"
+  [class.too-much]="index >= demand"
+  [class.missing]="!picture.card"
+>
   {{ picture.card }}
 
   <!-- if no text, use non-breaking space to have correct height -->

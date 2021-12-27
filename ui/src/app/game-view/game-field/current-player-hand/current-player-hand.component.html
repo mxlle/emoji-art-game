@@ -1,7 +1,7 @@
 <h2>My gallery</h2>
 <div class="hand">
   <app-picture
-    *ngFor="let picture of player.pictures"
+    *ngFor="let picture of player.pictures; trackBy: trackByPictureCard"
     class="{{ getPictureCssClass(picture) }}"
     [picture]="picture"
     [selected]="!!picture.painterTheme"

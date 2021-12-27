@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, TrackByFunction } from '@angular/core';
 import { BuyerSelection } from '../../../game-logic/game';
 
 @Component({
@@ -7,10 +7,7 @@ import { BuyerSelection } from '../../../game-logic/game';
   styleUrls: ['./buyer-selection-marker.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BuyerSelectionMarkerComponent implements OnInit {
+export class BuyerSelectionMarkerComponent {
   @Input() selections: BuyerSelection[] = [];
-
-  constructor() {}
-
-  ngOnInit(): void {}
+  trackBySelectionTheme: TrackByFunction<BuyerSelection> = (_index: number, selection: BuyerSelection) => selection.theme;
 }

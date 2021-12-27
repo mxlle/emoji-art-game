@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Picture } from '../../../../game-logic/game';
+import { trackByPictureCard } from '../../../ui-helpers';
 
 @Component({
   selector: 'app-offer-preview',
@@ -10,6 +11,8 @@ import { Picture } from '../../../../game-logic/game';
 export class OfferPreviewComponent {
   @Input() demand: number = 0;
   @Input() offerCount: number = 0;
+
+  readonly trackByPictureCard = trackByPictureCard;
 
   get offerPreview(): Picture[] {
     const remainingDemand = this.demand - this.offerCount;

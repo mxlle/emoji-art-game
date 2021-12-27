@@ -5,7 +5,7 @@
 <app-offer-preview *ngIf="!game.currentOffer.length" [demand]="game.currentDemand ?? 0" [offerCount]="game.offerCount"></app-offer-preview>
 <div *ngIf="game.currentOffer" class="offer">
   <app-picture
-    *ngFor="let picture of pictures"
+    *ngFor="let picture of pictures; trackBy: trackByPictureCard"
     class="{{ getPictureCssClass(picture) }}"
     [picture]="picture"
     [selected]="!!picture.buyerTheme || !!picture.buyerSelection?.length"

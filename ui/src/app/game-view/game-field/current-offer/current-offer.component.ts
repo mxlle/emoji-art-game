@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Picture, PlayerGame } from '../../../../game-logic/game';
-import { getPictureCssClass } from '../../../ui-helpers';
+import { getPictureCssClass, trackByPictureCard } from '../../../ui-helpers';
 import apiFunctions from '../../../../data/apiFunctions';
 
 @Component({
@@ -13,6 +13,8 @@ export class CurrentOfferComponent {
   @Input() game!: PlayerGame;
   @Input() pictures: Picture[] = [];
   @Input() currentTheme!: string;
+
+  readonly trackByPictureCard = trackByPictureCard;
 
   getPictureCssClass(picture: Picture): string {
     return getPictureCssClass(this.game, picture);

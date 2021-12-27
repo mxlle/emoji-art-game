@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { PlayerGame } from '../../../game-logic/game';
-import { masterFaker } from '../../../game-logic/gameConsts';
+import { masterFaker, pointsEmoji } from '../../../game-logic/gameConsts';
+import { trackByPictureCard } from '../../ui-helpers';
 
 @Component({
   selector: 'app-end-view',
@@ -8,16 +9,11 @@ import { masterFaker } from '../../../game-logic/gameConsts';
   styleUrls: ['./end-view.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EndViewComponent implements OnInit {
+export class EndViewComponent {
   @Input() game!: PlayerGame;
 
-  readonly trophy = '🏆';
+  readonly pointsEmoji = pointsEmoji;
+  readonly masterFaker = masterFaker;
 
-  constructor() {}
-
-  ngOnInit(): void {}
-
-  get masterFaker(): typeof masterFaker {
-    return masterFaker;
-  }
+  readonly trackByPictureCard = trackByPictureCard;
 }

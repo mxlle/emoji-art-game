@@ -1,13 +1,17 @@
 import { Picture, PlayerGame } from '../game-logic/game';
 import { TrackByFunction } from '@angular/core';
 
-export const trackByObjectId: TrackByFunction<{ id: string | number }> = (
+export const trackByObjectId: TrackByFunction<{ id: string }> = (
   _index: number,
   value: {
-    id: string | number;
+    id: string;
   }
 ) => {
   return value?.id;
+};
+
+export const trackByPictureCard: TrackByFunction<Picture> = (_index: number, value: Picture) => {
+  return value?.card;
 };
 
 export function getPictureCssClass(game: PlayerGame, picture: Picture): string {

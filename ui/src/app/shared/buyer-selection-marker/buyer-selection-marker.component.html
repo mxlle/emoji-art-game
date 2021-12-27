@@ -1,5 +1,5 @@
-<div *ngFor="let selection of selections" class="theme-group">
-  <div *ngFor="let playerIds of selection.playerIds">
+<div *ngFor="let selection of selections; trackBy: trackBySelectionTheme" class="theme-group">
+  <div *ngFor="let playerId of selection.playerIds">
     {{ selection.theme }}
   </div>
 </div>

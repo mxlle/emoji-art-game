@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { Picture, Player, PlayerGame } from '../../../../game-logic/game';
-import { getPictureCssClass } from '../../../ui-helpers';
+import { getPictureCssClass, trackByPictureCard } from '../../../ui-helpers';
 import apiFunctions from '../../../../data/apiFunctions';
 
 @Component({
@@ -9,14 +9,12 @@ import apiFunctions from '../../../../data/apiFunctions';
   styleUrls: ['./current-player-hand.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CurrentPlayerHandComponent implements OnInit {
+export class CurrentPlayerHandComponent {
   @Input() game!: PlayerGame;
   @Input() player!: Player;
   @Input() currentTheme!: string;
 
-  constructor() {}
-
-  ngOnInit(): void {}
+  readonly trackByPictureCard = trackByPictureCard;
 
   togglePainterSelection(picture: Picture) {
     apiFunctions.togglePainterSelections(this.game.id, picture.card, this.currentTheme);
