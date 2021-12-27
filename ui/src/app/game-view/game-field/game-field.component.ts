@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 
-import { GamePhase, Player, PlayerGame, Role } from '../../../game-logic/game';
+import { GamePhase, Player, PublicGame, Role } from '../../../game-logic/game';
 // @ts-ignore todo
 import { Subject } from 'rxjs';
 import apiFunctions from '../../../data/apiFunctions';
@@ -12,7 +12,7 @@ import apiFunctions from '../../../data/apiFunctions';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GameFieldComponent implements OnInit, OnDestroy {
-  @Input() game!: PlayerGame;
+  @Input() game!: PublicGame;
   @Input() currentPlayer?: Player;
 
   currentTheme: string = '';

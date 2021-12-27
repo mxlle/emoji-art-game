@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { GamePhase, PlayerGame } from '../../../../game-logic/game';
+import { GamePhase, PublicGame } from '../../../../game-logic/game';
 
 @Component({
   selector: 'app-counter',
@@ -8,7 +8,7 @@ import { GamePhase, PlayerGame } from '../../../../game-logic/game';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CounterComponent {
-  @Input() game!: PlayerGame;
+  @Input() game!: PublicGame;
 
   get count(): number {
     return GamePhase.Offer == this.game?.phase

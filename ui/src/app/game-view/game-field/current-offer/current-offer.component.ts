@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { BuyerSelection, Picture, PlayerGame } from '../../../../game-logic/game';
+import { BuyerSelection, Picture, PublicGame } from '../../../../game-logic/game';
 import { getPictureCssClass, trackByPictureCard } from '../../../ui-helpers';
 import apiFunctions from '../../../../data/apiFunctions';
 import { getCurrentUserId } from '../../../../data/functions';
@@ -11,7 +11,7 @@ import { getCurrentUserId } from '../../../../data/functions';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CurrentOfferComponent {
-  @Input() game!: PlayerGame;
+  @Input() game!: PublicGame;
   @Input() pictures: Picture[] = [];
   @Input() currentTheme!: string;
 

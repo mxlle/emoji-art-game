@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, HostBinding, Input } from '@angular/core';
 import { buyer, getPhaseEmojis, painter, pointsEmoji } from '../../../../game-logic/gameConsts';
-import { GamePhase, Player, PlayerGame, Role } from '../../../../game-logic/game';
+import { GamePhase, Player, PublicGame, Role } from '../../../../game-logic/game';
 import { getCurrentUserId } from '../../../../data/functions';
 
 @Component({
@@ -10,7 +10,7 @@ import { getCurrentUserId } from '../../../../data/functions';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PhaseInfoComponent {
-  @Input() game!: PlayerGame;
+  @Input() game!: PublicGame;
 
   readonly painter = painter;
   readonly buyer = buyer;

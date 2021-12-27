@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { GamePhase, Player, PlayerGame, Role } from '../../../../game-logic/game';
+import { GamePhase, Player, PublicGame, Role } from '../../../../game-logic/game';
 import apiFunctions from '../../../../data/apiFunctions';
 
 @Component({
@@ -9,7 +9,7 @@ import apiFunctions from '../../../../data/apiFunctions';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class QuickAccessBarComponent {
-  @Input() game!: PlayerGame;
+  @Input() game!: PublicGame;
   @Input() currentPlayer?: Player;
 
   @Input() currentTheme?: string;

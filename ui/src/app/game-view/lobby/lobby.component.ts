@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { Player, PlayerGame } from '../../../game-logic/game';
+import { Player, PublicGame } from '../../../game-logic/game';
 import apiFunctions from '../../../data/apiFunctions';
 import { getCurrentUserId } from '../../../data/functions';
 import { randomArrayValue } from '../../../game-tools/random-util';
@@ -14,7 +14,7 @@ import { minNumPlayers } from '../../../game-logic/gameConsts';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LobbyComponent {
-  @Input() game!: PlayerGame;
+  @Input() game!: PublicGame;
   @Input() currentPlayer?: Player;
 
   name: string = window.localStorage.getItem(SETTING_NAME) ?? '';

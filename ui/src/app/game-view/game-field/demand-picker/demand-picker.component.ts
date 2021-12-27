@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { maxDemand, minDemand } from '../../../../game-logic/gameConsts';
-import { DemandSuggestion, Player, PlayerGame } from '../../../../game-logic/game';
+import { DemandSuggestion, Player, PublicGame } from '../../../../game-logic/game';
 import apiFunctions from '../../../../data/apiFunctions';
 import { getPlayerInGame } from '../../../../game-logic/gameLogic';
 import { getCurrentUserId } from '../../../../data/functions';
@@ -12,7 +12,7 @@ import { getCurrentUserId } from '../../../../data/functions';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class DemandPickerComponent {
-  @Input() game!: PlayerGame;
+  @Input() game!: PublicGame;
 
   readonly currentPlayerId = getCurrentUserId();
 

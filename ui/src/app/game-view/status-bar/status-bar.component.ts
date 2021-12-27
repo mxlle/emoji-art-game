@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, HostBinding, Input, OnInit } from '@angular/core';
-import { PlayerGame } from '../../../game-logic/game';
+import { PublicGame } from '../../../game-logic/game';
 import { discardedEmoji, getPhaseEmojis, masterFaker, pointsEmoji } from '../../../game-logic/gameConsts';
 
 @Component({
@@ -9,7 +9,7 @@ import { discardedEmoji, getPhaseEmojis, masterFaker, pointsEmoji } from '../../
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class StatusBarComponent implements OnInit {
-  @Input() game!: PlayerGame;
+  @Input() game!: PublicGame;
 
   @HostBinding('class.toolbar') readonly toolbar = true;
 

@@ -22,7 +22,7 @@ export interface Game {
   endTime?: Date;
 }
 
-export interface PlayerGame {
+export interface PublicGame {
   id: string;
   name: string;
   players: Player[];
@@ -106,7 +106,7 @@ export interface DemandSuggestion {
 
 export interface GameApi {
   loadGames: () => Promise<GameInfo[]>;
-  loadGame: (gameId: string) => Promise<PlayerGame | null>;
+  loadGame: (gameId: string) => Promise<PublicGame | null>;
   addGame: (game: Game) => Promise<string>;
   addPlayer: (gameId: string, player: Player) => Promise<boolean>;
   updatePlayer: (gameId: string, player: Player) => Promise<boolean>;

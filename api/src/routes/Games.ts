@@ -5,7 +5,7 @@ import { docToPlain, GameController, GameDocument, GamePhase, Player } from '@en
 import { forbiddenError, gameNotFoundError, paramMissingError } from '@shared/constants';
 import { Namespace } from 'socket.io';
 import { Game, GameApi, GameEvent, Role, ROOM_GAME, ROOM_GAME_LIST, ROOM_GAME_PLAYER } from '@gameTypes';
-import { getPlayerInGame, toGameInfo, toPlayerGame } from '@gameFunctions';
+import { getPlayerInGame, toGameInfo, toPublicGame } from '@gameFunctions';
 
 // Init shared
 const gameDao = new GameDaoImpl();
@@ -33,7 +33,7 @@ class GameApiImpl implements GameApi {
   async loadGame(gameId: string) {
     const game = await gameDao.getOne(gameId);
     game && this.emitPlayerData(game, this.userId);
-    return game && toPlayerGame(docToPlain(game));
+    return game && toPublicGame(docToPlain(game));
   }
 
   async addGame(game: Game) {
@@ -63,7 +63,7 @@ class GameApiImpl implements GameApi {
 
     const updatedGame = await gameDao.update(game);
 
-    this.emitPlayerGame(updatedGame);
+    this.emitPublicGame(updatedGame);
     this.emitPlayerData(updatedGame, player.id);
     this.socket.to(ROOM_GAME_LIST).emit(GameEvent.UpdateList);
 
@@ -81,7 +81,7 @@ class GameApiImpl implements GameApi {
 
     const updatedGame = await gameDao.update(game);
 
-    this.emitPlayerGame(updatedGame);
+    this.emitPublicGame(updatedGame);
     this.emitPlayerData(updatedGame, player.id);
 
     return true;
@@ -98,7 +98,7 @@ class GameApiImpl implements GameApi {
 
     const updatedGame = await gameDao.update(game);
 
-    this.emitPlayerGame(updatedGame);
+    this.emitPublicGame(updatedGame);
     this.emitPlayerData(updatedGame, playerId);
 
     return true;
@@ -116,7 +116,7 @@ class GameApiImpl implements GameApi {
 
     const updatedGame = await gameDao.update(game);
 
-    this.emitPlayerGame(updatedGame);
+    this.emitPublicGame(updatedGame);
     this.emitPlayerData(updatedGame);
 
     return true;
@@ -135,7 +135,7 @@ class GameApiImpl implements GameApi {
 
     const updatedGame = await gameDao.update(game);
 
-    this.emitPlayerGame(updatedGame);
+    this.emitPublicGame(updatedGame);
 
     return true;
   }
@@ -152,7 +152,7 @@ class GameApiImpl implements GameApi {
 
     const updatedGame = await gameDao.update(game);
 
-    this.emitPlayerGame(updatedGame);
+    this.emitPublicGame(updatedGame);
 
     return true;
   }
@@ -171,7 +171,7 @@ class GameApiImpl implements GameApi {
 
     const updatedGame = await gameDao.update(game);
 
-    this.emitPlayerGame(updatedGame);
+    this.emitPublicGame(updatedGame);
     this.emitPlayerData(updatedGame, this.userId);
 
     return true;
@@ -189,7 +189,7 @@ class GameApiImpl implements GameApi {
 
     const updatedGame = await gameDao.update(game);
 
-    this.emitPlayerGame(updatedGame);
+    this.emitPublicGame(updatedGame);
 
     return true;
   }
@@ -208,7 +208,7 @@ class GameApiImpl implements GameApi {
 
     const updatedGame = await gameDao.update(game);
 
-    this.emitPlayerGame(updatedGame);
+    this.emitPublicGame(updatedGame);
 
     return true;
   }
@@ -225,7 +225,7 @@ class GameApiImpl implements GameApi {
 
     const updatedGame = await gameDao.update(game);
 
-    this.emitPlayerGame(updatedGame);
+    this.emitPublicGame(updatedGame);
 
     return true;
   }
@@ -242,7 +242,7 @@ class GameApiImpl implements GameApi {
 
     const updatedGame = await gameDao.update(game);
 
-    this.emitPlayerGame(updatedGame);
+    this.emitPublicGame(updatedGame);
     this.emitPlayerData(updatedGame);
 
     return true;
@@ -261,9 +261,9 @@ class GameApiImpl implements GameApi {
     return true;
   }
 
-  emitPlayerGame(game: GameDocument) {
-    const playerGame = toPlayerGame(docToPlain(game));
-    this.socket.to(ROOM_GAME(game.id)).emit(GameEvent.Update, playerGame);
+  emitPublicGame(game: GameDocument) {
+    const publicGame = toPublicGame(docToPlain(game));
+    this.socket.to(ROOM_GAME(game.id)).emit(GameEvent.Update, publicGame);
   }
 
   emitPlayerData(game: GameDocument, onlyPlayerId?: string) {

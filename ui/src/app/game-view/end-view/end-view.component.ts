@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { PlayerGame } from '../../../game-logic/game';
+import { PublicGame } from '../../../game-logic/game';
 import { masterFaker, pointsEmoji } from '../../../game-logic/gameConsts';
 import { trackByPictureCard } from '../../ui-helpers';
 
@@ -10,7 +10,7 @@ import { trackByPictureCard } from '../../ui-helpers';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class EndViewComponent {
-  @Input() game!: PlayerGame;
+  @Input() game!: PublicGame;
 
   readonly pointsEmoji = pointsEmoji;
   readonly masterFaker = masterFaker;

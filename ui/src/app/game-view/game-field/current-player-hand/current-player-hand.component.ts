@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { Picture, Player, PlayerGame } from '../../../../game-logic/game';
+import { Picture, Player, PublicGame } from '../../../../game-logic/game';
 import { getPictureCssClass, trackByPictureCard } from '../../../ui-helpers';
 import apiFunctions from '../../../../data/apiFunctions';
 
@@ -10,7 +10,7 @@ import apiFunctions from '../../../../data/apiFunctions';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CurrentPlayerHandComponent {
-  @Input() game!: PlayerGame;
+  @Input() game!: PublicGame;
   @Input() player!: Player;
   @Input() currentTheme!: string;
 

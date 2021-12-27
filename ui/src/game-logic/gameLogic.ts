@@ -8,7 +8,7 @@ import {
   GameRound,
   Picture,
   Player,
-  PlayerGame,
+  PublicGame,
 } from './game';
 import { shuffleArray } from '../game-tools/random-util';
 import { emojis, fakesPerRound, gameEndCondition, getNumOfCardsPerPlayer, getRoleOrder, minDemand, themesPerRound } from './gameConsts';
@@ -296,7 +296,7 @@ export function getPlayerInGame(game: Game | GameInfo, playerId?: string): Playe
   return game.players.find((player: Player) => player.id === playerId);
 }
 
-export function toPlayerGame(game: Game): PlayerGame {
+export function toPublicGame(game: Game): PublicGame {
   const { id, name, hostId, players, phase, currentRound, rounds, teamPoints, fakePoints, neutralCards } = game;
   const round = rounds[currentRound];
 
