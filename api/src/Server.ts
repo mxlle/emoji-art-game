@@ -27,7 +27,7 @@ io.on('connection', (socket) => {
 
     (<any>gameApi[action])(...params)
       .then((responseData: any) => ack(null, responseData))
-      .catch((error: any) => ack(error));
+      .catch((error?: Error) => ack({ name: error?.name, message: error?.message }));
   });
 
   socket.on(GameEvent.ListSubscribe, (ack: ErrorFirstCallback) => {
