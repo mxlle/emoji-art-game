@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
-import { PlayerGame } from '../../../game-logic/game';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { Player, PlayerGame } from '../../../game-logic/game';
 import apiFunctions from '../../../data/apiFunctions';
 import { getCurrentUserId } from '../../../data/functions';
 import { randomArrayValue } from '../../../game-tools/random-util';
@@ -13,20 +13,28 @@ import { minNumPlayers } from '../../../game-logic/gameConsts';
   styleUrls: ['./lobby.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class LobbyComponent implements OnInit {
+export class LobbyComponent {
   @Input() game!: PlayerGame;
 
   name: string = window.localStorage.getItem(SETTING_NAME) ?? '';
   color: string = window.localStorage.getItem(SETTING_COLOR) ?? randomArrayValue(allColors);
 
-  constructor() {}
+  get allowDelete(): boolean {
+    return this.game.playerIsHost;
+  }
 
-  ngOnInit(): void {}
+  constructor() {}
 
   joinGame() {
     window.localStorage.setItem(SETTING_NAME, this.name);
     window.localStorage.setItem(SETTING_COLOR, this.color);
     apiFunctions.addPlayer(this.game.id, { id: getCurrentUserId(), name: this.name, color: this.color, pictures: [] });
+  }
+
+  removePlayer(player: Player | undefined = this.game.currentPlayer) {
+    if (player) {
+      apiFunctions.removePlayerFromGame(this.game.id, player?.id);
+    }
   }
 
   startGame() {

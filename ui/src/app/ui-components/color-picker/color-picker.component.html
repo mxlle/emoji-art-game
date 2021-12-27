@@ -1,0 +1,3 @@
+<div *ngFor="let color of colors" [style.--color]="color" (click)="selectedChange.emit(color)">
+  <mat-icon *ngIf="color === selected">check</mat-icon>
+</div>

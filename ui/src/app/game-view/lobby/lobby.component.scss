@@ -6,9 +6,22 @@
   grid-template-rows: repeat(3, auto) 1fr;
   gap: var(--spacer-xxl);
   justify-items: center;
+  text-align: center;
   padding: var(--spacer-lg);
   height: 100%;
   overflow-y: auto;
+}
+
+.current-player {
+  display: grid;
+  gap: var(--spacer-lg);
+  justify-items: center;
+
+  app-color-picker {
+    height: 160px;
+    width: 160px;
+    margin-block-end: var(--spacer-lg);
+  }
 }
 
 .players {

@@ -1,5 +1,6 @@
 <div *ngIf="!game.currentPlayer" class="current-player">
   <h2>Join the game</h2>
+  <app-color-picker [(selected)]="color"></app-color-picker>
   <mat-form-field class="example-full-width" appearance="fill">
     <mat-label>Name</mat-label>
     <input type="text" matInput [(ngModel)]="name" (keydown.enter)="joinGame()" />
@@ -9,9 +10,14 @@
 <div *ngIf="game.players.length">
   <h2>Players</h2>
   <div class="players">
-    <app-player-info *ngFor="let player of game.players" [player]="player"> </app-player-info>
+    <app-player-info *ngFor="let player of game.players" [player]="player">
+      <button *ngIf="allowDelete" mat-icon-button (click)="removePlayer(player)"><mat-icon>delete</mat-icon></button>
+    </app-player-info>
   </div>
 </div>
+<button *ngIf="game.currentPlayer" mat-flat-button (click)="removePlayer()">
+  <span>Back</span>
+</button>
 <button
   *ngIf="game.currentPlayer && game.currentPlayer.id === game.hostId && game.players.length >= minNumPlayers"
   mat-flat-button

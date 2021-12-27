@@ -95,7 +95,7 @@ class GameApiImpl implements GameApi {
 
     const updatedGame = await gameDao.update(game);
 
-    this.emitPlayerGame(updatedGame);
+    this.emitPlayerGame(updatedGame, playerId);
 
     return true;
   }
@@ -254,12 +254,17 @@ class GameApiImpl implements GameApi {
     return true;
   }
 
-  emitPlayerGame(game: GameDocument) {
+  emitPlayerGame(game: GameDocument, additionalPlayerId?: string) {
     const plainGame = docToPlain(game);
+    // player games
     plainGame.players.forEach((player) => {
-      const playerGame = toPlayerGame(docToPlain(game), player.id);
+      const playerGame = toPlayerGame(plainGame, player.id);
       this.socket.to(ROOM_GAME_PLAYER(game.id, player.id)).emit(GameEvent.Update, playerGame);
     });
+    if (additionalPlayerId) {
+      const playerGame = toPlayerGame(plainGame, additionalPlayerId);
+      this.socket.to(ROOM_GAME_PLAYER(game.id, additionalPlayerId)).emit(GameEvent.Update, playerGame);
+    }
   }
 }
 
