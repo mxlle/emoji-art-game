@@ -9,9 +9,9 @@ const socket = io({
 socket.on(SocketEvent.Connect, () => {
   console.debug('Socket.io connected:  ' + socket.id);
 });
-socket.on(SocketEvent.ConnectError, (e: object) => console.error('connect_error', e));
-socket.on(SocketEvent.Error, (e: object) => console.error('error', e));
-socket.on(SocketEvent.ConnectTimeout, (timeout: any) => console.error('connect_timeout', timeout));
-socket.on(SocketEvent.Disconnect, (timeout: any) => console.error('disconnect', timeout));
+socket.on(SocketEvent.ConnectError, (e: Error) => console.warn('connect_error', e.message));
+socket.on(SocketEvent.Error, (e: Error) => console.warn('error', e.message));
+socket.on(SocketEvent.ConnectTimeout, (timeout: any) => console.warn('connect_timeout', timeout));
+socket.on(SocketEvent.Disconnect, (timeout: any) => console.warn('disconnect', timeout));
 
 export { socket };
