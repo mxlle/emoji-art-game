@@ -3,8 +3,10 @@
   grid-template-rows: auto auto auto 1fr;
   justify-items: center;
   gap: var(--spacer-lg);
-  margin: var(--spacer-lg);
+  padding: var(--spacer-lg);
   text-align: center;
+  overflow-y: auto;
+  overflow-x: hidden;
 
   h2 {
     margin: var(--spacer-xxl) 0 var(--spacer-sm);
