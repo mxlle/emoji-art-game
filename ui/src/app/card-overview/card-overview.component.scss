@@ -1,7 +1,7 @@
 @use '../mixins';
 
 :host {
-  padding: 16px;
+  padding: var(--spacer-lg);
   overflow-x: hidden;
   overflow-y: auto;
   @include mixins.defaultGrid();

@@ -1,6 +1,8 @@
-mat-toolbar {
+:host {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(40px, auto));
+  grid-template-columns: repeat(auto-fit, minmax(calc(#{var(--font-size-lg)} + 2 * #{var(--spacer-lg)}), auto));
+  font-size: var(--font-size-lg);
+  padding: var(--spacer-md) var(--spacer-lg);
 
   div {
     text-align: center;

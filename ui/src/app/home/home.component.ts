@@ -1,5 +1,4 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, NgZone, OnDestroy, OnInit } from '@angular/core';
-import { mockGameId } from '../mock-mode/mock-service';
 import { socket } from '../../data/socket';
 import { Game, GameEvent, GameInfo, GamePhase, SocketEvent } from '../../game-logic/game';
 import apiFunctions from '../../data/apiFunctions';
@@ -14,8 +13,6 @@ import { getCurrentUserInGame } from '../../data/functions';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  readonly testGameUrl = `/${mockGameId}`;
-
   newGames: GameInfo[] = [];
   ongoingGames: GameInfo[] = [];
   doneGames: GameInfo[] = [];

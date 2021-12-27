@@ -33,6 +33,7 @@
     "@types/node": "^12.11.1",
     "@types/socket.io-client": "^1.4.36",
     "prettier": "^2.5.1",
+    "stylelint": "^13.13.1",
     "typescript": "~4.5.2"
   }
 }

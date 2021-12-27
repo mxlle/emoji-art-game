@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { LobbyComponent } from './lobby.component';
-import { PlayerInfoModule } from '../game-field/player-info/player-info.module';
+import { PlayerInfoModule } from '../../shared/player-info/player-info.module';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';

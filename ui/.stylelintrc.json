@@ -1,0 +1,31 @@
+{
+  "rules": {
+    "color-no-hex": [
+      true,
+      {
+        "message": "No hard-coded colors! Define colors as css variables inside styles.scss"
+      }
+    ],
+    "color-named": [
+      "never",
+      {
+        "message": "No hard-coded colors! Define colors as css variables inside styles.scss"
+      }
+    ],
+    "function-disallowed-list": [
+      ["rgb", "linear-gradient", "radial-gradient"],
+      {
+        "message": "No hard-coded colors! Define colors and gradients as css variables inside styles.scss"
+      }
+    ],
+    "declaration-property-unit-disallowed-list": {
+      "font-size": ["px", "em", "rem", "vh", "vw"]
+    }
+  },
+  "ignoreFiles": [
+    "src/styles.scss",
+
+    "node_modules/**",
+    "dist/**"
+  ]
+}

@@ -1,6 +1,6 @@
 @use '../../../mixins';
 
 :host {
-  @include mixins.defaultGrid(60px);
-  --card-font-size: 30px;
+  @include mixins.defaultGrid(calc(#{var(--font-size-card-number)} + 2 * #{var(--spacer-lg)}));
+  --card-font-size: var(--font-size-card-number);
 }

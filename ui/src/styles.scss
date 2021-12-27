@@ -9,16 +9,60 @@
   font-style: normal;
 }
 
+html {
+  // colors
+  --success-color: green;
+  --success-background: darkgreen;
+  --warning-color: yellow;
+  --danger-color: red;
+  --danger-background: darkred;
+  // greyscale
+  --foreground: #ffffff;
+  --background: #222222;
+  --body-background: #333333;
+  --body-background-rgb: 51, 51, 51;
+  --card-background-default: #444444;
+  --card-background-selected: #555555;
+  --border-color: #555555;
+  // shadow copied from mat-card
+  --card-box-shadow: 0 2px 1px -1px rgb(0 0 0 / 20%), 0 1px 1px 0 rgb(0 0 0 / 14%), 0 1px 3px 0 rgb(0 0 0 / 12%);
+
+  // sizes
+  --border-radius: 0.25rem;
+  --border-width: 0.125rem;
+
+  --spacer-xs: 0.25rem;
+  --spacer-sm: 0.5rem;
+  --spacer-md: 0.75rem;
+  --spacer-lg: 1rem;
+  --spacer-xl: 1.5rem;
+  --spacer-xxl: 2rem;
+
+  --font-size-default: 1rem;
+  --font-size-md: 1.15rem;
+  --font-size-lg: 1.25rem;
+
+  --font-size-card-number: 2rem;
+
+  --emoji-size-xxs: 0.75rem;
+  --emoji-size-xs: 1.25rem;
+  --emoji-size-sm: 1.5rem;
+  --emoji-size-md: 2rem;
+  --emoji-size-lg: 3rem;
+  --emoji-size-xxl: 6rem;
+}
+
 html,
 body {
   height: 100%;
+  font-size: 16px;
 }
 
 body {
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
-  background-color: #333;
-  color: #fff;
+  background-color: var(--body-background);
+  color: var(--foreground);
 }
 
 * {
@@ -27,14 +71,29 @@ body {
 
 .emoji {
   font-family: 'EmojiFont', sans-serif;
+  font-weight: normal;
   margin-bottom: -0.2em; // to balance space below emojis // todo
 }
 
+h1 {
+  font-size: var(--font-size-lg);
+  font-weight: normal;
+}
+
 h2 {
-  font-size: 1.2em;
+  font-size: var(--font-size-md);
   letter-spacing: 0.05em;
 }
 
 h3 {
-  font-size: 1.1em;
+  font-size: var(--font-size-default);
+}
+
+.toolbar {
+  padding: 0 var(--spacer-lg);
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: center;
+  gap: var(--spacer-lg);
+  background: var(--background);
 }

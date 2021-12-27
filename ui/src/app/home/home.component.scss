@@ -2,11 +2,11 @@
   display: grid;
   grid-template-rows: auto auto auto 1fr;
   justify-items: center;
-  gap: 16px;
-  margin: 16px;
+  gap: var(--spacer-lg);
+  margin: var(--spacer-lg);
   text-align: center;
 
   h2 {
-    margin: 32px 0 8px;
+    margin: var(--spacer-xxl) 0 var(--spacer-sm);
   }
 }

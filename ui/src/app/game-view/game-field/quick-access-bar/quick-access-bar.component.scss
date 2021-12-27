@@ -1,21 +1,21 @@
 :host {
-  padding: 16px;
   display: grid;
+  padding: var(--spacer-lg);
+  gap: var(--spacer-lg);
   grid-template-columns: 1fr auto auto;
-  gap: 16px;
   align-items: center;
 }
 
 .themes {
   display: grid;
   grid-template-columns: auto auto 1fr;
-  gap: 8px;
-  --card-padding: 4px 12px;
-  --card-font-size: 24px;
+  gap: var(--spacer-sm);
+  --card-padding: var(--spacer-xs) var(--spacer-md);
+  --card-font-size: var(--emoji-size-sm);
 }
 
 button {
-  padding: 0 8px;
+  padding: 0 var(--spacer-sm);
   min-width: auto;
-  background: green;
+  background: var(--success-color);
 }

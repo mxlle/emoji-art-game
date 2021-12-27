@@ -1,6 +1,6 @@
-@mixin defaultGrid($minValue: 90px) {
+@mixin defaultGrid($minValue: calc(#{var(--emoji-size-lg)} + 2 * #{var(--spacer-lg)})) {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax($minValue, 1fr));
   grid-auto-rows: 1fr;
-  gap: 16px;
+  gap: var(--spacer-lg);
 }

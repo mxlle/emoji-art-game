@@ -1,14 +1,14 @@
 :host {
   &.correct {
-    --card-border-color: green;
-    --card-background-color: darkgreen;
+    --card-border-color: var(--success-color);
+    --card-background: var(--success-background);
   }
   &.neutral {
-    --card-border-color: yellow;
+    --card-border-color: var(--warning-color);
   }
   &.fake {
-    --card-border-color: red;
-    --card-background-color: darkred;
+    --card-border-color: var(--danger-color);
+    --card-background: var(--danger-background);
   }
 }
 
@@ -17,15 +17,16 @@ app-card {
 
   .theme {
     position: absolute;
-    font-size: 20px;
+    font-size: var(--emoji-size-xs);
+    --indicator-spacer: var(--spacer-xs);
 
     &.buyer {
-      top: 4px;
-      right: 4px;
+      top: var(--indicator-spacer);
+      right: var(--indicator-spacer);
     }
     &.painter {
-      bottom: 4px;
-      left: 4px;
+      bottom: var(--indicator-spacer);
+      left: var(--indicator-spacer);
     }
   }
 }

@@ -7,13 +7,13 @@
     --card-cursor: default;
 
     &.too-much {
-      --card-border-color: red;
+      --card-border-color: var(--danger-color);
     }
 
     &.missing {
-      --card-border-color: #555;
+      --card-border-color: var(--border-color);
       --card-border-style: dashed;
-      --card-background-color: transparent;
+      --card-background: transparent;
     }
   }
 }

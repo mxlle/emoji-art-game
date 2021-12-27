@@ -1,21 +1,17 @@
 :host {
-  display: flex;
   height: 100%;
-  &.selected {
-    mat-card {
-      background-color: var(--card-background-color, #555);
-    }
-  }
-}
-
-mat-card {
   width: 100%;
-  padding: var(--card-padding, 16px);
-  font-size: var(--card-font-size, 48px);
   display: grid;
   place-items: center;
+  padding: var(--card-padding, var(--spacer-lg));
+  font-size: var(--card-font-size, var(--emoji-size-lg));
   cursor: var(--card-cursor, pointer);
-  border: 2px var(--card-border-style, solid) var(--card-border-color, transparent);
-  background-color: var(--card-background-color, #424242);
-  font-family: inherit;
+  border: var(--border-width) var(--card-border-style, solid) var(--card-border-color, transparent);
+  background-color: var(--card-background, var(--card-background-default));
+  border-radius: var(--border-radius);
+  box-shadow: var(--card-box-shadow);
+
+  &.selected {
+    background-color: var(--card-background, var(--card-background-selected));
+  }
 }

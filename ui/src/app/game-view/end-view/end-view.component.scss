@@ -5,9 +5,9 @@
   grid-template-columns: repeat(2, 50%);
   grid-template-rows: 1fr;
   justify-items: center;
-  gap: 32px;
-  padding: 16px;
-  padding-inline-end: 48px; // gap + padding // for weird padding collapse behavior
+  gap: var(--spacer-xxl);
+  padding: var(--spacer-lg);
+  padding-inline-end: calc(#{var(--spacer-xxl)} + #{var(--spacer-lg)}); // gap + padding // for weird padding collapse behavior
   overflow-x: hidden;
   overflow-y: auto;
   text-align: center;
@@ -18,12 +18,12 @@
     grid-template-rows: auto 1fr;
     width: 100%;
     max-width: 500px;
-    gap: 16px;
+    gap: var(--spacer-lg);
 
-    :nth-child(2n + 1) {
-      font-size: 100px;
+    :nth-child(1) {
+      font-size: var(--emoji-size-xxl);
     }
-    :nth-child(2n) {
+    :nth-child(2) {
       @include mixins.defaultGrid();
       grid-auto-rows: min-content;
     }
