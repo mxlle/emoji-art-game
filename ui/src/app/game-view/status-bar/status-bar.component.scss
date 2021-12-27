@@ -5,14 +5,16 @@
   padding: var(--spacer-md) var(--spacer-lg);
 
   div {
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
     &:first-child {
-      text-align: start;
+      justify-content: flex-start;
     }
 
     &:last-child {
-      text-align: end;
+      justify-content: flex-end;
     }
   }
 }

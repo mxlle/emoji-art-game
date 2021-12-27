@@ -1,11 +1,10 @@
 <div class="emoji">{{ currentPhase }}</div>
 <div>
-  <span class="emoji">{{ pointsEmoji }}</span> {{ game?.teamPoints?.length }}
+  <span class="emoji">{{ pointsEmoji }}</span
+  ><span>&nbsp;{{ game?.teamPoints?.length }}</span>
 </div>
 <div>
-  <span class="emoji">{{ masterFaker }}</span> {{ game?.fakePoints?.length }}
-</div>
-<div>
-  <span class="emoji">{{ discardedEmoji }}</span> {{ game?.neutralCards?.length }}
+  <span class="emoji">{{ masterFaker }}</span
+  ><span>&nbsp;{{ game?.fakePoints?.length }}</span>
 </div>
 <div *ngIf="game?.phase === 5">GAME OVER</div>

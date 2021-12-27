@@ -7,6 +7,7 @@ export interface Game {
   hostId: string;
 
   deck: string[];
+  discardedDeck: string[];
 
   currentRound: number;
   phase: GamePhase;

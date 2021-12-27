@@ -24,6 +24,7 @@ export function createGame(name: string): Game {
     players: [],
     hostId: '',
     deck: [],
+    discardedDeck: [],
     currentRound: -1,
     phase: GamePhase.Init,
     rounds: [],
@@ -73,7 +74,7 @@ export function startGame(game: Game) {
 function startRound(game: Game) {
   game.currentRound++;
   const round: GameRound = {
-    themes: drawCards(game.deck, themesPerRound),
+    themes: drawCardsSafe(game, themesPerRound),
     pictures: [],
   };
 
@@ -140,7 +141,7 @@ export function offerPictures(game: Game) {
   const round = getCurrentRound(game);
 
   const originals = getOfferedPictures(game);
-  const fakes = getFakes(game.deck);
+  const fakes = getFakes(game);
   round.pictures = shuffleArray([...originals, ...fakes]);
 
   game.phase = GamePhase.Choose;
@@ -187,6 +188,7 @@ export function choosePictures(game: Game) {
     ...round.pictures.filter((pic) => !pic.isFake && !isPictureSelectedFromBuyer(pic))
   );
   game.fakePoints.push(...selectedPictures.filter((pic) => pic.isFake));
+
   game.phase = GamePhase.Evaluate;
 }
 
@@ -196,6 +198,7 @@ export function endRound(game: Game) {
   if (game.fakePoints.length >= gameEndCondition) {
     game.phase = GamePhase.End;
   } else {
+    discardRoundCards(game);
     fillUpCards(game);
     rotateRoles(game);
     startRound(game);
@@ -206,11 +209,22 @@ function getCurrentRound(game: Game): GameRound {
   return game.rounds[game.currentRound];
 }
 
-function getFakes(deck: string[]): Picture[] {
-  return drawCards(deck, fakesPerRound).map((card) => ({
+function getFakes(game: Game): Picture[] {
+  return drawCardsSafe(game, fakesPerRound).map((card) => ({
     card,
     isFake: true,
   }));
+}
+
+function discardRoundCards(game: Game) {
+  const round = getCurrentRound(game);
+  const notInPoints = round.pictures.filter(
+    (pic: Picture) =>
+      game.teamPoints.findIndex((p) => p.card === pic.card) === -1 && game.fakePoints.findIndex((p) => p.card === pic.card) === -1
+  );
+  if (!game.discardedDeck) game.discardedDeck = [];
+  game.discardedDeck.push(...round.themes, ...notInPoints.map((p) => p.card));
+  game.neutralCards = []; // reset neutral cards - todo only dynamic in round
 }
 
 function fillUpCards(game: Game) {
@@ -220,9 +234,21 @@ function fillUpCards(game: Game) {
     player.pictures = player.pictures?.filter((pic) => !isPictureSelectedFromPainter(pic));
     const numOfPlayedCards = numOfCards - (player.pictures?.length ?? 0);
     if (numOfPlayedCards && player.pictures) {
-      player.pictures.push(...drawCards(game.deck, numOfPlayedCards).map((card) => ({ card })));
+      player.pictures.push(...drawCardsSafe(game, numOfPlayedCards).map((card) => ({ card })));
     }
   });
+}
+
+function drawCardsSafe(game: Game, numOfCards: number) {
+  if (game.deck.length < numOfCards) {
+    fillUpDeck(game.deck, game.discardedDeck);
+    game.discardedDeck = [];
+  }
+  return drawCards(game.deck, numOfCards);
+}
+
+function fillUpDeck(deck: string[], discardedDeck: string[] = []) {
+  deck.push(...shuffleArray(discardedDeck));
 }
 
 function rotateRoles(game: Game) {

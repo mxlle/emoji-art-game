@@ -59,6 +59,7 @@ const GameSchema: Schema = new Schema(
     hostId: String,
 
     deck: [String],
+    discardedDeck: [String],
 
     currentRound: Number,
     phase: Number,
