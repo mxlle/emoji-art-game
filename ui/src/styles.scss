@@ -11,6 +11,8 @@
 
 html {
   // colors
+  --primary-color: #7b1fa2; // from mat theme
+  --primary-rgb: 123, 31, 162;
   --success-color: green;
   --success-background: darkgreen;
   --warning-color: yellow;
@@ -63,6 +65,8 @@ body {
   font-family: Roboto, 'Helvetica Neue', sans-serif;
   background-color: var(--body-background);
   color: var(--foreground);
+  user-select: none;
+  -webkit-tap-highlight-color: rgba(var(--primary-rgb), 0.075);
 }
 
 * {

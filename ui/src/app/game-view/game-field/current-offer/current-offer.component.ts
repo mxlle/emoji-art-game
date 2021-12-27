@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { Picture, PlayerGame } from '../../../../game-logic/game';
+import { BuyerSelection, Picture, PlayerGame } from '../../../../game-logic/game';
 import { getPictureCssClass, trackByPictureCard } from '../../../ui-helpers';
 import apiFunctions from '../../../../data/apiFunctions';
 
@@ -15,6 +15,16 @@ export class CurrentOfferComponent {
   @Input() currentTheme!: string;
 
   readonly trackByPictureCard = trackByPictureCard;
+
+  getPictureIsSelected(picture: Picture): boolean {
+    return (
+      !!picture.buyerTheme ||
+      (!!picture.buyerSelection &&
+        picture.buyerSelection.findIndex(
+          (s: BuyerSelection) => !!this.game.currentPlayer?.id && s.playerIds.includes(this.game.currentPlayer.id)
+        ) > -1)
+    );
+  }
 
   getPictureCssClass(picture: Picture): string {
     return getPictureCssClass(this.game, picture);

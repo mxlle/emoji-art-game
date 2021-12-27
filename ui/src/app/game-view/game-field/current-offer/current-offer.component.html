@@ -8,7 +8,7 @@
     *ngFor="let picture of pictures; trackBy: trackByPictureCard"
     class="{{ getPictureCssClass(picture) }}"
     [picture]="picture"
-    [selected]="!!picture.buyerTheme || !!picture.buyerSelection?.length"
+    [selected]="getPictureIsSelected(picture)"
     (click)="toggleBuyerSelection(picture)"
   >
     {{ picture.card }}
