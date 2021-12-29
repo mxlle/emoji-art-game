@@ -46,5 +46,5 @@ export function getGameDuration(durationInMillis: number) {
 export function easeInQuad(x: number, of: number): number {
   const x1 = x / of;
   const x_quad = x1 * x1;
-  return Math.ceil(x_quad * of);
+  return x_quad * of;
 }

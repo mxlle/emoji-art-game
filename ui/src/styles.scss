@@ -28,6 +28,7 @@ html {
   --dialog-background: #111111;
   --card-background-default: #444444;
   --card-background-selected: #555555;
+  --inactive-background: rgba(255, 255, 255, 0.1);
   --border-color-secondary: #555555;
   --border-color: #999999;
   // shadow copied from mat-card
@@ -43,6 +44,7 @@ html {
   --spacer-lg: 1rem;
   --spacer-xl: 1.5rem;
   --spacer-xxl: 2rem;
+  --spacer-xxxl: 4rem;
 
   --font-size-sm: 0.9rem;
   --font-size-default: 1rem;

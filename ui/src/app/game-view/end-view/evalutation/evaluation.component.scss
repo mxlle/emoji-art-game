@@ -1,0 +1,12 @@
+:host {
+  width: 100%;
+  display: grid;
+  grid-template-rows: auto auto auto;
+  gap: var(--spacer-lg);
+  place-items: center;
+  font-size: var(--font-size-md);
+
+  .emoji {
+    font-size: var(--emoji-size-lg);
+  }
+}

@@ -12,6 +12,14 @@ import { trackByPictureCard } from '../../ui-helpers';
 export class EndViewComponent {
   @Input() game!: PublicGame;
 
+  animatedPoints: number = 0;
+
+  get animatedFakePoints(): number {
+    return this.animatedPoints !== this.game.teamPoints.length
+      ? Math.min(this.game.fakePoints.length, this.animatedPoints)
+      : this.game.fakePoints.length;
+  }
+
   readonly pointsEmoji = pointsEmoji;
   readonly masterFaker = masterFaker;
 

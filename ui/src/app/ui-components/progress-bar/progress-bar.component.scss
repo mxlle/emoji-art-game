@@ -1,0 +1,15 @@
+:host {
+  display: block;
+  width: 100%;
+  height: var(--spacer-lg);
+  background-color: var(--inactive-background);
+  position: relative;
+}
+
+.bar {
+  position: absolute;
+  height: 100%;
+  width: 0;
+  max-width: 100%;
+  background-color: var(--primary-color);
+}

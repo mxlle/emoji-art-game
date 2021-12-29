@@ -1,0 +1,3 @@
+<h2>Your result</h2>
+<app-progress-bar [value]="(animatedPercentage$ | async) ?? 0" [colors]="colors"></app-progress-bar>
+<div class="emoji" [style.transform]="getTransform((animatedPercentage$ | async) ?? 0)">{{ animatedEmoji$ | async }}</div>

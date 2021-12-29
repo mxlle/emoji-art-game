@@ -48,6 +48,8 @@ export const maxDemand = 7;
 export const fakesPerRound = 4;
 export const gameEndCondition = 6;
 
+export const bestPoints = 30;
+
 export const roleOrder: Role[] = [Role.PAINTER, Role.BUYER, Role.BUYER, Role.PAINTER, Role.BUYER];
 
 export const getRoleOrder = (numOfPlayer: number): Role[] => {
