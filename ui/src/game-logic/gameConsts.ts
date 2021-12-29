@@ -14,7 +14,7 @@ import {
   travelAndPlaces,
   weatherAndEarth,
 } from '../game-tools/emoji-util';
-import { GamePhase, Role } from './game';
+import { GamePhase, Joker, JokerType, Role } from './game';
 
 export const emojis: string[] = splitEmojis(
   bodyParts +
@@ -67,6 +67,30 @@ export const getNumOfCardsPerPlayer = (numOfPlayers: number): number => {
     return 6;
   }
 };
+
+export const getInitialJokers = (): Joker[] => {
+  return [
+    { type: 3, phase: GamePhase.Demand, role: Role.BUYER, used: false },
+    { type: 4, phase: GamePhase.Offer, role: Role.PAINTER, used: false },
+    { type: 5, phase: GamePhase.Offer, role: Role.PAINTER, used: false },
+    { type: 6, phase: GamePhase.Choose, role: Role.BUYER, used: false },
+  ];
+};
+
+export function getJokerLabel(joker: Joker): string {
+  switch (joker.type) {
+    case JokerType.EXCHANGE_THEMES:
+      return `2️⃣🔄`;
+    case JokerType.SWAP_HAND:
+      return `✋🔄`;
+    case JokerType.CHANGE_DEMAND:
+      return `➕➖`;
+    case JokerType.QUESTION_PICTURE:
+      return `🖼️❓`;
+    default:
+      return '';
+  }
+}
 
 export const getPhaseEmojis = (phase: GamePhase) => {
   switch (phase) {

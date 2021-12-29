@@ -20,6 +20,8 @@
   <button mat-flat-button color="primary" [disabled]="!allowDemandConfirm" (click)="setDemand()">Confirm</button>
 </div>
 
+<app-jokers *ngIf="game.jokers.length" [game]="game" [currentPlayer]="currentPlayer"></app-jokers>
+
 <app-current-offer
   *ngIf="GamePhase.Demand !== game.phase"
   [game]="game"

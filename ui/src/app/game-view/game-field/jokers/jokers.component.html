@@ -1,0 +1,15 @@
+<h2>Jokers</h2>
+<div class="jokers">
+  <app-card
+    *ngFor="let joker of game.jokers"
+    [clickable]="isAvailable(joker) && userIsAllowed(joker)"
+    [disabled]="!isAvailable(joker)"
+    (click)="useJoker(joker)"
+  >
+    <span *ngIf="joker.used">{{ joker.type }}</span>
+    <ng-container *ngIf="!joker.used">
+      <span class="emoji">{{ joker.role }}</span>
+      <span class="emoji">{{ getJokerLabel(joker) }}</span>
+    </ng-container>
+  </app-card>
+</div>

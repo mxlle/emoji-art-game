@@ -1,0 +1,16 @@
+@use '../../../../mixins';
+
+.joker-label {
+  font-size: var(--emoji-size-md);
+  margin-block-end: var(--spacer-md);
+}
+
+.options {
+  @include mixins.defaultGrid();
+  padding: var(--spacer-lg) 0;
+  //--card-font-size: var(--emoji-size-md);
+}
+
+.mat-dialog-actions {
+  justify-content: flex-end;
+}

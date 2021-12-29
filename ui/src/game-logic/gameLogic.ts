@@ -9,9 +9,21 @@ import {
   Picture,
   Player,
   PublicGame,
+  Role,
 } from './game';
 import { shuffleArray } from '../game-tools/random-util';
-import { emojis, fakesPerRound, gameEndCondition, getNumOfCardsPerPlayer, getRoleOrder, minDemand, themesPerRound } from './gameConsts';
+import {
+  emojis,
+  fakesPerRound,
+  gameEndCondition,
+  getInitialJokers,
+  getNumOfCardsPerPlayer,
+  getRoleOrder,
+  masterFaker,
+  maxDemand,
+  minDemand,
+  themesPerRound,
+} from './gameConsts';
 import { dealCards, drawCards } from '../game-tools/card-game-util';
 import { generateEmojiId } from '../game-tools/emoji-util';
 
@@ -25,6 +37,7 @@ export function createGame(name: string): Game {
     hostId: '',
     deck: [],
     discardedDeck: [],
+    jokers: getInitialJokers(),
     currentRound: -1,
     phase: GamePhase.Init,
     rounds: [],
@@ -182,12 +195,19 @@ export function choosePictures(game: Game) {
   const round = getCurrentRound(game);
   round.pictures.forEach(setBuyerThemeForPicture);
   const selectedPictures = round.pictures.filter(isPictureSelectedFromBuyer);
-  game.teamPoints.push(...selectedPictures.filter((pic) => pic.buyerTheme === pic.painterTheme));
+  const newTeamPoints = selectedPictures.filter((pic) => pic.buyerTheme === pic.painterTheme);
+  const newFakePoints = selectedPictures.filter((pic) => pic.isFake);
+
+  game.teamPoints.push(...newTeamPoints);
+  game.fakePoints.push(...newFakePoints);
   game.neutralCards.push(
     ...selectedPictures.filter((pic) => pic.buyerTheme !== pic.painterTheme && !pic.isFake),
     ...round.pictures.filter((pic) => !pic.isFake && !isPictureSelectedFromBuyer(pic))
   );
-  game.fakePoints.push(...selectedPictures.filter((pic) => pic.isFake));
+
+  if (newTeamPoints.length === round.demand) {
+    reactivateJoker(game, newTeamPoints.length);
+  }
 
   game.phase = GamePhase.Evaluate;
 }
@@ -202,6 +222,68 @@ export function endRound(game: Game) {
     fillUpCards(game);
     rotateRoles(game);
     startRound(game);
+  }
+}
+
+// -------------
+// JOKER USAGE
+// -------------
+
+export function useExchangeThemesJoker(game: Game) {
+  const joker = game.jokers[0];
+  if (joker.phase !== game.phase) return;
+  if (joker.used) return;
+
+  const round = getCurrentRound(game);
+  game.discardedDeck.push(...round.themes);
+  round.themes = drawCardsSafe(game, themesPerRound);
+
+  joker.used = true;
+}
+
+export function useSwapHandJoker(game: Game, playerId: string) {
+  const joker = game.jokers[1];
+  if (joker.phase !== game.phase) return;
+  if (joker.used) return;
+
+  const player = getPlayerInGame(game, playerId);
+  if (!player || !player.pictures) return;
+
+  game.discardedDeck.push(...player.pictures?.map((pic) => pic.card));
+  player.pictures = drawCardsSafe(game, player.pictures.length).map((card) => ({ card }));
+
+  joker.used = true;
+}
+
+export function useChangeDemandJoker(game: Game, newDemand: number) {
+  const joker = game.jokers[2];
+  if (joker.phase !== game.phase) return;
+  if (joker.used) return;
+  if (newDemand < minDemand && newDemand > maxDemand) return;
+
+  getCurrentRound(game).demand = newDemand;
+
+  joker.used = true;
+}
+
+export function useQuestionPictureJoker(game: Game, card: string) {
+  const joker = game.jokers[3];
+  if (joker.phase !== game.phase) return;
+  if (joker.used) return;
+
+  const round = getCurrentRound(game);
+  const picture = round.pictures.find((pic) => pic.card === card);
+  if (!picture) return;
+
+  picture.fakeStatusKnown = true;
+
+  joker.used = true;
+}
+
+function reactivateJoker(game: Game, value: number) {
+  const joker = game.jokers.find((joker) => joker.type === value);
+  if (joker) {
+    joker.used = false;
   }
 }
 
@@ -323,7 +405,7 @@ export function getPlayerInGame(game: Game | GameInfo, playerId?: string): Playe
 }
 
 export function toPublicGame(game: Game): PublicGame {
-  const { id, name, hostId, players, phase, currentRound, rounds, teamPoints, fakePoints, neutralCards } = game;
+  const { id, name, hostId, players, jokers, phase, currentRound, rounds, teamPoints, fakePoints, neutralCards } = game;
   const round = rounds[currentRound];
 
   return {
@@ -331,12 +413,14 @@ export function toPublicGame(game: Game): PublicGame {
     name,
     hostId,
     players: players.map(mapToPublicPlayer),
+    jokers,
     currentOffer:
-      round?.pictures.map(({ card, isFake, buyerTheme, painterTheme, buyerSelection }) => {
+      round?.pictures.map(({ card, isFake, buyerTheme, painterTheme, buyerSelection, fakeStatusKnown }) => {
         if (GamePhase.Evaluate === phase) {
           return { card, isFake, buyerTheme, painterTheme };
         } else {
-          return { card, buyerSelection };
+          let painterTheme = fakeStatusKnown ? (isFake ? masterFaker : Role.PAINTER) : undefined;
+          return { card, buyerSelection, painterTheme };
         }
       }) ?? [],
     currentThemes: round?.themes ?? [],

@@ -13,6 +13,7 @@ import { PlayerInfoModule } from '../../shared/player-info/player-info.module';
 import { OfferPreviewModule } from './offer-preview/offer-preview.module';
 import { QuickAccessBarModule } from './quick-access-bar/quick-access-bar.module';
 import { PhaseInfoModule } from './phase-info/phase-info.module';
+import { JokersModule } from './jokers/jokers.module';
 
 @NgModule({
   declarations: [GameFieldComponent],
@@ -31,6 +32,7 @@ import { PhaseInfoModule } from './phase-info/phase-info.module';
     OfferPreviewModule,
     QuickAccessBarModule,
     PhaseInfoModule,
+    JokersModule,
   ],
 })
 export class GameFieldModule {}

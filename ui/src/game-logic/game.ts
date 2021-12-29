@@ -9,6 +9,8 @@ export interface Game {
   deck: string[];
   discardedDeck: string[];
 
+  jokers: Joker[];
+
   currentRound: number;
   phase: GamePhase;
 
@@ -28,6 +30,8 @@ export interface PublicGame {
   name: string;
   players: Player[];
   hostId: string;
+
+  jokers: Joker[];
 
   currentOffer: Picture[];
   currentThemes: string[];
@@ -76,11 +80,26 @@ export interface Picture {
   buyerTheme?: string;
   buyerSelection?: BuyerSelection[];
   isFake?: boolean;
+  fakeStatusKnown?: boolean;
 }
 
 export enum Role {
   BUYER = '🔍',
   PAINTER = '🎨',
+}
+
+export interface Joker {
+  readonly type: JokerType;
+  readonly phase: GamePhase;
+  readonly role: Role;
+  used: boolean;
+}
+
+export enum JokerType {
+  EXCHANGE_THEMES = 3,
+  SWAP_HAND = 4,
+  CHANGE_DEMAND = 5,
+  QUESTION_PICTURE = 6,
 }
 
 export interface Player {
@@ -113,10 +132,14 @@ export interface GameApi {
   updatePlayer: (gameId: string, player: Player) => Promise<boolean>;
   removePlayerFromGame: (gameId: string, playerId: string) => Promise<boolean>;
   startGame: (gameId: string) => Promise<boolean>;
+  useExchangeThemesJoker: (gameId: string) => Promise<boolean>;
   suggestDemand: (gameId: string, demand: number) => Promise<boolean>;
   setDemand: (gameId: string) => Promise<boolean>;
+  useSwapHandJoker: (gameId: string) => Promise<boolean>;
+  useChangeDemandJoker: (gameId: string, newDemand: number) => Promise<boolean>;
   togglePainterSelections: (gameId: string, card: string, theme: string) => Promise<boolean>;
   offerPictures: (gameId: string) => Promise<boolean>;
+  useQuestionPictureJoker: (gameId: string, card: string) => Promise<boolean>;
   toggleBuyerPreSelections: (gameId: string, card: string, theme: string) => Promise<boolean>;
   choosePictures: (gameId: string) => Promise<boolean>;
   endOfRound: (gameId: string) => Promise<boolean>;

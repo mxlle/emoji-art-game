@@ -25,6 +25,7 @@ html {
   --background: #222222;
   --body-background: #333333;
   --body-background-rgb: 51, 51, 51;
+  --dialog-background: #111111;
   --card-background-default: #444444;
   --card-background-selected: #555555;
   --border-color-secondary: #555555;
@@ -106,4 +107,8 @@ h3 {
   align-items: center;
   gap: var(--spacer-lg);
   background: var(--background);
+}
+
+body .mat-dialog-container {
+  background-color: var(--dialog-background);
 }

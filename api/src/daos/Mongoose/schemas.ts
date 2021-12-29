@@ -17,6 +17,7 @@ export const PictureSchema: Schema = new Schema(
       default: undefined,
     },
     isFake: { type: Boolean, required: false },
+    fakeStatusKnown: { type: Boolean, required: false },
   },
   { _id: false }
 );
@@ -51,6 +52,16 @@ export const RoundSchema: Schema = new Schema(
   { _id: false }
 );
 
+export const JokerSchema: Schema = new Schema(
+  {
+    type: Number,
+    phase: Number,
+    role: String,
+    used: Boolean,
+  },
+  { _id: false }
+);
+
 const GameSchema: Schema = new Schema(
   {
     id: String,
@@ -60,6 +71,8 @@ const GameSchema: Schema = new Schema(
 
     deck: [String],
     discardedDeck: [String],
+
+    jokers: [JokerSchema],
 
     currentRound: Number,
     phase: Number,

@@ -122,6 +122,23 @@ class GameApiImpl implements GameApi {
     return true;
   }
 
+  async useExchangeThemesJoker(gameId: string) {
+    const game = await gameDao.getOne(gameId);
+
+    if (!game) throw new Error(gameNotFoundError);
+    if (game.players.findIndex((p: Player) => p.id === this.userId && p.role === Role.BUYER) === -1) {
+      throw new Error(forbiddenError);
+    }
+
+    GameController.useExchangeThemesJoker(game);
+
+    const updatedGame = await gameDao.update(game);
+
+    this.emitPublicGame(updatedGame);
+
+    return true;
+  }
+
   async suggestDemand(gameId: string, demand: number) {
     const game = await gameDao.getOne(gameId);
 
@@ -149,6 +166,42 @@ class GameApiImpl implements GameApi {
     }
 
     GameController.setDemand(game);
+
+    const updatedGame = await gameDao.update(game);
+
+    this.emitPublicGame(updatedGame);
+
+    return true;
+  }
+
+  async useSwapHandJoker(gameId: string) {
+    const game = await gameDao.getOne(gameId);
+
+    if (!game) throw new Error(gameNotFoundError);
+    if (game.players.findIndex((p: Player) => p.id === this.userId && p.role === Role.PAINTER) === -1) {
+      throw new Error(forbiddenError);
+    }
+
+    GameController.useSwapHandJoker(game, this.userId);
+
+    const updatedGame = await gameDao.update(game);
+
+    this.emitPublicGame(updatedGame);
+    this.emitPlayerData(updatedGame, this.userId);
+
+    return true;
+  }
+
+  async useChangeDemandJoker(gameId: string, newDemand: number) {
+    const game = await gameDao.getOne(gameId);
+
+    if (!newDemand) throw new Error(paramMissingError);
+    if (!game) throw new Error(gameNotFoundError);
+    if (game.players.findIndex((p: Player) => p.id === this.userId && p.role === Role.PAINTER) === -1) {
+      throw new Error(forbiddenError);
+    }
+
+    GameController.useChangeDemandJoker(game, newDemand);
 
     const updatedGame = await gameDao.update(game);
 
@@ -186,6 +239,24 @@ class GameApiImpl implements GameApi {
     }
 
     GameController.offerPictures(game);
+
+    const updatedGame = await gameDao.update(game);
+
+    this.emitPublicGame(updatedGame);
+
+    return true;
+  }
+
+  async useQuestionPictureJoker(gameId: string, card: string) {
+    const game = await gameDao.getOne(gameId);
+
+    if (!card) throw new Error(paramMissingError);
+    if (!game) throw new Error(gameNotFoundError);
+    if (game.players.findIndex((p: Player) => p.id === this.userId && p.role === Role.BUYER) === -1) {
+      throw new Error(forbiddenError);
+    }
+
+    GameController.useQuestionPictureJoker(game, card);
 
     const updatedGame = await gameDao.update(game);
 

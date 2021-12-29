@@ -1,0 +1,52 @@
+<h1 mat-dialog-title>Do you want to spent this joker?</h1>
+<div mat-dialog-content>
+  <div class="joker-label">
+    <span class="emoji">{{ data.joker.role }}</span>
+    <span class="emoji">{{ getJokerLabel(data.joker) }}</span>
+  </div>
+  <ng-container [ngSwitch]="data.joker.type">
+    <ng-container *ngSwitchCase="JokerType.EXCHANGE_THEMES">
+      <span>This will exchange the theme cards for this round.</span>
+    </ng-container>
+    <ng-container *ngSwitchCase="JokerType.SWAP_HAND">
+      <span>This will swap all your hand cards.</span>
+    </ng-container>
+    <ng-container *ngSwitchCase="JokerType.CHANGE_DEMAND">
+      <div>Set the new demand:</div>
+      <div class="options">
+        <app-card
+          *ngFor="let option of demandOptions"
+          [clickable]="true"
+          [selected]="option === selectedValue"
+          (click)="selectedValue = option"
+        >
+          {{ option }}
+        </app-card>
+      </div>
+    </ng-container>
+    <ng-container *ngSwitchCase="JokerType.QUESTION_PICTURE">
+      <div>Ask whether a card is fake or original. Which card should it be?</div>
+      <div class="options">
+        <app-picture
+          *ngFor="let option of pictureOptions"
+          [picture]="option"
+          [clickable]="true"
+          [selected]="option.card === selectedValue"
+          (click)="selectedValue = option.card"
+        >
+        </app-picture>
+      </div>
+    </ng-container>
+  </ng-container>
+</div>
+<div mat-dialog-actions>
+  <button mat-flat-button [mat-dialog-close]="undefined">Cancel</button>
+  <button
+    mat-flat-button
+    color="primary"
+    [mat-dialog-close]="isBooleanCheck || selectedValue"
+    [disabled]="!isBooleanCheck && !selectedValue"
+  >
+    OK
+  </button>
+</div>
