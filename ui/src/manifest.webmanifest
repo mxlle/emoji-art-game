@@ -1,7 +1,7 @@
 {
   "name": "Emoji Art Game",
   "short_name": "emoji-art-game",
-  "theme_color": "#ffab00",
+  "theme_color": "#7b1fa2",
   "background_color": "#333",
   "display": "standalone",
   "scope": "./",
