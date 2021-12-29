@@ -1,10 +1,3 @@
-<app-quick-access-bar
-  *ngIf="showQuickAccess"
-  [game]="game"
-  [currentPlayer]="currentPlayer"
-  [(currentTheme)]="currentTheme"
-></app-quick-access-bar>
-
 <app-phase-info [game]="game"></app-phase-info>
 
 <app-current-themes
@@ -38,3 +31,10 @@
   [player]="currentPlayer"
   [currentTheme]="currentTheme"
 ></app-current-player-hand>
+
+<app-quick-access-bar
+  *ngIf="showQuickAccess"
+  [game]="game"
+  [currentPlayer]="currentPlayer"
+  [(currentTheme)]="currentTheme"
+></app-quick-access-bar>
