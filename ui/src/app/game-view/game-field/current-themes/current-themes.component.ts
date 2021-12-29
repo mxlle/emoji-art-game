@@ -17,6 +17,8 @@ export class CurrentThemesComponent implements OnInit {
     return this._themes;
   }
 
+  @Input() active?: boolean;
+
   @Input() currentTheme?: string;
   @Output() currentThemeChange: EventEmitter<string> = new EventEmitter<string>();
 

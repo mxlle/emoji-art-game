@@ -17,11 +17,15 @@ export class GameFieldComponent implements OnInit, OnDestroy {
 
   currentTheme: string = '';
 
-  get showQuickAccess(): boolean {
+  get themesActive(): boolean {
     return (
       (GamePhase.Offer === this.game.phase && Role.PAINTER === this.currentPlayer?.role) ||
       (GamePhase.Choose === this.game.phase && Role.BUYER === this.currentPlayer?.role)
     );
+  }
+
+  get showQuickAccess(): boolean {
+    return this.themesActive;
   }
 
   get showDemandPicker(): boolean {

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { GameFieldComponent } from './game-field.component';
-import { CardModule } from '../../shared/card/card.module';
+import { CardModule } from '../../ui-components/card/card.module';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { PictureModule } from '../../shared/picture/picture.module';

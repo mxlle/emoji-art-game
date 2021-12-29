@@ -11,7 +11,19 @@
   border-radius: var(--border-radius);
   box-shadow: var(--card-box-shadow);
 
-  &.selected {
+  pointer-events: none; // re-activated when clickable
+
+  &.clickable {
+    pointer-events: all;
+  }
+
+  &.disabled {
+    box-shadow: none;
+    filter: grayscale(0.75);
+    opacity: 0.75;
+  }
+
+  &.selected.clickable {
     background-color: var(--card-background, var(--card-background-selected));
   }
 }

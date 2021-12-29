@@ -7,7 +7,12 @@
 
 <app-phase-info [game]="game"></app-phase-info>
 
-<app-current-themes *ngIf="game.currentThemes" [themes]="game.currentThemes" [(currentTheme)]="currentTheme"></app-current-themes>
+<app-current-themes
+  *ngIf="game.currentThemes"
+  [themes]="game.currentThemes"
+  [active]="themesActive"
+  [(currentTheme)]="currentTheme"
+></app-current-themes>
 
 <div *ngIf="showDemandPicker" class="demand">
   <h2>Set demand</h2>
@@ -20,6 +25,7 @@
   [game]="game"
   [pictures]="game.currentOffer"
   [currentTheme]="currentTheme"
+  [currentPlayer]="currentPlayer"
 ></app-current-offer>
 
 <button *ngIf="showEndRoundConfirm" mat-flat-button color="primary" (click)="endRound()">Next round</button>

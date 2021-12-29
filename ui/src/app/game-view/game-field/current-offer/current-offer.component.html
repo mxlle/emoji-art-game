@@ -9,6 +9,7 @@
     class="{{ getPictureCssClass(picture) }}"
     [picture]="picture"
     [selected]="getPictureIsSelected(picture)"
+    [clickable]="active"
     (click)="toggleBuyerSelection(picture)"
   >
     {{ picture.card }}

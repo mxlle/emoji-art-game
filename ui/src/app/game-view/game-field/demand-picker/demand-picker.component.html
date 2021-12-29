@@ -1,4 +1,4 @@
-<app-card *ngFor="let option of demandOptions" [selected]="getDemandIsSelected(option)" (click)="suggestDemand(option)">
+<app-card *ngFor="let option of demandOptions" [clickable]="true" [selected]="getDemandIsSelected(option)" (click)="suggestDemand(option)">
   {{ option }}
   <div *ngIf="getSuggestionForDemand(option) as suggestion" class="suggestions">
     <div *ngFor="let id of suggestion.playerIds" [style.--color]="getPlayer(id)?.color">&nbsp;</div>

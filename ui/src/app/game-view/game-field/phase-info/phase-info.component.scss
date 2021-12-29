@@ -21,7 +21,7 @@
   align-items: center;
   grid-column: 1;
   &.inactive {
-    opacity: 0.5;
+    opacity: var(--inactive-opacity);
   }
   .players {
     display: flex;

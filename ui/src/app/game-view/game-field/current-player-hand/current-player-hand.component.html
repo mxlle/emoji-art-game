@@ -5,6 +5,8 @@
     class="{{ getPictureCssClass(picture) }}"
     [picture]="picture"
     [selected]="!!picture.painterTheme"
+    [clickable]="active"
+    [disabled]="!active"
     (click)="togglePainterSelection(picture)"
   >
     {{ picture.card }}

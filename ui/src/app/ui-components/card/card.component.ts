@@ -7,5 +7,7 @@ import { ChangeDetectionStrategy, Component, HostBinding, Input } from '@angular
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CardComponent {
+  @Input() @HostBinding('class.clickable') clickable?: boolean;
+  @Input() @HostBinding('class.disabled') disabled?: boolean;
   @Input() @HostBinding('class.selected') selected?: boolean;
 }

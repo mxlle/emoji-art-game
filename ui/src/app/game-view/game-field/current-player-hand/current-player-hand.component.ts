@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { Picture, Player, PublicGame } from '../../../../game-logic/game';
+import { ChangeDetectionStrategy, Component, HostBinding, Input } from '@angular/core';
+import { GamePhase, Picture, Player, PublicGame, Role } from '../../../../game-logic/game';
 import { getPictureCssClass, trackByPictureCard } from '../../../ui-helpers';
 import apiFunctions from '../../../../data/apiFunctions';
 
@@ -15,6 +15,10 @@ export class CurrentPlayerHandComponent {
   @Input() currentTheme!: string;
 
   readonly trackByPictureCard = trackByPictureCard;
+
+  @HostBinding('class.active') get active(): boolean {
+    return GamePhase.Offer === this.game.phase && this.player.role === Role.PAINTER;
+  }
 
   togglePainterSelection(picture: Picture) {
     apiFunctions.togglePainterSelections(this.game.id, picture.card, this.currentTheme);

@@ -1,6 +1,6 @@
-import {ChangeDetectionStrategy, Component, Input, OnInit} from '@angular/core';
-import {Picture} from '../../../game-logic/game';
-import {masterFaker} from '../../../game-logic/gameConsts';
+import { ChangeDetectionStrategy, Component, Input, OnInit } from '@angular/core';
+import { Picture } from '../../../game-logic/game';
+import { masterFaker } from '../../../game-logic/gameConsts';
 
 @Component({
   selector: 'app-picture',
@@ -11,6 +11,8 @@ import {masterFaker} from '../../../game-logic/gameConsts';
 export class PictureComponent implements OnInit {
   @Input() picture!: Picture;
   @Input() selected: boolean = false;
+  @Input() clickable: boolean = false;
+  @Input() disabled: boolean = false;
 
   constructor() {}
 

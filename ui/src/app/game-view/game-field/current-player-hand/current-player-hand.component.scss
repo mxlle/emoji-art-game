@@ -1,5 +1,13 @@
 @use '../../../mixins';
 
+:host {
+  &:not(.active) {
+    h2 {
+      opacity: var(--inactive-opacity);
+    }
+  }
+}
+
 .hand {
   @include mixins.defaultGrid();
 }

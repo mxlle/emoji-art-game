@@ -4,8 +4,6 @@
   @include mixins.defaultGrid();
 
   app-card {
-    --card-cursor: default;
-
     &.too-much {
       --card-border-color: var(--danger-color);
     }
