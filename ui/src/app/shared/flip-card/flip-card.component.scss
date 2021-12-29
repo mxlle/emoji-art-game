@@ -1,0 +1,23 @@
+:host {
+  perspective: 8cm;
+
+  .flip-container {
+    display: grid;
+    transition: transform 0.5s;
+    transform-style: preserve-3d;
+
+    div {
+      grid-area: 1 / 1;
+      backface-visibility: hidden;
+    }
+
+    .back {
+      transform: rotateY(180deg);
+    }
+  }
+  &.show-back {
+    .flip-container {
+      transform: rotateY(180deg);
+    }
+  }
+}
