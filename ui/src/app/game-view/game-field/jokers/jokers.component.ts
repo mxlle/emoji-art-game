@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, HostBinding, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, HostBinding, Input, TrackByFunction } from '@angular/core';
 import { GamePhase, Joker, JokerType, Player, PublicGame } from '../../../../game-logic/game';
 import apiFunctions from '../../../../data/apiFunctions';
 import { JokerConfirmDialogService } from './joker-confirm-dialog/joker-confirm-dialog.service';
@@ -19,6 +19,7 @@ export class JokersComponent {
     return GamePhase.Evaluate === this.game.phase;
   }
 
+  readonly trackByJoker: TrackByFunction<Joker> = (_, joker: Joker) => joker.type;
   readonly getJokerLabel = getJokerLabel;
 
   constructor(private _jokerConfirmDialogService: JokerConfirmDialogService) {}
