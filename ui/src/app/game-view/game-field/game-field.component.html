@@ -1,35 +1,37 @@
-<app-phase-info [game]="game"></app-phase-info>
+<div class="scroll-container">
+  <app-phase-info [game]="game"></app-phase-info>
 
-<app-current-themes
-  *ngIf="game.currentThemes"
-  [themes]="game.currentThemes"
-  [active]="themesActive"
-  [(currentTheme)]="currentTheme"
-></app-current-themes>
+  <app-current-themes
+    *ngIf="game.currentThemes"
+    [themes]="game.currentThemes"
+    [active]="themesActive"
+    [(currentTheme)]="currentTheme"
+  ></app-current-themes>
 
-<div *ngIf="showDemandPicker" class="demand">
-  <h2>Set demand</h2>
-  <app-demand-picker [game]="game"></app-demand-picker>
-  <button mat-flat-button color="primary" [disabled]="!allowDemandConfirm" (click)="setDemand()">Confirm</button>
+  <div *ngIf="showDemandPicker" class="demand">
+    <h2>Set demand</h2>
+    <app-demand-picker [game]="game"></app-demand-picker>
+    <button mat-flat-button color="primary" [disabled]="!allowDemandConfirm" (click)="setDemand()">Confirm</button>
+  </div>
+
+  <app-jokers *ngIf="game.jokers.length" [game]="game" [currentPlayer]="currentPlayer"></app-jokers>
+
+  <app-current-offer
+    *ngIf="GamePhase.Demand !== game.phase"
+    [game]="game"
+    [currentTheme]="currentTheme"
+    [currentPlayer]="currentPlayer"
+  ></app-current-offer>
+
+  <button *ngIf="showEndRoundConfirm" mat-flat-button color="primary" (click)="endRound()">Next round</button>
+
+  <app-current-player-hand
+    *ngIf="currentPlayer"
+    [game]="game"
+    [player]="currentPlayer"
+    [currentTheme]="currentTheme"
+  ></app-current-player-hand>
 </div>
-
-<app-jokers *ngIf="game.jokers.length" [game]="game" [currentPlayer]="currentPlayer"></app-jokers>
-
-<app-current-offer
-  *ngIf="GamePhase.Demand !== game.phase"
-  [game]="game"
-  [currentTheme]="currentTheme"
-  [currentPlayer]="currentPlayer"
-></app-current-offer>
-
-<button *ngIf="showEndRoundConfirm" mat-flat-button color="primary" (click)="endRound()">Next round</button>
-
-<app-current-player-hand
-  *ngIf="currentPlayer"
-  [game]="game"
-  [player]="currentPlayer"
-  [currentTheme]="currentTheme"
-></app-current-player-hand>
 
 <app-quick-access-bar
   *ngIf="showQuickAccess"

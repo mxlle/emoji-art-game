@@ -1,8 +1,22 @@
 @use '../../mixins';
 
+$quickAccessBarHeight: 85px; // 68 + margin
+
 :host {
+  height: 100%;
+  overflow: hidden;
+  display: grid;
+  grid-template-rows: 1fr;
+
+  > * {
+    grid-area: 1 / 1;
+  }
+}
+
+.scroll-container {
   display: block;
   padding: var(--spacer-lg);
+  padding-bottom: $quickAccessBarHeight;
   height: 100%;
   overflow-y: auto;
   overflow-x: hidden;
@@ -10,13 +24,9 @@
 }
 
 app-quick-access-bar {
-  position: sticky;
-  bottom: calc(-1 * #{var(--spacer-lg)});
+  align-self: end;
   z-index: 1;
   background-color: rgba(var(--body-background-rgb), 0.85);
-  margin: calc(-1 * #{var(--spacer-lg)});
-  margin-top: var(--spacer-lg);
-  width: calc(100% + 2 * #{var(--spacer-lg)});
 }
 
 .demand {
