@@ -1,9 +1,28 @@
 @use '../../../mixins';
 
 :host {
-  display: block;
+  display: grid;
+  grid-template-rows: auto auto;
+}
+
+app-offer-preview,
+.offer {
+  grid-area: 2 / 1;
 }
 
 .offer {
   @include mixins.defaultGrid();
+  transform: scale(1);
+  transition: transform 1s;
+  --flip-card-delay: 0.25s;
+
+  &.initial-show {
+    transform: scale(0);
+    opacity: 0;
+  }
+
+  &.show-start-animation {
+    transform: scale(1);
+    opacity: 1;
+  }
 }

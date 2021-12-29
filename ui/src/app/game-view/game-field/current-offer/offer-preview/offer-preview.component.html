@@ -1,0 +1,17 @@
+<app-card
+  *ngFor="let picture of offerPreview; trackBy: trackByPictureCard; let index = index"
+  [class.too-much]="index >= demand"
+  [class.missing]="!picture.card"
+>
+  <span class="emoji">
+    {{ picture.card }}
+
+    <!-- if no text, use non-breaking space to have correct height -->
+    <ng-container *ngIf="!picture?.card">&nbsp;</ng-container>
+  </span>
+</app-card>
+<div class="faker-cards">
+  <app-card *ngFor="let picture of fakerArray">
+    <span class="emoji">{{ picture }}</span>
+  </app-card>
+</div>

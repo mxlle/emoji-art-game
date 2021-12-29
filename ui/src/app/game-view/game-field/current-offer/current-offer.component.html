@@ -1,16 +1,31 @@
 <h2>
   <span>Market </span>
-  <span>(<app-counter [game]="game"></app-counter>)</span>
+  <span>(<app-counter *ngIf="game" [game]="game"></app-counter>)</span>
 </h2>
-<app-offer-preview *ngIf="!game.currentOffer.length" [demand]="game.currentDemand" [offerCount]="game.offerCount"></app-offer-preview>
-<div *ngIf="game.currentOffer" class="offer">
-  <app-picture
-    *ngFor="let picture of pictures; trackBy: trackByPictureCard"
-    class="{{ getPictureCssClass(picture) }}"
-    [picture]="picture"
-    [selected]="getPictureIsSelected(picture)"
-    [clickable]="active"
-    (click)="toggleBuyerSelection(picture)"
-  >
-  </app-picture>
+<app-offer-preview
+  *ngIf="game && showPreview"
+  [demand]="game.currentDemand"
+  [offerCount]="game.offerCount"
+  [showEndAnimation]="showPreviewEndAnimation"
+></app-offer-preview>
+<div
+  *ngIf="game && (!showPreview || showPreviewEndAnimation)"
+  class="offer"
+  [class.initial-show]="showPreviewEndAnimation"
+  [class.show-start-animation]="showMarketStartAnimation"
+>
+  <app-flip-card *ngFor="let picture of game.currentOffer; trackBy: trackByPictureCard" [showBack]="showPreviewEndAnimation">
+    <app-picture
+      appFlipCardFront
+      class="{{ getPictureCssClass(picture) }}"
+      [picture]="picture"
+      [selected]="getPictureIsSelected(picture)"
+      [clickable]="active"
+      (click)="toggleBuyerSelection(picture)"
+    >
+    </app-picture>
+    <app-card appFlipCardBack
+      ><span class="emoji">{{ unknownCardEmoji }}</span></app-card
+    >
+  </app-flip-card>
 </div>

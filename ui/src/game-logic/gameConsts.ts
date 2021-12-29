@@ -40,6 +40,7 @@ export const gameEmojis = masterFaker + painter + buyer;
 
 export const pointsEmoji = '🏆';
 export const discardedEmoji = '🗑️';
+export const unknownCardEmoji = '❔';
 
 export const minNumPlayers = 2;
 export const themesPerRound = 2;

@@ -1,4 +1,6 @@
 :host {
+  display: block;
+
   &.correct {
     --card-border-color: var(--success-color);
     --card-background: var(--success-background);

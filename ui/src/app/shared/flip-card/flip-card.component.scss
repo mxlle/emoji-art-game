@@ -1,9 +1,11 @@
 :host {
+  display: block;
   perspective: 8cm;
 
   .flip-container {
     display: grid;
     transition: transform 0.5s;
+    transition-delay: var(--flip-card-delay, 0s);
     transform-style: preserve-3d;
 
     div {

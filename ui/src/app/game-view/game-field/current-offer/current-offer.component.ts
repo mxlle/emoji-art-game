@@ -1,8 +1,9 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input } from '@angular/core';
 import { BuyerSelection, GamePhase, Picture, Player, PublicGame, Role } from '../../../../game-logic/game';
 import { getPictureCssClass, trackByPictureCard } from '../../../ui-helpers';
 import apiFunctions from '../../../../data/apiFunctions';
 import { getCurrentUserId } from '../../../../data/functions';
+import { unknownCardEmoji } from '../../../../game-logic/gameConsts';
 
 @Component({
   selector: 'app-current-offer',
@@ -11,18 +12,45 @@ import { getCurrentUserId } from '../../../../data/functions';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CurrentOfferComponent {
-  @Input() game!: PublicGame;
+  @Input() set game(game: PublicGame | undefined) {
+    if (
+      this._game &&
+      GamePhase.Offer === this._game?.phase &&
+      GamePhase.Choose === game?.phase &&
+      this._animationTimeoutRef === undefined
+    ) {
+      this._triggerSwitchToMarketAnimation();
+    } else {
+      this.showPreview = game?.currentOffer.length === 0;
+    }
+    this._game = game;
+  }
+  get game(): PublicGame | undefined {
+    return this._game;
+  }
+  private _game?: PublicGame;
+
   @Input() pictures: Picture[] = [];
   @Input() currentTheme!: string;
   @Input() currentPlayer?: Player;
 
+  showPreview: boolean = true;
+  showPreviewEndAnimation: boolean = false;
+  showMarketStartAnimation: boolean = false;
+
   readonly currentPlayerId = getCurrentUserId();
+  readonly unknownCardEmoji = unknownCardEmoji;
 
   readonly trackByPictureCard = trackByPictureCard;
 
+  private readonly _animationMillis = 2000;
+  private _animationTimeoutRef?: number;
+
   get active(): boolean {
-    return (GamePhase.Choose === this.game.phase && this.currentPlayer?.role === Role.BUYER) || GamePhase.Evaluate === this.game.phase;
+    return (GamePhase.Choose === this._game?.phase && this.currentPlayer?.role === Role.BUYER) || GamePhase.Evaluate === this._game?.phase;
   }
+
+  constructor(private _cdr: ChangeDetectorRef) {}
 
   getPictureIsSelected(picture: Picture): boolean {
     return (
@@ -33,12 +61,31 @@ export class CurrentOfferComponent {
   }
 
   getPictureCssClass(picture: Picture): string {
-    return getPictureCssClass(this.game, picture);
+    return this._game ? getPictureCssClass(this._game, picture) : '';
   }
 
   toggleBuyerSelection(picture: Picture) {
-    if (this.currentTheme) {
-      apiFunctions.toggleBuyerPreSelections(this.game.id, picture.card, this.currentTheme);
+    if (this._game && this.currentTheme) {
+      apiFunctions.toggleBuyerPreSelections(this._game.id, picture.card, this.currentTheme);
+    }
+  }
+
+  private _triggerSwitchToMarketAnimation() {
+    this.showPreview = true;
+    if (!this._animationTimeoutRef) {
+      this.showPreviewEndAnimation = true;
+      this._animationTimeoutRef = setTimeout(() => {
+        this.showPreviewEndAnimation = false;
+        this.showMarketStartAnimation = true;
+        this.showPreview = false;
+        this._cdr.markForCheck();
+
+        this._animationTimeoutRef = setTimeout(() => {
+          this.showMarketStartAnimation = false;
+          this._animationTimeoutRef = undefined;
+          this._cdr.markForCheck();
+        }, this._animationMillis / 2);
+      }, this._animationMillis / 2);
     }
   }
 }
