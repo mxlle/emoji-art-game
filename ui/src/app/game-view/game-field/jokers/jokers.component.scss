@@ -13,6 +13,10 @@
   --card-font-size: var(--emoji-size-xs);
   --card-padding: var(--spacer-sm);
 
+  @media (min-width: 600px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
   app-card {
     display: flex;
     flex-wrap: wrap;

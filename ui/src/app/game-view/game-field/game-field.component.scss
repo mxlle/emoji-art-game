@@ -21,6 +21,18 @@ $quickAccessBarHeight: 85px; // 68 + margin
   overflow-y: auto;
   overflow-x: hidden;
   position: relative;
+
+  @media (min-width: 600px) {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    grid-auto-flow: column;
+    grid-template-rows: auto auto auto;
+    gap: 20px;
+
+    app-current-offer {
+      grid-row: 1 / 3;
+    }
+  }
 }
 
 app-quick-access-bar {
