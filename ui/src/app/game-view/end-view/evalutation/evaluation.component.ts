@@ -60,7 +60,7 @@ export class EvaluationComponent implements OnInit {
       return '🙂';
     } else if (percentage < 100) {
       return '😎';
-    } else if (percentage === 100) {
+    } else if (percentage >= 100) {
       return '🤩';
     } else {
       return '🤔';
