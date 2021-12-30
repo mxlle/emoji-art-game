@@ -16,14 +16,9 @@
 
   <app-jokers *ngIf="game.jokers.length" [game]="game" [currentPlayer]="currentPlayer"></app-jokers>
 
-  <app-current-offer
-    *ngIf="GamePhase.Demand !== game.phase"
-    [game]="game"
-    [currentTheme]="currentTheme"
-    [currentPlayer]="currentPlayer"
-  ></app-current-offer>
-
-  <button *ngIf="showEndRoundConfirm" mat-flat-button color="primary" (click)="endRound()">Next round</button>
+  <app-current-offer *ngIf="GamePhase.Demand !== game.phase" [game]="game" [currentTheme]="currentTheme" [currentPlayer]="currentPlayer">
+    <button *ngIf="showEndRoundConfirm" mat-flat-button color="primary" (click)="endRound()">Next round</button>
+  </app-current-offer>
 
   <app-current-player-hand
     *ngIf="currentPlayer"

@@ -52,4 +52,9 @@ app-quick-access-bar {
 
 app-current-offer {
   margin-bottom: var(--spacer-lg);
+
+  button {
+    place-self: center;
+    margin-block-start: var(--spacer-lg);
+  }
 }

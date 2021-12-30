@@ -37,7 +37,7 @@ export class GameFieldComponent implements OnInit, OnDestroy {
   }
 
   get showEndRoundConfirm(): boolean {
-    return GamePhase.Evaluate === this.game.phase;
+    return GamePhase.Evaluate === this.game.phase && !!this.currentPlayer;
   }
 
   private _destroy$: Subject<void> = new Subject<void>();
