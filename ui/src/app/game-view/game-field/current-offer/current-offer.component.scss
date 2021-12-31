@@ -13,8 +13,8 @@ app-offer-preview,
 .offer {
   @include mixins.defaultGrid();
   transform: scale(1);
-  transition: transform 1s;
-  --flip-card-delay: 0.25s;
+  transition: transform 1.5s;
+  --flip-card-delay: 0.5s;
 
   &.initial-show {
     transform: scale(0);

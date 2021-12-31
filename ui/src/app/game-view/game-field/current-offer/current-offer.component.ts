@@ -43,7 +43,7 @@ export class CurrentOfferComponent {
 
   readonly trackByPictureCard = trackByPictureCard;
 
-  private readonly _animationMillis = 2000;
+  private readonly _animationMillis = 3000;
   private _animationTimeoutRef?: number;
 
   get active(): boolean {
