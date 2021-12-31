@@ -11,6 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { HomeModule } from './home/home.module';
 import { GameViewModule } from './game-view/game-view.module';
 import { CardOverviewModule } from './card-overview/card-overview.module';
+import { AppUpdateService } from './update.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -30,7 +31,7 @@ import { CardOverviewModule } from './card-overview/card-overview.module';
     HomeModule,
     CardOverviewModule,
   ],
-  providers: [],
+  providers: [AppUpdateService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
