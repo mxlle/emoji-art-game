@@ -33,6 +33,7 @@ html {
   --border-color: #999999;
   // shadow copied from mat-card
   --card-box-shadow: 0 2px 1px -1px rgb(0 0 0 / 20%), 0 1px 1px 0 rgb(0 0 0 / 14%), 0 1px 3px 0 rgb(0 0 0 / 12%);
+  --text-shadow-color: #cccccc;
 
   // sizes
   --border-radius: 0.25rem;
@@ -90,6 +91,7 @@ body {
   font-family: 'EmojiFont', sans-serif;
   font-weight: normal;
   margin-bottom: -0.2em; // to balance space below emojis // todo
+  text-shadow: 0 0 0.025em var(--text-shadow-color);
 }
 
 h1 {
