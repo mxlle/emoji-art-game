@@ -2,12 +2,7 @@
   <span>Market </span>
   <span>(<app-counter *ngIf="game" [game]="game"></app-counter>)</span>
 </h2>
-<app-offer-preview
-  *ngIf="game && showPreview"
-  [demand]="game.currentDemand"
-  [offerCount]="game.offerCount"
-  [showEndAnimation]="showPreviewEndAnimation"
-></app-offer-preview>
+<app-offer-preview *ngIf="game && showPreview" [game]="game" [showEndAnimation]="showPreviewEndAnimation"></app-offer-preview>
 <div
   *ngIf="game && (!showPreview || showPreviewEndAnimation)"
   class="offer"

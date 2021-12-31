@@ -30,6 +30,7 @@ export class DemandPickerComponent {
   getPlayer(playerId: string): Player | undefined {
     return getPlayerInGame(this.game, playerId);
   }
+
   suggestDemand(demand: number) {
     apiFunctions.suggestDemand(this.game.id, demand);
   }

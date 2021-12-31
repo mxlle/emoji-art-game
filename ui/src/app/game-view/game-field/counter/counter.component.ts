@@ -12,7 +12,7 @@ export class CounterComponent {
 
   get count(): number {
     return GamePhase.Offer == this.game?.phase
-      ? this.game.offerCount
+      ? this.game.offerPreview.length
       : GamePhase.Choose == this.game?.phase
       ? this.game.selectionCount
       : this.game.correctCount;

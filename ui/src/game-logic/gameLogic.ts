@@ -23,6 +23,7 @@ import {
   maxDemand,
   minDemand,
   themesPerRound,
+  unknownCardEmoji,
 } from './gameConsts';
 import { dealCards, drawCards } from '../game-tools/card-game-util';
 import { generateEmojiId } from '../game-tools/emoji-util';
@@ -350,9 +351,15 @@ function isPictureSelectedFromBuyer(pic: Picture): boolean {
   return !!pic.buyerTheme;
 }
 
-export function getOfferedPictures(game: Game): Picture[] {
+export function getOfferedPictures(game: Game, includePlayerId: boolean = false): Picture[] {
   return game.players.reduce(
-    (currentArr: Picture[], player: Player) => currentArr.concat((player.pictures ?? []).filter(isPictureSelectedFromPainter)),
+    (currentArr: Picture[], player: Player) =>
+      currentArr.concat((player.pictures ?? []).filter(isPictureSelectedFromPainter)).map((pic) => {
+        if (includePlayerId) {
+          return { ...pic, playerId: player.id };
+        }
+        return pic;
+      }),
     []
   );
 }
@@ -426,7 +433,7 @@ export function toPublicGame(game: Game): PublicGame {
     currentThemes: round?.themes ?? [],
     currentDemand: round?.demand ?? 0,
     currentDemandSuggestions: round?.demandSuggestions ?? [],
-    offerCount: getOfferedPictures(game).length,
+    offerPreview: getOfferedPictures(game, true).map(({ playerId }) => ({ card: unknownCardEmoji, playerId })),
     selectionCount: getBuyerSelection(game).length,
     correctCount: round?.pictures.filter((pic) => game.teamPoints.findIndex((p) => pic.card === p.card) > -1).length,
     phase,

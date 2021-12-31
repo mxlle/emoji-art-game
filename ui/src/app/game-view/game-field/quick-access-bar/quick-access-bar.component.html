@@ -9,7 +9,7 @@
   </app-card>
 </div>
 <app-counter [game]="game"></app-counter>
-<button *ngIf="showOfferConfirm" mat-flat-button [disabled]="game.offerCount !== game.currentDemand" (click)="confirmOffer()">
+<button *ngIf="showOfferConfirm" mat-flat-button [disabled]="game.offerPreview.length !== game.currentDemand" (click)="confirmOffer()">
   <mat-icon>check</mat-icon>
 </button>
 <button *ngIf="showSelectionConfirm" mat-flat-button [disabled]="game.selectionCount !== game.currentDemand" (click)="confirmSelection()">

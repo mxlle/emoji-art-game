@@ -1,7 +1,8 @@
 import { ChangeDetectionStrategy, Component, HostBinding, Input } from '@angular/core';
-import { Picture } from '../../../../../game-logic/game';
+import { Picture, Player, PublicGame } from '../../../../../game-logic/game';
 import { trackByPictureCard } from '../../../../ui-helpers';
-import { fakesPerRound, masterFaker, unknownCardEmoji } from '../../../../../game-logic/gameConsts';
+import { fakesPerRound, masterFaker } from '../../../../../game-logic/gameConsts';
+import { getPlayerInGame } from '../../../../../game-logic/gameLogic';
 
 @Component({
   selector: 'app-offer-preview',
@@ -10,8 +11,7 @@ import { fakesPerRound, masterFaker, unknownCardEmoji } from '../../../../../gam
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class OfferPreviewComponent {
-  @Input() demand: number = 0;
-  @Input() offerCount: number = 0;
+  @Input() game!: PublicGame;
   @HostBinding('class.show-end-animation') @Input() showEndAnimation: boolean = false;
 
   readonly fakerArray: string[] = new Array(fakesPerRound).fill(masterFaker);
@@ -19,12 +19,16 @@ export class OfferPreviewComponent {
   readonly trackByPictureCard = trackByPictureCard;
 
   get offerPreview(): Picture[] {
-    const remainingDemand = this.demand - this.offerCount;
-    const offer = new Array(this.offerCount).fill(unknownCardEmoji);
-    const demandArray = remainingDemand > 0 ? new Array(remainingDemand).fill('') : [];
+    const remainingDemand = this.game.currentDemand - this.game.offerPreview.length;
 
-    return [...offer, ...demandArray].map((card) => ({ card }));
+    const demandArray = remainingDemand > 0 ? new Array(remainingDemand).fill('').map((card) => ({ card })) : [];
+
+    return [...this.game.offerPreview, ...demandArray];
   }
 
   constructor() {}
+
+  getPlayer(playerId: string): Player | undefined {
+    return getPlayerInGame(this.game, playerId);
+  }
 }

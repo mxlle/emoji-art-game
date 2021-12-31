@@ -38,7 +38,7 @@ export interface PublicGame {
 
   currentDemand: number;
   currentDemandSuggestions: DemandSuggestion[];
-  offerCount: number;
+  offerPreview: Picture[];
   selectionCount: number;
   correctCount: number;
 
@@ -81,6 +81,7 @@ export interface Picture {
   buyerSelection?: BuyerSelection[];
   isFake?: boolean;
   fakeStatusKnown?: boolean;
+  playerId?: string;
 }
 
 export enum Role {
