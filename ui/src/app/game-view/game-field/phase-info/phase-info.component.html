@@ -2,7 +2,7 @@
   {{ phaseInfoText }}
 </div>
 
-<div *ngIf="!isEvaluation" class="role-group" [class.inactive]="!paintersActive">
+<div class="role-group" [class.inactive]="!paintersActive">
   <div class="emoji">{{ painter }}</div>
   <div class="players">
     <div *ngFor="let player of painters" [class.current-player]="currentPlayerId === player.id" [style.--color]="player.color">
@@ -11,7 +11,7 @@
   </div>
 </div>
 
-<div *ngIf="!isEvaluation" class="role-group" [class.inactive]="!buyersActive">
+<div class="role-group" [class.inactive]="!buyersActive">
   <div class="emoji">{{ buyer }}</div>
   <div class="players">
     <div *ngFor="let player of buyers" [class.current-player]="currentPlayerId === player.id" [style.--color]="player.color">
