@@ -1,10 +1,13 @@
 import {
   activityAndSport,
+  activityPersons,
+  additionalSmileys,
   animalFaces,
   animals,
   bodyParts,
   clothingAndAccessories,
   foodAndDrink,
+  jobs,
   nature,
   objects1,
   objects2,
@@ -18,6 +21,8 @@ import { GamePhase, Joker, JokerType, Role } from './game';
 
 export const emojis: string[] = splitEmojis(
   bodyParts +
+    additionalSmileys +
+    jobs +
     clothingAndAccessories +
     animalFaces +
     animals +
@@ -25,6 +30,7 @@ export const emojis: string[] = splitEmojis(
     weatherAndEarth +
     foodAndDrink +
     activityAndSport +
+    activityPersons +
     travelAndPlaces +
     objects1 +
     objects2 +

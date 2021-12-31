@@ -36,6 +36,7 @@ export const positiveSmileys =
 export const negativeSmileys =
   '🤨 🧐 😒 😞 😔 😟 😕 🙁 ☹️ 😣 😖 😫 😩 🥺 😢 😭 😤 😠 😡 🤬 🤯 😳 🥵 🥶 😱 😨 😰 😥 😓 🤔 🤭 🤫 🤥 😶 😐 😑 😬 🙄 😯 😦 😧 😮 😲 🥱 😴 😪 😵 🤐 🥴 🤢 🤮 🤧 😷 🤒 🤕';
 export const smileys = positiveSmileys + negativeSmileys;
+export const additionalSmileys = '🤡 💩 👻 ☠️ 👽 🤖 🎃';
 export const catSmileys = '😺 😸 😹 😻 😼 😽 🙀 😿 😾';
 export const monkeySmileys = '🙈 🙉 🙊';
 export const gestures = '👋 🤚 🖐 ✋ 🖖 👌 🤌 🤏 ✌️ 🤞 🤟 🤘 🤙 👈 👉 👆 🖕 👇 ☝️ 👍 👎 ✊ 👊 🤛 🤜 👏 🙌 👐 🤲 🤝 🙏';
@@ -44,16 +45,19 @@ export const clothingAndAccessories =
   '🧳 🌂 ☂️ 🧵 🪡 🪢 🧶 👓 🕶 🥽 🥼 🦺 👔 👕 👖 🧣 🧤 🧥 🧦 👗 👘 🥻 🩴 🩱 🩳 👙 👚 👛 👜 👝 🎒 👟 🥾 👠 🩰 👢 👑 👒 🎩 🎓 🧢 🪖 💄 💍 💼';
 export const animalFaces = '🐶 🐱 🐭 🐹 🐰 🦊 🐻 🐼 🐻‍❄️ 🐨 🐯 🦁 🐮 🐷 🐸 🐵 🐔 🐧 🐦 🐤 🐺 🐗 🐴 🦄';
 export const animals =
-  '🐒 🐣 🦆 🦅 🦉 🦇 🐝 🪱 🐛 🦋 🐌 🐞 🐜 🪰 🪲 🪳 🦟 🦗 🕷 🕸 🦂 🐢 🐍 🦎 🦖 🦕 🐙 🦞 🦀 🐡 🐟 🐬 🐳 🦈 🐊 🐅 🐆 🦓 🦍 🦧 🦣 🐘 🦛 🦏 🐪 🐫 🦒 🦘 🦬 🐃 🐂 🐄 🐎 🐖 🐑 🦙 🐐 🦌 🐕 🐩 🐈 ‍🪶 🐓 🦤 🦚 🦜 🦢 🦩 🕊 🐇 🦝 🦨 🦡 🦫 🦦 🦥 🐁 🐿 🦔 🐉';
-export const nature = '🌵 🎄 🌲 🌳 🌴 🪵 🌱 🌿 ☘️ 🍀 🎍 🪴 🎋 🍃 🍂 🍁 🍄 🐚 🪨 🌾 💐 🌷 🌹 🥀 🌺 🌸 🌼 🌻';
+  '🐒 🐣 🦆 🦅 🦉 🦇 🐝 🪱 🐛 🦋 🐌 🐞 🐜 🪰 🪲 🪳 🦟 🦗 🕷 🕸 🦂 🐢 🐍 🦎 🦖 🦕 🐙 🦞 🦀 🐡 🐟 🐬 🐳 🦈 🐊 🐅 🐆 🦓 🦍 🦧 🦣 🐘 🦛 🦏 🐪 🐫 🦒 🦘 🦬 🐂 🐄 🐎 🐖 🐑 🦙 🐐 🦌 🐕 🐩 🐈 ‍🪶 🐓 🦤 🦚 🦜 🦢 🦩 🕊 🐇 🦝 🦨 🦡 🦫 🦦 🦥 🐁 🐿 🦔 🐉';
+export const nature = '🌵 🎄 🌲 🌳 🌴 🪵 🌱 🌿 ☘️ 🍀 🪴 🎋 🍃 🍂 🍁 🍄 🐚 🪨 🌾 💐 🌷 🌹 🥀 🌺 🌸 🌼 🌻';
 export const weatherAndEarth = '🌙 🌎 🌍 🌏 🪐 💫 ⭐️ ✨ ⚡️ ☄️ 💥 🔥 🌪 🌈 ☀️ ⛅️ ☁️ 🌦 🌧 ⛈️ 🌨 ❄️ ⛄️ 💨 💧 💦 ☔️ 🌊 ';
 export const foodAndDrink =
   '🍏 🍎 🍐 🍊 🍋 🍌 🍉 🍇 🍓 🫐 🍈 🍒 🍑 🥭 🍍 🥥 🥝 🍅 🍆 🥑 🥦 🥬 🥒 🌶 🫑 🌽 🥕 🫒 🧄 🧅 🥔 🍠 🥐 🥯 🍞 🥖 🥨 🧀 🥚 🍳 🧈 🥞 🧇 🥓 🌭 🍔 🍟 🍕 🫓 🥪 🥙 🧆 🌮 🌯 🥗 🥘 🫕 🥫 🍝 🍛 🍣 🍱 🍤 🍚 🥠 🍡 🍨 🍦 🧁 🍰 🎂 🍮 🍭 🍬 🍫 🍿 🍩 🍪 🥜 🍯 🥛 🍼 🫖 ☕️ 🧃 🥤 🍺 🥂 🍷 🥃 🍸 🍾 🧊 🥄 🍴 🍽 🥡 🧂';
 export const activityAndSport =
-  '⚽️ 🏀 🏈 ⚾️ 🎾 🏐 🥏 🎱 🪀 🏓 🏸 🏒 🪃 🥅 ⛳️ 🪁 🏹 🎣 🤿 🥊 🥋 🎽 🛹 🛼 🛷 ⛸️ 🥌 🎿 🏆 🥇 🎖 🎫 🎟 🎪 🤹 🎭 🩰 🎨 🎬 🎤 🎧 🎼 🎹 🥁 🪘 🎷 🎺 🪗 🎸 🪕 🎻 🎲 ♟️ 🎯 🎳 🎮 🎰 🧩';
+  '⚽️ 🏀 🏈 ⚾️ 🎾 🏐 🥏 🎱 🪀 🏓 🏸 🏒 🪃 🥅 ⛳️ 🪁 🏹 🎣 🤿 🥊 🥋 🎽 🛹 🛼 🛷 ⛸️ 🥌 🎿 🏆 🥇 🎖 🎫 🎟 🎪 🎭 🩰 🎨 🎬 🎤 🎧 🎼 🎹 🥁 🪘 🎷 🎺 🪗 🎸 🪕 🎻 🎲 ♟️ 🎯 🎳 🎮 🎰 🧩';
+export const activityPersons = '⛷ 🏂 🪂  🏋️  🤼  🤸 ⛹️  🤺  🤾  🏌️  🏇  🧘  🏄  🏊 🤽  🚣 🧗 🚴 🤹';
 export const travelAndPlaces =
   '🚗 🚕 🚌 🚎 🏎 🚓 🚑 🚒 🚐 🛻 🚚 🚛 🚜 🦯 🦽 🦼 🛴 🚲 🛵 🏍 🛺 🚨 🚔 🚍 🚘 🚖 🚠 🚋 🚄 🚂 🚉 ✈️ 💺 🛰 🚀 🛸 🚁 🛶 ⛵️ 🚤 🛥 🚢 ⚓️ 🪝 ⛽️ 🚧 🚦 🚥 🚏 🗺 🗿 🗽 🗼 🏰 🏯 🏟 🎡 🎢 🎠 ⛲️ 🏖 🏝 🏜 🌋 ⛰️ 🏔 ⛺️ 🛖 🏠 🏗';
 export const objects1 = '⌚️ 📱 💻 ⌨️ 🖥 🖨 🖱 🕹 💾 💿 📼 📸 🎥 📽 🎞 📞 ☎️ 📺 📻 🎙 🧭 ⏱️ ⏲️ ⏰ ';
 export const objects2 = '📡 🔋 🔌 💡 🔦 🕯 🧯 🛢 💵 💶 🪙 💰 💳 💎 ⚖️ 🪜 🧰 🪛 🔧 🔨 🪚 🔩 ⚙️ 🪤 🧱 ⛓ 🧲 🔫 💣 🧨 🪓 🗡 ⚔️ 🛡';
-export const objects3 = '🏺 🔮 📿 💈 🔭 🔬 🕳 🩹 🩺 💊 💉 🩸 🧬 🦠 🧪 🌡 🧹 🧻 🚽 🚰 🚿 🛁 🪥 🪒 🧽 🪣 🧴';
+export const objects3 = '🏺 🔮 📿 💈 🔭 🔬 🕳 🩹 🩺 💊 💉 🩸 🧬 🦠 🧪 🌡 🧹 🪠 🧺 🧻 🚽 🚰 🚿 🛁 🪥 🪒 🧽 🪣 🧴';
 export const objects4 = '🛎 🔑 🗝 🚪 🪑 🛋 🛏 🧸 🪆 🖼 🪞 🪟 🛍 🛒 🎁 🎈 🎀 🪄 🎊 🎉 ✉️ ';
+
+export const jobs = ' 👮 👷 💂 🕵️ 🧑‍⚕️ 🧑‍🌾 🧑‍🍳 🧑‍🎓 🧑‍🎤 🧑‍🏫 🧑‍🏭 🧑‍💻 🧑‍💼 🧑‍🔧 🧑‍🔬 🧑‍🎨 🧑‍🚒 🧑‍✈️ 🧑‍🚀  🧑‍⚖️';
