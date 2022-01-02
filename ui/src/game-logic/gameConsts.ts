@@ -13,6 +13,7 @@ import {
   objects2,
   objects3,
   objects4,
+  phantasy,
   splitEmojis,
   travelAndPlaces,
   weatherAndEarth,
@@ -23,6 +24,7 @@ export const emojis: string[] = splitEmojis(
   bodyParts +
     additionalSmileys +
     jobs +
+    phantasy +
     clothingAndAccessories +
     animalFaces +
     animals +

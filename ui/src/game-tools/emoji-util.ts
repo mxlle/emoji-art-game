@@ -40,7 +40,7 @@ export const additionalSmileys = '🤡 💩 👻 ☠️ 👽 🤖 🎃';
 export const catSmileys = '😺 😸 😹 😻 😼 😽 🙀 😿 😾';
 export const monkeySmileys = '🙈 🙉 🙊';
 export const gestures = '👋 🤚 🖐 ✋ 🖖 👌 🤌 🤏 ✌️ 🤞 🤟 🤘 🤙 👈 👉 👆 🖕 👇 ☝️ 👍 👎 ✊ 👊 🤛 🤜 👏 🙌 👐 🤲 🤝 🙏';
-export const bodyParts = '✋ 💪 🦵 🦶 👂 🦻 👃 🫀 🫁 🧠 🦷 🦴 👀 👁 👅 👄 💋 🩸';
+export const bodyParts = '💅 🤳 ✋ 💪 🦾 🦵 🦿 🦶 👣 👂 🦻 👃 🫀 🫁 🧠 🦷 🦴 👀 👁 👅 👄 💋 🩸';
 export const clothingAndAccessories =
   '🧳 🌂 ☂️ 🧵 🪡 🪢 🧶 👓 🕶 🥽 🥼 🦺 👔 👕 👖 🧣 🧤 🧥 🧦 👗 👘 🥻 🩴 🩱 🩳 👙 👚 👛 👜 👝 🎒 👟 🥾 👠 🩰 👢 👑 👒 🎩 🎓 🧢 🪖 💄 💍 💼';
 export const animalFaces = '🐶 🐱 🐭 🐹 🐰 🦊 🐻 🐼 🐻‍❄️ 🐨 🐯 🦁 🐮 🐷 🐸 🐵 🐔 🐧 🐦 🐤 🐺 🐗 🐴 🦄';
@@ -52,7 +52,7 @@ export const foodAndDrink =
   '🍏 🍎 🍐 🍊 🍋 🍌 🍉 🍇 🍓 🫐 🍈 🍒 🍑 🥭 🍍 🥥 🥝 🍅 🍆 🥑 🥦 🥬 🥒 🌶 🫑 🌽 🥕 🫒 🧄 🧅 🥔 🍠 🥐 🥯 🍞 🥖 🥨 🧀 🥚 🍳 🧈 🥞 🧇 🥓 🌭 🍔 🍟 🍕 🫓 🥪 🥙 🧆 🌮 🌯 🥗 🥘 🫕 🥫 🍝 🍛 🍣 🍱 🍤 🍚 🥠 🍡 🍨 🍦 🧁 🍰 🎂 🍮 🍭 🍬 🍫 🍿 🍩 🍪 🥜 🍯 🥛 🍼 🫖 ☕️ 🧃 🥤 🍺 🥂 🍷 🥃 🍸 🍾 🧊 🥄 🍴 🍽 🥡 🧂';
 export const activityAndSport =
   '⚽️ 🏀 🏈 ⚾️ 🎾 🏐 🥏 🎱 🪀 🏓 🏸 🏒 🪃 🥅 ⛳️ 🪁 🏹 🎣 🤿 🥊 🥋 🎽 🛹 🛼 🛷 ⛸️ 🥌 🎿 🏆 🥇 🎖 🎫 🎟 🎪 🎭 🩰 🎨 🎬 🎤 🎧 🎼 🎹 🥁 🪘 🎷 🎺 🪗 🎸 🪕 🎻 🎲 ♟️ 🎯 🎳 🎮 🎰 🧩';
-export const activityPersons = '⛷ 🏂 🪂  🏋️  🤼  🤸 ⛹️  🤺  🤾  🏌️  🏇  🧘  🏄  🏊 🤽  🚣 🧗 🚴 🤹';
+export const activityPersons = '⛷ 🏂 🪂  🏋️  🤼  🤸 ⛹️  🤺  🤾  🏌️  🏇  🧘  🏄  🏊 🤽  🚣 🧗 🚴 🤹 🏃';
 export const travelAndPlaces =
   '🚗 🚕 🚌 🚎 🏎 🚓 🚑 🚒 🚐 🛻 🚚 🚛 🚜 🦯 🦽 🦼 🛴 🚲 🛵 🏍 🛺 🚨 🚔 🚍 🚘 🚖 🚠 🚋 🚄 🚂 🚉 ✈️ 💺 🛰 🚀 🛸 🚁 🛶 ⛵️ 🚤 🛥 🚢 ⚓️ 🪝 ⛽️ 🚧 🚦 🚥 🚏 🗺 🗿 🗽 🗼 🏰 🏯 🏟 🎡 🎢 🎠 ⛲️ 🏖 🏝 🏜 🌋 ⛰️ 🏔 ⛺️ 🛖 🏠 🏗';
 export const objects1 = '⌚️ 📱 💻 ⌨️ 🖥 🖨 🖱 🕹 💾 💿 📼 📸 🎥 📽 🎞 📞 ☎️ 📺 📻 🎙 🧭 ⏱️ ⏲️ ⏰ ';
@@ -60,4 +60,5 @@ export const objects2 = '📡 🔋 🔌 💡 🔦 🕯 🧯 🛢 💵 💶 🪙 
 export const objects3 = '🏺 🔮 📿 💈 🔭 🔬 🕳 🩹 🩺 💊 💉 🩸 🧬 🦠 🧪 🌡 🧹 🪠 🧺 🧻 🚽 🚰 🚿 🛁 🪥 🪒 🧽 🪣 🧴';
 export const objects4 = '🛎 🔑 🗝 🚪 🪑 🛋 🛏 🧸 🪆 🖼 🪞 🪟 🛍 🛒 🎁 🎈 🎀 🪄 🎊 🎉 ✉️ ';
 
-export const jobs = ' 👮 👷 💂 🕵️ 🧑‍⚕️ 🧑‍🌾 🧑‍🍳 🧑‍🎓 🧑‍🎤 🧑‍🏫 🧑‍🏭 🧑‍💻 🧑‍💼 🧑‍🔧 🧑‍🔬 🧑‍🎨 🧑‍🚒 🧑‍✈️ 🧑‍🚀  🧑‍⚖️';
+export const jobs = ' 👮 👷 💂 🕵️ 🧑‍⚕️ 🧑‍🌾 🧑‍🍳 🧑‍🎓 🧑‍🎤 🧑‍🏫 🧑‍🏭 🧑‍💻 🧑‍💼 🧑‍🔧 🧑‍🔬 🧑‍🎨 🧑‍🚒 🧑‍✈️ 🧑‍🚀  🧑‍⚖️ 💃 🕺 ';
+export const phantasy = '👸 🤴 🥷️ 🦸 🦹 🎅 🧙 🧝 🧛️ 🧟 🧞 🧜 👼 ';
