@@ -446,7 +446,11 @@ export function toPublicGame(game: Game): PublicGame {
 }
 
 export function toGameInfo(game: Game): GameInfo {
-  const { id, name, hostId, players, phase, creationTime } = game;
+  const { id, name, hostId, players, phase, creationTime, teamPoints } = game;
+  let endResult = undefined;
+  if (GamePhase.End === phase) {
+    endResult = teamPoints.length;
+  }
 
   return {
     id,
@@ -455,6 +459,7 @@ export function toGameInfo(game: Game): GameInfo {
     players: players.map(mapToPublicPlayer),
     phase,
     creationTime,
+    endResult,
   };
 }
 

@@ -3,15 +3,14 @@
     <div class="inner-list-item">
       <div>{{ game.name }}</div>
       <div>{{ getPlayersString(game) }}</div>
-      <button
-        *ngIf="isDeleteAllowed(game)"
-        mat-icon-button
-        class="delete-btn"
-        (click)="deleteClick($event, game.id)"
-        (mouseover)="deleteHover($event)"
-      >
-        <mat-icon>delete</mat-icon>
-      </button>
+      <div class="delete-btn">
+        <button *ngIf="isDeleteAllowed(game)" mat-icon-button (click)="deleteClick($event, game.id)" (mouseover)="deleteHover($event)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+      <div class="result" *ngIf="game.endResult">
+        {{ game.endResult }} <span class="emoji">{{ pointsEmoji }}</span>
+      </div>
     </div>
   </button>
 </mat-action-list>

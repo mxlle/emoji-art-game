@@ -56,6 +56,7 @@ export interface GameInfo {
   hostId: string;
   phase: GamePhase;
   creationTime?: Date;
+  endResult?: number;
 }
 
 export enum GamePhase {

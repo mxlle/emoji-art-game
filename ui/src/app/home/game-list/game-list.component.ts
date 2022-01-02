@@ -3,6 +3,7 @@ import { GameInfo } from '../../../game-logic/game';
 import { trackByObjectId } from '../../ui-helpers';
 import { getCurrentUserId } from '../../../data/functions';
 import { getClearedForDeletion } from '../../../game-logic/gameLogic';
+import { pointsEmoji } from '../../../game-logic/gameConsts';
 
 @Component({
   selector: 'app-game-list',
@@ -16,6 +17,7 @@ export class GameListComponent implements OnInit {
 
   readonly trackByGameId: TrackByFunction<GameInfo> = trackByObjectId;
   readonly currentUserId: string = getCurrentUserId();
+  readonly pointsEmoji: string = pointsEmoji;
 
   constructor() {}
 

@@ -4,7 +4,7 @@
 
 .inner-list-item {
   display: grid;
-  grid-template-columns: 1fr auto;
+  grid-template-columns: 1fr auto auto;
   grid-template-rows: repeat(2, auto);
   grid-auto-flow: column;
   gap: var(--spacer-xs);
@@ -17,7 +17,15 @@
     font-style: italic;
   }
 
-  .delete-btn {
+  .delete-btn,
+  .result {
     grid-row: 1 / 3;
+  }
+
+  .result {
+    display: grid;
+    place-items: center;
+    grid-auto-flow: column;
+    gap: var(--spacer-xs);
   }
 }
