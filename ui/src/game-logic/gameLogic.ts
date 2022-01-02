@@ -354,12 +354,14 @@ function isPictureSelectedFromBuyer(pic: Picture): boolean {
 export function getOfferedPictures(game: Game, includePlayerId: boolean = false): Picture[] {
   return game.players.reduce(
     (currentArr: Picture[], player: Player) =>
-      currentArr.concat((player.pictures ?? []).filter(isPictureSelectedFromPainter)).map((pic) => {
-        if (includePlayerId) {
-          return { ...pic, playerId: player.id };
-        }
-        return pic;
-      }),
+      currentArr.concat(
+        (player.pictures ?? []).filter(isPictureSelectedFromPainter).map((pic) => {
+          if (includePlayerId) {
+            return { ...pic, playerId: player.id };
+          }
+          return pic;
+        })
+      ),
     []
   );
 }
