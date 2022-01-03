@@ -10,7 +10,7 @@
     <ng-container *ngIf="!picture?.card">&nbsp;</ng-container>
   </span>
 
-  <app-player-marker *ngIf="picture.playerId" [players]="game.players" [playerId]="picture.playerId"></app-player-marker>
+  <app-player-marker *ngIf="picture.playerId" appCardTopRight [players]="game.players" [playerId]="picture.playerId"></app-player-marker>
 </app-card>
 
 <div class="faker-cards">

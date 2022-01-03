@@ -91,7 +91,7 @@ body {
 .emoji {
   font-family: 'EmojiFont', sans-serif;
   font-weight: normal;
-  margin-bottom: -0.2em; // to balance space below emojis // todo
+  vertical-align: middle;
   text-shadow: 0 0 0.025em var(--text-shadow-color);
 }
 

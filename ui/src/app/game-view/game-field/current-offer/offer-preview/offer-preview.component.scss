@@ -19,8 +19,6 @@
   }
 
   app-card {
-    position: relative;
-
     &.too-much {
       --card-border-color: var(--danger-color);
     }
@@ -29,13 +27,6 @@
       --card-border-color: var(--border-color-secondary);
       --card-border-style: dashed;
       --card-background: transparent;
-    }
-
-    app-player-marker {
-      position: absolute;
-      --indicator-spacer: var(--spacer-xs);
-      top: var(--indicator-spacer);
-      right: var(--indicator-spacer);
     }
   }
 

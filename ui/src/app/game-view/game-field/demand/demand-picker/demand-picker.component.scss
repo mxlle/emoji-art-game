@@ -6,13 +6,7 @@
 }
 
 app-card {
-  position: relative;
-
   .suggestions {
-    position: absolute;
-    --indicator-spacer: var(--spacer-xs);
-    top: var(--indicator-spacer);
-    right: var(--indicator-spacer);
     @include mixins.stackEffect(var(--spacer-sm));
   }
 }

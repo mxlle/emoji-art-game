@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, HostBinding, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Directive, HostBinding, Input } from '@angular/core';
 
 @Component({
   selector: 'app-card',
@@ -11,3 +11,13 @@ export class CardComponent {
   @Input() @HostBinding('class.disabled') disabled?: boolean;
   @Input() @HostBinding('class.selected') selected?: boolean;
 }
+
+@Directive({
+  selector: '[appCardTopRight]',
+})
+export class CardTopRightDirective {}
+
+@Directive({
+  selector: '[appCardBottomLeft]',
+})
+export class CardBottomLeftDirective {}

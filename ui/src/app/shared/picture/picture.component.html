@@ -1,21 +1,22 @@
 <app-card [clickable]="clickable" [disabled]="disabled" [selected]="selected">
   <span class="emoji">{{ picture?.card }}</span>
 
-  <div *ngIf="picture?.buyerTheme" class="theme buyer emoji">
+  <div *ngIf="picture?.buyerTheme" appCardTopRight class="theme emoji">
     {{ picture?.buyerTheme }}
   </div>
 
   <app-buyer-selection-marker
     *ngIf="picture?.buyerSelection && !picture?.buyerTheme"
-    class="theme buyer emoji"
+    appCardTopRight
+    class="theme emoji"
     [selections]="picture.buyerSelection ?? []"
   ></app-buyer-selection-marker>
 
-  <div *ngIf="picture?.painterTheme" class="theme painter emoji">
+  <div *ngIf="picture?.painterTheme" appCardBottomLeft class="theme emoji">
     {{ picture?.painterTheme }}
   </div>
 
-  <div *ngIf="picture?.isFake" class="theme painter fake emoji">
+  <div *ngIf="picture?.isFake" appCardBottomLeft class="theme fake emoji">
     {{ masterFaker }}
   </div>
 </app-card>

@@ -2,9 +2,8 @@
   height: 100%;
   width: 100%;
   display: grid;
-  place-items: center;
-  padding: var(--card-padding, var(--spacer-lg));
-  font-size: var(--card-font-size, var(--emoji-size-lg));
+  grid-template-areas: 'card';
+  place-items: var(--card-place-items, center);
   cursor: var(--card-cursor, pointer);
   border: var(--border-width) var(--card-border-style, solid) var(--card-border-color, transparent);
   background-color: var(--card-background, var(--card-background-default));
@@ -12,6 +11,15 @@
   box-shadow: var(--card-box-shadow);
 
   pointer-events: none; // re-activated when clickable
+
+  > * {
+    grid-area: card;
+  }
+
+  .content {
+    padding: var(--card-padding, var(--spacer-lg));
+    font-size: var(--card-font-size, var(--emoji-size-lg));
+  }
 
   &.clickable {
     pointer-events: all;
@@ -25,5 +33,15 @@
 
   &.selected.clickable {
     background-color: var(--card-background, var(--card-background-selected));
+  }
+
+  .top-right {
+    place-self: start end;
+    margin: var(--indicator-spacer, var(--spacer-xs));
+  }
+
+  .bottom-left {
+    place-self: end start;
+    margin: var(--indicator-spacer, var(--spacer-xs));
   }
 }

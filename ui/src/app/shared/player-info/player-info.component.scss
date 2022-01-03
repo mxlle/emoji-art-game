@@ -1,5 +1,14 @@
 app-card {
+  min-width: 10rem;
   border: var(--border-width) solid var(--border-color, transparent);
   --card-font-size: var(--font-size-lg);
   --card-padding: var(--spacer-sm);
+  --card-place-items: center auto;
+
+  .player-content {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 }

@@ -1,6 +1,6 @@
 <app-card *ngFor="let option of demandOptions" [clickable]="true" [selected]="getDemandIsSelected(option)" (click)="suggestDemand(option)">
   {{ option }}
-  <div *ngIf="getSuggestionForDemand(option) as suggestion" class="suggestions">
+  <div *ngIf="getSuggestionForDemand(option) as suggestion" appCardTopRight class="suggestions">
     <app-player-marker *ngFor="let id of suggestion.playerIds" [players]="game.players" [playerId]="id"></app-player-marker>
   </div>
 </app-card>

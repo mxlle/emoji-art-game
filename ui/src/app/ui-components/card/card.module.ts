@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CardComponent } from './card.component';
+import { CardBottomLeftDirective, CardComponent, CardTopRightDirective } from './card.component';
 import { MatCardModule } from '@angular/material/card';
 
 @NgModule({
-  declarations: [CardComponent],
+  declarations: [CardComponent, CardTopRightDirective, CardBottomLeftDirective],
   imports: [CommonModule, MatCardModule],
-  exports: [CardComponent],
+  exports: [CardComponent, CardTopRightDirective, CardBottomLeftDirective],
 })
 export class CardModule {}

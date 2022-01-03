@@ -15,20 +15,7 @@
 }
 
 app-card {
-  position: relative;
-
   .theme {
-    position: absolute;
     font-size: var(--emoji-size-xs);
-    --indicator-spacer: var(--spacer-xs);
-
-    &.buyer {
-      top: var(--indicator-spacer);
-      right: var(--indicator-spacer);
-    }
-    &.painter {
-      bottom: var(--indicator-spacer);
-      left: var(--indicator-spacer);
-    }
   }
 }
