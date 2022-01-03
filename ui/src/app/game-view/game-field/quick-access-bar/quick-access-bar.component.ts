@@ -10,7 +10,7 @@ import apiFunctions from '../../../../data/apiFunctions';
 })
 export class QuickAccessBarComponent {
   @Input() game!: PublicGame;
-  @Input() currentPlayer?: Player;
+  @Input() currentPlayer: Player | null = null;
 
   @Input() currentTheme?: string;
   @Output() currentThemeChange: EventEmitter<string> = new EventEmitter<string>();

@@ -1,9 +1,9 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, NgZone, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { socket } from '../../data/socket';
-import { GameEvent, GamePhase, Player, PublicGame, SocketEvent } from '../../game-logic/game';
-import apiFunctions from '../../data/apiFunctions';
-import { getCurrentUserId } from '../../data/functions';
+import { GamePhase, Player, PublicGame } from '../../game-logic/game';
+import { GameService } from '../game.service';
+import { Observable, Subject, takeUntil } from 'rxjs';
+import { ConnectionService } from '../connection.service';
 
 @Component({
   selector: 'app-game-view',
@@ -12,52 +12,25 @@ import { getCurrentUserId } from '../../data/functions';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GameViewComponent implements OnInit, OnDestroy {
-  game: PublicGame | null = null;
-  currentPlayer: Player | undefined;
+  game$: Observable<PublicGame> = this._gameService.currentGame$;
+  currentPlayer$: Observable<Player> = this._gameService.currentPlayer$;
+
   readonly _gameId: string;
 
-  constructor(private _activatedRoute: ActivatedRoute, private _cdr: ChangeDetectorRef, private _ngZone: NgZone) {
-    this._gameId = this._activatedRoute.snapshot.paramMap.get('gameId') ?? '';
+  private readonly _destroy$: Subject<void> = new Subject<void>();
+
+  constructor(_activatedRoute: ActivatedRoute, private _gameService: GameService, private _connectionService: ConnectionService) {
+    this._gameId = _activatedRoute.snapshot.paramMap.get('gameId') ?? '';
   }
 
   ngOnInit(): void {
-    this._setupConnection();
-    socket.on(SocketEvent.Reconnect, () => this._ngZone.run(() => this._setupConnection()));
+    this._gameService.subscribeToGame(this._gameId);
+    this._connectionService.reconnect$.pipe(takeUntil(this._destroy$)).subscribe(() => this._gameService.subscribeToGame(this._gameId));
   }
 
   ngOnDestroy() {
-    this._unsubscribeFromGame();
-    socket.off(SocketEvent.Reconnect);
-  }
-
-  private async _setupConnection() {
-    this._unsubscribeFromGame();
-    socket.emit(GameEvent.GameSubscribe, this._gameId, getCurrentUserId(), (error: any) => {
-      if (error !== null) {
-        setTimeout(() => this._ngZone.run(() => this._setupConnection()), 1000);
-      }
-    });
-    socket.on(GameEvent.Update, (game: PublicGame) => this._ngZone.run(() => this.setGameAfterUpdate(game)));
-    socket.on(GameEvent.UpdatePlayerData, (player: Player) => this._ngZone.run(() => this.setPlayerAfterUpdate(player)));
-    this.game = await apiFunctions.loadGame(this._gameId);
-    this._cdr.markForCheck();
-  }
-
-  private _unsubscribeFromGame() {
-    socket.emit(GameEvent.GameUnsubscribe, this._gameId, getCurrentUserId());
-    socket.off(GameEvent.Update);
-    socket.off(GameEvent.UpdatePlayerData);
-  }
-
-  setGameAfterUpdate(game: PublicGame) {
-    if (this._gameId !== game?.id) return;
-    this.game = game;
-    this._cdr.markForCheck();
-  }
-
-  setPlayerAfterUpdate(player: Player) {
-    this.currentPlayer = player;
-    this._cdr.markForCheck();
+    this._destroy$.next();
+    this._gameService.unsubscribeFromGame(this._gameId);
   }
 
   get GamePhase(): typeof GamePhase {

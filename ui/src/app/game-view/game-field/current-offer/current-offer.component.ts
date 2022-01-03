@@ -32,7 +32,7 @@ export class CurrentOfferComponent {
 
   @Input() pictures: Picture[] = [];
   @Input() currentTheme!: string;
-  @Input() currentPlayer?: Player;
+  @Input() currentPlayer: Player | null = null;
 
   showPreview: boolean = true;
   showPreviewEndAnimation: boolean = false;

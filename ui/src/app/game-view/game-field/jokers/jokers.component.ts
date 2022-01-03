@@ -13,7 +13,7 @@ import { getJokerLabel, maxDemand, minDemand } from '../../../../game-logic/game
 })
 export class JokersComponent {
   @Input() game!: PublicGame;
-  @Input() currentPlayer?: Player;
+  @Input() currentPlayer: Player | null = null;
 
   @HostBinding('class.inactive') get inactive(): boolean {
     return GamePhase.Evaluate === this.game.phase;

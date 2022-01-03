@@ -11,7 +11,7 @@ import { minNumPlayers } from '../../../game-logic/gameConsts';
 })
 export class JoiningViewComponent {
   @Input() game!: PublicGame;
-  @Input() currentPlayer?: Player;
+  @Input() currentPlayer: Player | null = null;
 
   get allowDelete(): boolean {
     return this.game.hostId === this.currentPlayer?.id;
@@ -23,7 +23,7 @@ export class JoiningViewComponent {
     apiFunctions.addPlayer(this.game.id, { ...player, pictures: [] });
   }
 
-  removePlayer(player: Player | undefined = this.currentPlayer) {
+  removePlayer(player: Player | null = this.currentPlayer) {
     if (player) {
       apiFunctions.removePlayerFromGame(this.game.id, player?.id);
     }

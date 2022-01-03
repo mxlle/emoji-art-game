@@ -13,7 +13,7 @@ import apiFunctions from '../../../data/apiFunctions';
 })
 export class GameFieldComponent implements OnInit, OnDestroy {
   @Input() game!: PublicGame;
-  @Input() currentPlayer?: Player;
+  @Input() currentPlayer: Player | null = null;
 
   currentTheme: string = '';
 
