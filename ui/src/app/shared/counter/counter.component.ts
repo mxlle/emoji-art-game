@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { GamePhase, PublicGame } from '../../../../game-logic/game';
+import { GamePhase, PublicGame } from '../../../game-logic/game';
 
 @Component({
   selector: 'app-counter',

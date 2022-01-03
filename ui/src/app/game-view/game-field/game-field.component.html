@@ -20,12 +20,7 @@
     <button *ngIf="showEndRoundConfirm" mat-flat-button color="primary" (click)="endRound()">Continue</button>
   </app-current-offer>
 
-  <app-current-player-hand
-    *ngIf="currentPlayer"
-    [game]="game"
-    [player]="currentPlayer"
-    [currentTheme]="currentTheme"
-  ></app-current-player-hand>
+  <app-player-hand *ngIf="currentPlayer" [game]="game" [player]="currentPlayer" [currentTheme]="currentTheme"></app-player-hand>
 </div>
 
 <app-quick-access-bar

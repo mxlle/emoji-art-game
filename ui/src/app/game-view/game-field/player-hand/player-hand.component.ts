@@ -4,12 +4,12 @@ import { getPictureCssClass, trackByPictureCard } from '../../../ui-helpers';
 import apiFunctions from '../../../../data/apiFunctions';
 
 @Component({
-  selector: 'app-current-player-hand',
-  templateUrl: './current-player-hand.component.html',
-  styleUrls: ['./current-player-hand.component.scss'],
+  selector: 'app-player-hand',
+  templateUrl: './player-hand.component.html',
+  styleUrls: ['./player-hand.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CurrentPlayerHandComponent {
+export class PlayerHandComponent {
   @Input() game!: PublicGame;
   @Input() player!: Player;
   @Input() currentTheme!: string;

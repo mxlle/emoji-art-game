@@ -4,8 +4,8 @@ import { CurrentOfferComponent } from './current-offer.component';
 import { PictureModule } from '../../../shared/picture/picture.module';
 import { OfferPreviewModule } from './offer-preview/offer-preview.module';
 import { MatButtonModule } from '@angular/material/button';
-import { CounterModule } from '../counter/counter.module';
-import { FlipCardModule } from '../../../shared/flip-card/flip-card.module';
+import { CounterModule } from '../../../shared/counter/counter.module';
+import { FlipCardModule } from '../../../ui-components/flip-card/flip-card.module';
 import { CardModule } from '../../../ui-components/card/card.module';
 
 @NgModule({
