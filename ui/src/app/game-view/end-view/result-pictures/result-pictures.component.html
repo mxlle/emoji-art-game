@@ -1,0 +1,10 @@
+<div class="result">
+  <span class="emoji">{{ label }}</span> {{ points }}
+</div>
+<div class="pictures">
+  <app-picture
+    *ngFor="let picture of pictures; trackBy: trackByPictureCard; let index = index"
+    [picture]="picture"
+    [class.invisible]="index + 1 > points"
+  ></app-picture>
+</div>

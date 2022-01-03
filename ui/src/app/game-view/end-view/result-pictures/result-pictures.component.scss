@@ -1,0 +1,25 @@
+@use '../../../mixins';
+
+:host {
+  display: grid;
+  grid-template-rows: auto 1fr;
+  width: 100%;
+  gap: var(--spacer-lg);
+
+  .result {
+    font-size: var(--emoji-size-xl);
+  }
+  .pictures {
+    @include mixins.defaultGrid();
+    grid-auto-rows: min-content;
+
+    app-picture {
+      transition: opacity 0.3s;
+      opacity: 1;
+
+      &.invisible {
+        opacity: 0;
+      }
+    }
+  }
+}

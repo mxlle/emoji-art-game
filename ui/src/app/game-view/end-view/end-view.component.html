@@ -3,27 +3,7 @@
   [players]="game.players"
   (animatedPointsChange)="animatedPoints = $event"
 ></app-evaluation>
-<div class="team-points">
-  <div>
-    <span class="emoji">{{ pointsEmoji }}</span> {{ animatedPoints }}
-  </div>
-  <div>
-    <app-picture
-      *ngFor="let picture of game.teamPoints; trackBy: trackByPictureCard; let index = index"
-      [picture]="picture"
-      [class.invisible]="index + 1 > animatedPoints"
-    ></app-picture>
-  </div>
-</div>
-<div class="fake-points">
-  <div>
-    <span class="emoji">{{ masterFaker }}</span> {{ animatedFakePoints }}
-  </div>
-  <div>
-    <app-picture
-      *ngFor="let picture of game.fakePoints; trackBy: trackByPictureCard; let index = index"
-      [picture]="picture"
-      [class.invisible]="index + 1 > animatedFakePoints"
-    ></app-picture>
-  </div>
-</div>
+
+<app-result-pictures [pictures]="game.teamPoints" [points]="animatedPoints" [label]="pointsEmoji"></app-result-pictures>
+
+<app-result-pictures [pictures]="game.fakePoints" [points]="animatedFakePoints" [label]="masterFaker"></app-result-pictures>

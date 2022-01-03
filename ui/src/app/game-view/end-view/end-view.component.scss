@@ -17,29 +17,7 @@
     max-width: 500px;
   }
 
-  .team-points,
-  .fake-points {
-    display: grid;
-    grid-template-rows: auto 1fr;
-    width: 100%;
+  app-result-pictures {
     max-width: 500px;
-    gap: var(--spacer-lg);
-
-    :nth-child(1) {
-      font-size: var(--emoji-size-xxl);
-    }
-    :nth-child(2) {
-      @include mixins.defaultGrid();
-      grid-auto-rows: min-content;
-    }
-
-    app-picture {
-      transition: opacity 0.3s;
-      opacity: 1;
-
-      &.invisible {
-        opacity: 0;
-      }
-    }
   }
 }

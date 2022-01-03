@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { EndViewComponent } from './end-view.component';
-import { PictureModule } from '../../shared/picture/picture.module';
 import { EvaluationModule } from './evaluation/evaluation.module';
+import { ResultPicturesModule } from './result-pictures/result-pictures.module';
 
 @NgModule({
   declarations: [EndViewComponent],
-  imports: [CommonModule, PictureModule, EvaluationModule],
+  imports: [CommonModule, EvaluationModule, ResultPicturesModule],
   exports: [EndViewComponent],
 })
 export class EndViewModule {}
