@@ -12,6 +12,7 @@ import { pointsEmoji } from '../../../game-logic/gameConsts';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GameListComponent implements OnInit {
+  @Input() label: string = '';
   @Input() games: GameInfo[] = [];
   @Output() delete: EventEmitter<string> = new EventEmitter<string>();
 

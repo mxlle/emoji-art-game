@@ -2,6 +2,14 @@
   display: block;
 }
 
+h2 {
+  margin: var(--spacer-xxl) 0 var(--spacer-sm);
+
+  &.inactive {
+    opacity: var(--inactive-opacity);
+  }
+}
+
 .inner-list-item {
   display: grid;
   grid-template-columns: 1fr auto auto;

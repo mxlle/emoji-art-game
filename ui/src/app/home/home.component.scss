@@ -1,6 +1,5 @@
 :host {
   display: grid;
-  grid-template-rows: auto auto auto 1fr;
   justify-items: center;
   gap: var(--spacer-lg);
   padding: var(--spacer-lg);
@@ -8,17 +7,8 @@
   overflow-y: auto;
   overflow-x: hidden;
 
-  h2 {
-    margin: var(--spacer-xxl) 0 var(--spacer-sm);
-  }
-
-  .create-game {
-    display: grid;
-    padding: var(--spacer-lg);
-  }
-
   app-game-list {
-    width: 320px;
+    width: 20rem;
     max-width: 100vw;
   }
 }

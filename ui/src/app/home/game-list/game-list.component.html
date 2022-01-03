@@ -1,3 +1,4 @@
+<h2 [class.inactive]="!games.length">{{ label }} ({{ games.length }})</h2>
 <mat-action-list>
   <button mat-list-item *ngFor="let game of games; trackBy: trackByGameId" [routerLink]="'/' + game.id">
     <div class="inner-list-item">
