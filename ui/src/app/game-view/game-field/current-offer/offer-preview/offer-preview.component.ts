@@ -1,8 +1,7 @@
 import { ChangeDetectionStrategy, Component, HostBinding, Input } from '@angular/core';
-import { Picture, Player, PublicGame } from '../../../../../game-logic/game';
+import { Picture, PublicGame } from '../../../../../game-logic/game';
 import { trackByPictureCard } from '../../../../ui-helpers';
 import { fakesPerRound, masterFaker } from '../../../../../game-logic/gameConsts';
-import { getPlayerInGame } from '../../../../../game-logic/gameLogic';
 
 @Component({
   selector: 'app-offer-preview',
@@ -24,11 +23,5 @@ export class OfferPreviewComponent {
     const demandArray = remainingDemand > 0 ? new Array(remainingDemand).fill('').map((card) => ({ card })) : [];
 
     return [...this.game.offerPreview, ...demandArray];
-  }
-
-  constructor() {}
-
-  getPlayer(playerId: string): Player | undefined {
-    return getPlayerInGame(this.game, playerId);
   }
 }

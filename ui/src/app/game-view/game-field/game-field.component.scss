@@ -36,6 +36,12 @@ $quickAccessBarHeight: 85px; // 68 + margin
     app-demand {
       grid-column: 2;
     }
+
+    app-phase-info,
+    app-current-themes,
+    app-jokers {
+      grid-column: 1;
+    }
   }
 }
 

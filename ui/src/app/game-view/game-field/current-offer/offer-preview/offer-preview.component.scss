@@ -31,16 +31,11 @@
       --card-background: transparent;
     }
 
-    .player-marker {
+    app-player-marker {
       position: absolute;
       --indicator-spacer: var(--spacer-xs);
       top: var(--indicator-spacer);
       right: var(--indicator-spacer);
-      height: var(--emoji-size-xs);
-      width: var(--emoji-size-xs);
-      background: var(--color);
-      border: 1px solid var(--border-color);
-      border-radius: 50%;
     }
   }
 

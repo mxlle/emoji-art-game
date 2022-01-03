@@ -1,8 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { maxDemand, minDemand } from '../../../../../game-logic/gameConsts';
-import { DemandSuggestion, Player, PublicGame } from '../../../../../game-logic/game';
+import { DemandSuggestion, PublicGame } from '../../../../../game-logic/game';
 import apiFunctions from '../../../../../data/apiFunctions';
-import { getPlayerInGame } from '../../../../../game-logic/gameLogic';
 import { getCurrentUserId } from '../../../../../data/functions';
 
 @Component({
@@ -25,10 +24,6 @@ export class DemandPickerComponent {
 
   getSuggestionForDemand(demand: number): DemandSuggestion | undefined {
     return this.game.currentDemandSuggestions?.find((s: DemandSuggestion) => s.demand === demand);
-  }
-
-  getPlayer(playerId: string): Player | undefined {
-    return getPlayerInGame(this.game, playerId);
   }
 
   suggestDemand(demand: number) {

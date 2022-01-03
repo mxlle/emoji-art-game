@@ -409,7 +409,7 @@ export function getClearedForDeletion(game: Game | GameInfo, nowTime: number = n
   }
 }
 
-export function getPlayerInGame(game: Game | GameInfo, playerId?: string): Player | undefined {
+export function getPlayerInGame(game: { players: Player[] }, playerId?: string): Player | undefined {
   return game.players.find((player: Player) => player.id === playerId);
 }
 

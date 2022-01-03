@@ -10,8 +10,9 @@
     <ng-container *ngIf="!picture?.card">&nbsp;</ng-container>
   </span>
 
-  <div *ngIf="picture.playerId" class="player-marker" [style.--color]="getPlayer(picture.playerId)?.color"></div>
+  <app-player-marker *ngIf="picture.playerId" [players]="game.players" [playerId]="picture.playerId"></app-player-marker>
 </app-card>
+
 <div class="faker-cards">
   <app-card *ngFor="let picture of fakerArray">
     <span class="emoji">{{ picture }}</span>
