@@ -1,1 +1,1 @@
-Copied from game-tools-js and adapted for typescript
+Partly copied from game-tools-js and adapted for typescript
