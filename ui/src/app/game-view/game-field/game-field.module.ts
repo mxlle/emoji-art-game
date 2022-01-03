@@ -5,7 +5,7 @@ import { CardModule } from '../../ui-components/card/card.module';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { PictureModule } from '../../shared/picture/picture.module';
-import { DemandPickerModule } from './demand-picker/demand-picker.module';
+import { DemandPickerModule } from './demand/demand-picker/demand-picker.module';
 import { PlayerHandModule } from './player-hand/player-hand.module';
 import { CurrentOfferModule } from './current-offer/current-offer.module';
 import { CurrentThemesModule } from './current-themes/current-themes.module';
@@ -13,6 +13,7 @@ import { PlayerInfoModule } from '../../shared/player-info/player-info.module';
 import { QuickAccessBarModule } from './quick-access-bar/quick-access-bar.module';
 import { PhaseInfoModule } from './phase-info/phase-info.module';
 import { JokersModule } from './jokers/jokers.module';
+import { DemandModule } from './demand/demand.module';
 
 @NgModule({
   declarations: [GameFieldComponent],
@@ -31,6 +32,7 @@ import { JokersModule } from './jokers/jokers.module';
     QuickAccessBarModule,
     PhaseInfoModule,
     JokersModule,
+    DemandModule,
   ],
 })
 export class GameFieldModule {}

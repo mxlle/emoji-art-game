@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { maxDemand, minDemand } from '../../../../game-logic/gameConsts';
-import { DemandSuggestion, Player, PublicGame } from '../../../../game-logic/game';
-import apiFunctions from '../../../../data/apiFunctions';
-import { getPlayerInGame } from '../../../../game-logic/gameLogic';
-import { getCurrentUserId } from '../../../../data/functions';
+import { maxDemand, minDemand } from '../../../../../game-logic/gameConsts';
+import { DemandSuggestion, Player, PublicGame } from '../../../../../game-logic/game';
+import apiFunctions from '../../../../../data/apiFunctions';
+import { getPlayerInGame } from '../../../../../game-logic/gameLogic';
+import { getCurrentUserId } from '../../../../../data/functions';
 
 @Component({
   selector: 'app-demand-picker',

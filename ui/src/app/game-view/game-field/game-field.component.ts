@@ -1,8 +1,6 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 
 import { GamePhase, Player, PublicGame, Role } from '../../../game-logic/game';
-// @ts-ignore todo
-import { Subject } from 'rxjs';
 import apiFunctions from '../../../data/apiFunctions';
 
 @Component({
@@ -11,7 +9,7 @@ import apiFunctions from '../../../data/apiFunctions';
   styleUrls: ['./game-field.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class GameFieldComponent implements OnInit, OnDestroy {
+export class GameFieldComponent {
   @Input() game!: PublicGame;
   @Input() currentPlayer: Player | null = null;
 
@@ -32,26 +30,8 @@ export class GameFieldComponent implements OnInit, OnDestroy {
     return GamePhase.Demand === this.game.phase && Role.BUYER === this.currentPlayer?.role;
   }
 
-  get allowDemandConfirm(): boolean {
-    return this.showDemandPicker && this.game.currentDemandSuggestions.length === 1;
-  }
-
   get showEndRoundConfirm(): boolean {
     return GamePhase.Evaluate === this.game.phase && !!this.currentPlayer;
-  }
-
-  private _destroy$: Subject<void> = new Subject<void>();
-
-  constructor(private _cdr: ChangeDetectorRef) {}
-
-  ngOnInit(): void {}
-
-  ngOnDestroy(): void {
-    this._destroy$.next();
-  }
-
-  setDemand() {
-    apiFunctions.setDemand(this.game.id);
   }
 
   endRound() {

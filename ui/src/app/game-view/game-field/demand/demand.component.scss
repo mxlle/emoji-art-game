@@ -1,0 +1,9 @@
+:host {
+  display: grid;
+  grid-template-rows: repeat(3, auto);
+  --card-padding: var(--spacer-lg);
+  button {
+    place-self: center;
+    margin-top: var(--spacer-lg); // todo ?
+  }
+}

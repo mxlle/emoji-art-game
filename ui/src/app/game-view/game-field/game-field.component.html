@@ -1,28 +1,26 @@
 <div class="scroll-container">
+  <!-- INFO -->
   <app-phase-info [game]="game"></app-phase-info>
 
-  <app-current-themes
-    *ngIf="game.currentThemes"
-    [themes]="game.currentThemes"
-    [active]="themesActive"
-    [(currentTheme)]="currentTheme"
-  ></app-current-themes>
+  <!-- THEMES -->
+  <app-current-themes [themes]="game.currentThemes" [active]="themesActive" [(currentTheme)]="currentTheme"></app-current-themes>
 
-  <div *ngIf="showDemandPicker" class="demand">
-    <h2>Set demand</h2>
-    <app-demand-picker [game]="game"></app-demand-picker>
-    <button mat-flat-button color="primary" [disabled]="!allowDemandConfirm" (click)="setDemand()">Confirm</button>
-  </div>
+  <!-- DEMAND -->
+  <app-demand *ngIf="showDemandPicker" [game]="game"></app-demand>
 
+  <!-- JOKERS -->
   <app-jokers *ngIf="game.jokers.length" [game]="game" [currentPlayer]="currentPlayer"></app-jokers>
 
+  <!-- OFFER -->
   <app-current-offer *ngIf="GamePhase.Demand !== game.phase" [game]="game" [currentTheme]="currentTheme" [currentPlayer]="currentPlayer">
     <button *ngIf="showEndRoundConfirm" mat-flat-button color="primary" (click)="endRound()">Continue</button>
   </app-current-offer>
 
+  <!-- PLAYER HAND -->
   <app-player-hand *ngIf="currentPlayer" [game]="game" [player]="currentPlayer" [currentTheme]="currentTheme"></app-player-hand>
 </div>
 
+<!-- QUICK ACCESS -->
 <app-quick-access-bar
   *ngIf="showQuickAccess"
   [game]="game"
