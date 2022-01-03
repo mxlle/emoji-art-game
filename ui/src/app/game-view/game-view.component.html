@@ -1,10 +1,17 @@
 <ng-container *ngIf="game">
+  <!-- PRE-GAME (players joining) -->
   <app-joining-view *ngIf="GamePhase.Init === game.phase" [game]="game" [currentPlayer]="currentPlayer"></app-joining-view>
+
+  <!-- ONGOING GAME -->
   <app-game-field
     *ngIf="GamePhase.Init !== game.phase && GamePhase.End !== game.phase"
     [game]="game"
     [currentPlayer]="currentPlayer"
   ></app-game-field>
+
+  <!-- FINISHED GAME -->
   <app-end-view *ngIf="GamePhase.End === game.phase" [game]="game"></app-end-view>
+
+  <!-- GAME STATUS -->
   <app-status-bar *ngIf="GamePhase.Init !== game.phase" [game]="game"></app-status-bar>
 </ng-container>
