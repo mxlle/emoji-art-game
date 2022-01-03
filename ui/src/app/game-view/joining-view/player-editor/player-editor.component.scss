@@ -1,0 +1,11 @@
+:host {
+  display: grid;
+  gap: var(--spacer-lg);
+  justify-items: center;
+
+  app-color-picker {
+    height: 10rem;
+    width: 10rem;
+    margin-block-end: var(--spacer-lg);
+  }
+}

@@ -1,5 +1,5 @@
 <ng-container *ngIf="game">
-  <app-lobby *ngIf="GamePhase.Init === game.phase" [game]="game" [currentPlayer]="currentPlayer"></app-lobby>
+  <app-joining-view *ngIf="GamePhase.Init === game.phase" [game]="game" [currentPlayer]="currentPlayer"></app-joining-view>
   <app-game-field
     *ngIf="GamePhase.Init !== game.phase && GamePhase.End !== game.phase"
     [game]="game"
