@@ -10,14 +10,20 @@ h2 {
   }
 }
 
+button.mat-list-item {
+  height: auto;
+}
+
 .inner-list-item {
   display: grid;
   grid-template-columns: 1fr auto auto;
   grid-template-rows: repeat(2, auto);
   grid-auto-flow: column;
   gap: var(--spacer-xs);
+  padding: var(--spacer-xs) 0;
   align-items: center;
   width: 100%;
+  font-size: var(--font-size-default);
 
   div:nth-child(2) {
     color: var(--foreground-secondary);

@@ -1,11 +1,18 @@
 :host {
   display: grid;
+  grid-auto-rows: min-content;
   justify-items: center;
   gap: var(--spacer-lg);
   padding: var(--spacer-lg);
   text-align: center;
   overflow-y: auto;
   overflow-x: hidden;
+
+  .games {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 
   app-game-list {
     width: 20rem;

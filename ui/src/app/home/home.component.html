@@ -2,7 +2,7 @@
 
 <button mat-flat-button routerLink="/cards">Show all cards</button>
 
-<div>
+<div class="games">
   <!-- NEW GAMES -->
   <app-game-list *ngIf="newGames$ | async as newGames" label="New Games" [games]="newGames" (delete)="deleteGame($event)"></app-game-list>
 
