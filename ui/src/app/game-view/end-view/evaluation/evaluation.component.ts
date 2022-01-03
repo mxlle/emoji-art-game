@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
 import { Player } from '../../../../game-logic/game';
 import { randomArrayValue } from '../../../../game-tools/random-util';
 import { allColors } from '../../../../game-tools/color-util';
@@ -13,8 +13,15 @@ import { percentage } from '../../../util';
   styleUrls: ['./evaluation.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class EvaluationComponent implements OnInit {
-  @Input() points: number = 0;
+export class EvaluationComponent {
+  @Input() set points(points: number) {
+    this.resultPercentage = percentage(points, bestPoints);
+
+    this.animatedPercentage$ = animateNumber(points, this._resultAnimationMillis).pipe(
+      tap((animatedPoints: number) => this.animatedPointsChange.emit(Math.ceil(animatedPoints))),
+      map((animatedPoints: number) => percentage(animatedPoints, bestPoints))
+    );
+  }
   @Input() players: Player[] = [];
 
   @Output() animatedPointsChange: EventEmitter<number> = new EventEmitter<number>();
@@ -26,15 +33,6 @@ export class EvaluationComponent implements OnInit {
 
   get colors(): string[] {
     return this.players.map((player: Player) => player.color ?? randomArrayValue(allColors));
-  }
-
-  ngOnInit(): void {
-    this.resultPercentage = percentage(this.points, bestPoints);
-
-    this.animatedPercentage$ = animateNumber(this.points, this._resultAnimationMillis).pipe(
-      tap((points: number) => this.animatedPointsChange.emit(Math.ceil(points))),
-      map((points: number) => percentage(points, bestPoints))
-    );
   }
 
   getResultEmoji(percentage: number): string {
