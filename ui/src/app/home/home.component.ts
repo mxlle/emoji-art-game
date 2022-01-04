@@ -12,9 +12,9 @@ import { Observable, Subject, takeUntil } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  newGames$: Observable<GameInfo[]> = this._gameService.newGames$;
-  ongoingGames$: Observable<GameInfo[]> = this._gameService.ongoingGames$;
-  finishedGames$: Observable<GameInfo[]> = this._gameService.finishedGames$;
+  newGames$: Observable<GameInfo[] | null> = this._gameService.newGames$;
+  ongoingGames$: Observable<GameInfo[] | null> = this._gameService.ongoingGames$;
+  finishedGames$: Observable<GameInfo[] | null> = this._gameService.finishedGames$;
 
   private readonly _destroy$: Subject<void> = new Subject<void>();
 

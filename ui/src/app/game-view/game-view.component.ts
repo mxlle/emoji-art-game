@@ -12,8 +12,8 @@ import { ConnectionService } from '../connection.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class GameViewComponent implements OnInit, OnDestroy {
-  game$: Observable<PublicGame> = this._gameService.currentGame$;
-  currentPlayer$: Observable<Player> = this._gameService.currentPlayer$;
+  game$: Observable<PublicGame | null> = this._gameService.currentGame$;
+  currentPlayer$: Observable<Player | null> = this._gameService.currentPlayer$;
 
   readonly _gameId: string;
 

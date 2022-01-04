@@ -15,18 +15,18 @@ export interface ConfettiEvent {
   providedIn: 'root',
 })
 export class GameService {
-  get currentGame$(): Observable<PublicGame> {
+  get currentGame$(): Observable<PublicGame | null> {
     return this._currentGame$.asObservable();
   }
 
-  get currentPlayer$(): Observable<Player> {
+  get currentPlayer$(): Observable<Player | null> {
     return this._currentPlayer$.asObservable();
   }
 
   get confetti$(): Observable<ConfettiEvent> {
     return this._confetti$.asObservable().pipe(
       withLatestFrom(this.currentGame$),
-      map(([colors, game]: [string[], PublicGame]) => {
+      map(([colors, game]: [string[], PublicGame | null]) => {
         let amount = 1;
         if (game && game.phase === GamePhase.End) {
           amount = game.teamPoints.length / bestPoints;
@@ -36,24 +36,24 @@ export class GameService {
     );
   }
 
-  get newGames$(): Observable<GameInfo[]> {
+  get newGames$(): Observable<GameInfo[] | null> {
     return this._newGames$.asObservable();
   }
 
-  get ongoingGames$(): Observable<GameInfo[]> {
+  get ongoingGames$(): Observable<GameInfo[] | null> {
     return this._ongoingGames$.asObservable();
   }
 
-  get finishedGames$(): Observable<GameInfo[]> {
+  get finishedGames$(): Observable<GameInfo[] | null> {
     return this._finishedGames$.asObservable();
   }
 
-  private _currentGame$: ReplaySubject<PublicGame> = new ReplaySubject<PublicGame>(1);
-  private _currentPlayer$: ReplaySubject<Player> = new ReplaySubject<Player>(1);
+  private _currentGame$: ReplaySubject<PublicGame | null> = new ReplaySubject<PublicGame | null>(1);
+  private _currentPlayer$: ReplaySubject<Player | null> = new ReplaySubject<Player | null>(1);
   private _confetti$: ReplaySubject<string[]> = new ReplaySubject<string[]>(1);
-  private _newGames$: ReplaySubject<GameInfo[]> = new ReplaySubject<GameInfo[]>(1);
-  private _ongoingGames$: ReplaySubject<GameInfo[]> = new ReplaySubject<GameInfo[]>(1);
-  private _finishedGames$: ReplaySubject<GameInfo[]> = new ReplaySubject<GameInfo[]>(1);
+  private _newGames$: ReplaySubject<GameInfo[] | null> = new ReplaySubject<GameInfo[] | null>(1);
+  private _ongoingGames$: ReplaySubject<GameInfo[] | null> = new ReplaySubject<GameInfo[] | null>(1);
+  private _finishedGames$: ReplaySubject<GameInfo[] | null> = new ReplaySubject<GameInfo[] | null>(1);
 
   constructor(private _ngZone: NgZone) {}
 
@@ -75,6 +75,8 @@ export class GameService {
     socket.off(GameEvent.Update);
     socket.off(GameEvent.UpdatePlayerData);
     socket.off(GameEvent.Confetti);
+    this._currentGame$.next(null);
+    this._currentPlayer$.next(null);
   }
 
   subscribeToGameList() {
@@ -87,12 +89,15 @@ export class GameService {
   unsubscribeFromGameList() {
     socket.emit(GameEvent.ListUnsubscribe);
     socket.off(GameEvent.UpdateList);
+    this._newGames$.next(null);
+    this._ongoingGames$.next(null);
+    this._finishedGames$.next(null);
   }
 
   sendConfetti(colors: string[]) {
     this._confetti$.next(colors);
-    this.currentGame$.pipe(take(1)).subscribe((game: PublicGame) => {
-      socket.emit(GameEvent.Confetti, game.id, colors);
+    this.currentGame$.pipe(take(1)).subscribe((game: PublicGame | null) => {
+      if (game) socket.emit(GameEvent.Confetti, game.id, colors);
     });
   }
 
