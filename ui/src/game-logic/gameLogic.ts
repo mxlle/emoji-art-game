@@ -14,9 +14,9 @@ import {
 } from './game';
 import { shuffleArray } from '../game-tools/random-util';
 import {
-  defaultConfig,
   fakesPerRound,
   gameEndCondition,
+  getDefaultConfig,
   getInitialJokers,
   getNumOfCardsPerPlayer,
   getRoleOrder,
@@ -71,7 +71,7 @@ export function removePlayerFromGame(game: Game, playerId: string) {
   }
 }
 
-export function startGame(game: Game, config: GameConfig = defaultConfig) {
+export function startGame(game: Game, config: GameConfig = getDefaultConfig()) {
   if (GamePhase.Init !== game.phase) return;
 
   // deal cards and assign roles

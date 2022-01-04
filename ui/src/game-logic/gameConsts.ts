@@ -69,13 +69,16 @@ export const minDeck = 140;
 export const bestPoints = 30;
 
 const deckCategories = emojiCategories.map((cat) => cat.id);
-export const defaultConfig: GameConfig = {
-  deckCategories,
-  deckLimitPerCategory: 7,
-  calculatedCount: deckCategories.length * 7,
-};
 export const minPerCategory = Math.ceil(minDeck / deckCategories.length);
 export const maxPerCategory = Math.max(...emojiCategories.map((cat) => cat.emojis.length));
+
+export const getDefaultConfig = (): GameConfig => {
+  return {
+    deckCategories,
+    deckLimitPerCategory: 7,
+    calculatedCount: deckCategories.length * 7,
+  };
+};
 
 export const roleOrder: Role[] = [Role.PAINTER, Role.BUYER, Role.BUYER, Role.PAINTER, Role.BUYER];
 

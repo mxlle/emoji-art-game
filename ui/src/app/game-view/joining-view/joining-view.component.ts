@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { GameConfig, Player, PublicGame } from '../../../game-logic/game';
 import apiFunctions from '../../../data/apiFunctions';
-import { defaultConfig, minDeck, minNumPlayers } from '../../../game-logic/gameConsts';
+import { getDefaultConfig, minDeck, minNumPlayers } from '../../../game-logic/gameConsts';
 
 @Component({
   selector: 'app-joining-view',
@@ -12,7 +12,7 @@ import { defaultConfig, minDeck, minNumPlayers } from '../../../game-logic/gameC
 export class JoiningViewComponent {
   @Input() game!: PublicGame;
   @Input() currentPlayer: Player | null = null;
-  config: GameConfig = defaultConfig;
+  config: GameConfig = getDefaultConfig();
 
   get isHost(): boolean {
     return this.game.hostId === this.currentPlayer?.id;

@@ -6,10 +6,11 @@ import { EmojiListPreviewModule } from '../../../shared/emoji-list-preview/emoji
 import { MatSliderModule } from '@angular/material/slider';
 import { FormsModule } from '@angular/forms';
 import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
 
 @NgModule({
   declarations: [ConfigComponent],
   exports: [ConfigComponent],
-  imports: [CommonModule, CardModule, EmojiListPreviewModule, MatSliderModule, FormsModule, MatIconModule],
+  imports: [CommonModule, CardModule, EmojiListPreviewModule, MatSliderModule, FormsModule, MatIconModule, MatButtonModule],
 })
 export class ConfigModule {}

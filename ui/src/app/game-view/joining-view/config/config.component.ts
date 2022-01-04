@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output, ViewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Output, ViewChild } from '@angular/core';
 import { emojiCategories, EmojiCategory, EmojiCategoryId } from '../../../../game-logic/deck';
 import { GameConfig } from '../../../../game-logic/game';
-import { defaultConfig, maxPerCategory, minDeck, minPerCategory } from '../../../../game-logic/gameConsts';
+import { getDefaultConfig, maxPerCategory, minDeck, minPerCategory } from '../../../../game-logic/gameConsts';
 import { MatSlider, MatSliderChange } from '@angular/material/slider';
 
 @Component({
@@ -10,11 +10,11 @@ import { MatSlider, MatSliderChange } from '@angular/material/slider';
   styleUrls: ['./config.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ConfigComponent implements OnInit {
+export class ConfigComponent {
   @Output() configChange: EventEmitter<GameConfig> = new EventEmitter<GameConfig>();
   @ViewChild(MatSlider) limitSlider?: MatSlider;
 
-  config: GameConfig = defaultConfig;
+  config: GameConfig = getDefaultConfig();
   show: boolean = false;
 
   readonly emojiCategories = emojiCategories;
@@ -30,7 +30,9 @@ export class ConfigComponent implements OnInit {
     this._onConfigChange();
   }
 
-  ngOnInit(): void {}
+  resetConfig() {
+    this.config = getDefaultConfig();
+  }
 
   onLimitChange(event: MatSliderChange) {
     if (event.value) {

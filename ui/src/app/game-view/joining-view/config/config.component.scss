@@ -28,3 +28,7 @@ mat-slider {
   --card-font-size: var(--emoji-size-sm);
   --card-padding: var(--spacer-sm);
 }
+
+button {
+  margin-block-start: var(--spacer-lg);
+}
