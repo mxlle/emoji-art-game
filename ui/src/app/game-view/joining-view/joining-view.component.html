@@ -4,7 +4,7 @@
   <h2>Players</h2>
   <div class="players">
     <app-player-info *ngFor="let player of game.players" [player]="player">
-      <button *ngIf="allowDelete" mat-icon-button (click)="removePlayer(player)"><mat-icon>delete</mat-icon></button>
+      <button *ngIf="isHost" mat-icon-button (click)="removePlayer(player)"><mat-icon>delete</mat-icon></button>
     </app-player-info>
   </div>
 </div>
@@ -13,11 +13,6 @@
   <span>Back</span>
 </button>
 
-<button
-  *ngIf="currentPlayer && currentPlayer.id === game.hostId && game.players.length >= minNumPlayers"
-  mat-flat-button
-  color="primary"
-  (click)="startGame()"
->
-  Start game
-</button>
+<button *ngIf="isHost" mat-flat-button color="primary" [disabled]="startDisabled" (click)="startGame()">Start game</button>
+
+<app-config *ngIf="isHost" (configChange)="config = $event"></app-config>

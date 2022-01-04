@@ -15,3 +15,8 @@
 .players {
   @include mixins.defaultGrid();
 }
+
+app-config {
+  width: 40rem;
+  max-width: calc(100vw - 2 * #{var(--spacer-lg)});
+}

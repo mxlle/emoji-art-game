@@ -4,7 +4,7 @@ import GameDaoImpl from '@daos/Game';
 import { docToPlain, GameController, GameDocument, GamePhase, Player } from '@entities/Game';
 import { forbiddenError, gameNotFoundError, paramMissingError } from '@shared/constants';
 import { Namespace } from 'socket.io';
-import { Game, GameApi, GameEvent, Role, ROOM_GAME, ROOM_GAME_LIST, ROOM_GAME_PLAYER } from '@gameTypes';
+import { Game, GameApi, GameConfig, GameEvent, Role, ROOM_GAME, ROOM_GAME_LIST, ROOM_GAME_PLAYER } from '@gameTypes';
 import { getPlayerInGame, toGameInfo, toPublicGame } from '@gameFunctions';
 
 // Init shared
@@ -104,7 +104,7 @@ class GameApiImpl implements GameApi {
     return true;
   }
 
-  async startGame(gameId: string) {
+  async startGame(gameId: string, config: GameConfig) {
     const game = await gameDao.getOne(gameId);
 
     if (!game) throw new Error(gameNotFoundError);
@@ -112,7 +112,7 @@ class GameApiImpl implements GameApi {
       throw new Error(forbiddenError);
     }
 
-    GameController.startGame(game);
+    GameController.startGame(game, config);
 
     const updatedGame = await gameDao.update(game);
 

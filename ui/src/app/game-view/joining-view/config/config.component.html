@@ -1,0 +1,30 @@
+<h3 (click)="show = !show">
+  <mat-icon>settings</mat-icon>
+  Game config (deck creation)
+  <mat-icon [class.open]="show">expand_more</mat-icon>
+</h3>
+<ng-container *ngIf="show">
+  <div [class.bad]="deckTooSmall">
+    Deck size: {{ config.calculatedCount }} <span *ngIf="deckTooSmall">(min: {{ minDeck }})</span>
+  </div>
+  Cards per category:
+  <mat-slider
+    thumbLabel
+    [min]="minPerCategory"
+    [max]="maxPerCategory"
+    [value]="config.deckLimitPerCategory"
+    (change)="onLimitChange($event)"
+  ></mat-slider>
+  {{ config.deckLimitPerCategory }}
+  <h4>Selected categories ({{ config.deckCategories.length }}/{{ emojiCategories.length }})</h4>
+  <div class="category-selector">
+    <app-card
+      *ngFor="let category of emojiCategories"
+      [clickable]="true"
+      [selected]="config.deckCategories.includes(category.id)"
+      (click)="toggleCategorySelection(category)"
+    >
+      <app-emoji-list-preview [emojis]="category.emojis"></app-emoji-list-preview>
+    </app-card>
+  </div>
+</ng-container>

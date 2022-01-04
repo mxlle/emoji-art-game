@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { Player, PublicGame } from '../../../game-logic/game';
+import { GameConfig, Player, PublicGame } from '../../../game-logic/game';
 import apiFunctions from '../../../data/apiFunctions';
-import { minNumPlayers } from '../../../game-logic/gameConsts';
+import { defaultConfig, minDeck, minNumPlayers } from '../../../game-logic/gameConsts';
 
 @Component({
   selector: 'app-joining-view',
@@ -12,12 +12,15 @@ import { minNumPlayers } from '../../../game-logic/gameConsts';
 export class JoiningViewComponent {
   @Input() game!: PublicGame;
   @Input() currentPlayer: Player | null = null;
+  config: GameConfig = defaultConfig;
 
-  get allowDelete(): boolean {
+  get isHost(): boolean {
     return this.game.hostId === this.currentPlayer?.id;
   }
 
-  constructor() {}
+  get startDisabled(): boolean {
+    return this.game.players.length < minNumPlayers || this.config.calculatedCount < minDeck;
+  }
 
   joinGame(player: Player) {
     apiFunctions.addPlayer(this.game.id, { ...player, pictures: [] });
@@ -30,10 +33,6 @@ export class JoiningViewComponent {
   }
 
   startGame() {
-    apiFunctions.startGame(this.game.id);
-  }
-
-  get minNumPlayers(): typeof minNumPlayers {
-    return minNumPlayers;
+    apiFunctions.startGame(this.game.id, this.config);
   }
 }

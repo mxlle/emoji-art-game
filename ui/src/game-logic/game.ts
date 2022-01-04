@@ -1,3 +1,5 @@
+import { EmojiCategoryId } from './deck';
+
 export const DELETE_CLEARANCE_TIME: number = 7 * 24 * 60 * 60 * 1000; // 1 week
 
 export interface Game {
@@ -124,6 +126,12 @@ export interface DemandSuggestion {
   playerIds: string[];
 }
 
+export interface GameConfig {
+  deckCategories: EmojiCategoryId[];
+  deckLimitPerCategory: number;
+  calculatedCount: number;
+}
+
 // API related interfaces
 
 export interface GameApi {
@@ -133,7 +141,7 @@ export interface GameApi {
   addPlayer: (gameId: string, player: Player) => Promise<boolean>;
   updatePlayer: (gameId: string, player: Player) => Promise<boolean>;
   removePlayerFromGame: (gameId: string, playerId: string) => Promise<boolean>;
-  startGame: (gameId: string) => Promise<boolean>;
+  startGame: (gameId: string, config: GameConfig) => Promise<boolean>;
   useExchangeThemesJoker: (gameId: string) => Promise<boolean>;
   suggestDemand: (gameId: string, demand: number) => Promise<boolean>;
   setDemand: (gameId: string) => Promise<boolean>;

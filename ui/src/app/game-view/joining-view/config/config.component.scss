@@ -1,0 +1,30 @@
+h3 {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--spacer-sm);
+
+  mat-icon {
+    transition: transform 0.3s;
+    &.open {
+      transform: rotate(180deg);
+    }
+  }
+}
+
+.bad {
+  color: var(--danger-color);
+}
+
+mat-slider {
+  width: 15rem;
+}
+
+.category-selector {
+  display: grid;
+  gap: var(--spacer-sm);
+  grid-template-columns: repeat(auto-fill, minmax(4.5rem, 1fr)); // todo
+  --card-font-size: var(--emoji-size-sm);
+  --card-padding: var(--spacer-sm);
+}

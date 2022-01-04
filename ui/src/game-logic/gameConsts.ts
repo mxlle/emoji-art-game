@@ -21,7 +21,8 @@ import {
   vehicles,
   weatherAndEarth,
 } from '../game-tools/emoji-util';
-import { GamePhase, Joker, JokerType, Role } from './game';
+import { GameConfig, GamePhase, Joker, JokerType, Role } from './game';
+import { emojiCategories } from './deck';
 
 export const emojis: string[] = splitEmojis(
   bodyParts +
@@ -63,7 +64,18 @@ export const maxDemand = 7;
 export const fakesPerRound = 4;
 export const gameEndCondition = 6;
 
+export const minDeck = 140;
+
 export const bestPoints = 30;
+
+const deckCategories = emojiCategories.map((cat) => cat.id);
+export const defaultConfig: GameConfig = {
+  deckCategories,
+  deckLimitPerCategory: 7,
+  calculatedCount: deckCategories.length * 7,
+};
+export const minPerCategory = Math.ceil(minDeck / deckCategories.length);
+export const maxPerCategory = Math.max(...emojiCategories.map((cat) => cat.emojis.length));
 
 export const roleOrder: Role[] = [Role.PAINTER, Role.BUYER, Role.BUYER, Role.PAINTER, Role.BUYER];
 

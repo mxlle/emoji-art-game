@@ -3,6 +3,7 @@ import {
   DELETE_CLEARANCE_TIME,
   DemandSuggestion,
   Game,
+  GameConfig,
   GameInfo,
   GamePhase,
   GameRound,
@@ -13,7 +14,7 @@ import {
 } from './game';
 import { shuffleArray } from '../game-tools/random-util';
 import {
-  emojis,
+  defaultConfig,
   fakesPerRound,
   gameEndCondition,
   getInitialJokers,
@@ -27,6 +28,7 @@ import {
 } from './gameConsts';
 import { dealCards, drawCards } from '../game-tools/card-game-util';
 import { generateEmojiId } from '../game-tools/emoji-util';
+import { createDeck } from './deck';
 
 export function createGame(name: string): Game {
   const id = generateEmojiId();
@@ -69,11 +71,11 @@ export function removePlayerFromGame(game: Game, playerId: string) {
   }
 }
 
-export function startGame(game: Game) {
+export function startGame(game: Game, config: GameConfig = defaultConfig) {
   if (GamePhase.Init !== game.phase) return;
 
   // deal cards and assign roles
-  game.deck = shuffleArray(emojis);
+  game.deck = createDeck(config.deckCategories, config.deckLimitPerCategory);
   const dealtCards = dealCards(game.deck, game.players.length, getNumOfCardsPerPlayer(game.players.length));
   const roleOrder = getRoleOrder(game.players.length);
   game.players.forEach((player, index) => {
