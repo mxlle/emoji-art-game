@@ -1,7 +1,7 @@
 <ng-container *ngLet="(animatedPercentage$ | async) ?? 0 as percentage">
   <h2>Your result</h2>
   <app-progress-bar [value]="percentage" [colors]="colors"></app-progress-bar>
-  <div class="emoji" [appScale]="percentage / resultPercentage">
+  <div class="emoji" [appScale]="percentage / scaleResultPercentage">
     {{ getResultEmoji(percentage) }}
   </div>
 </ng-container>

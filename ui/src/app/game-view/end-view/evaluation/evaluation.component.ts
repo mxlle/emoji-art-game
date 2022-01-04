@@ -29,6 +29,10 @@ export class EvaluationComponent {
   animatedPercentage$: Observable<number> = of(0);
   resultPercentage: number = 0;
 
+  get scaleResultPercentage() {
+    return Math.min(this.resultPercentage, 100); // end scale bigger if above 100%
+  }
+
   private readonly _resultAnimationMillis = 1500;
 
   get colors(): string[] {
