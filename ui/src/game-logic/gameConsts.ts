@@ -1,43 +1,49 @@
 import {
-  activityAndSport,
+  accessories,
+  activity,
   activityPersons,
-  additionalSmileys,
-  animalFaces,
   animals,
   bodyParts,
-  clothingAndAccessories,
+  clothing,
   foodAndDrink,
   jobs,
+  music,
   nature,
   objects1,
   objects2,
   objects3,
   objects4,
   phantasy,
+  smileysForGame,
   splitEmojis,
+  sport,
   travelAndPlaces,
+  vehicles,
   weatherAndEarth,
 } from '../game-tools/emoji-util';
 import { GamePhase, Joker, JokerType, Role } from './game';
 
 export const emojis: string[] = splitEmojis(
   bodyParts +
-    additionalSmileys +
     jobs +
     phantasy +
-    clothingAndAccessories +
-    animalFaces +
+    clothing +
+    accessories +
     animals +
     nature +
     weatherAndEarth +
     foodAndDrink +
-    activityAndSport +
+    sport +
+    activity +
+    music +
     activityPersons +
+    vehicles +
     travelAndPlaces +
     objects1 +
     objects2 +
     objects3 +
-    objects4
+    objects4 +
+    smileysForGame
 );
 
 export const masterFaker = '🥸';

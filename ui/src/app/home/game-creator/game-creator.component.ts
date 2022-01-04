@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { SETTING_NAME } from '../../../data/constants';
 import { randomArrayValue } from '../../../game-tools/random-util';
-import { positiveSmileys, splitEmojis } from '../../../game-tools/emoji-util';
+import { positiveSmileys1, positiveSmileys2, splitEmojis } from '../../../game-tools/emoji-util';
 import { Game } from '../../../game-logic/game';
 import apiFunctions from '../../../data/apiFunctions';
 import { createGame } from '../../../game-logic/gameLogic';
@@ -30,6 +30,6 @@ export class GameCreatorComponent {
   }
 
   private _getDefaultGameName(): string {
-    return `New game ${randomArrayValue(splitEmojis(positiveSmileys))}`;
+    return `New game ${randomArrayValue(splitEmojis(positiveSmileys1 + positiveSmileys2))}`;
   }
 }

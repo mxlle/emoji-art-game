@@ -1,7 +1,28 @@
-<app-card *ngFor="let card of gameEmojis"
-  ><span class="emoji">{{ card }}</span></app-card
->
-<app-card [style.--card-font-size]="'var(--font-size-card-number)'">{{ cards.length }}</app-card>
-<app-card *ngFor="let card of cards"
-  ><span class="emoji">{{ card }}</span></app-card
->
+<div class="buttons">
+  <button mat-flat-button (click)="expandAll()">Expand all</button>
+  <button mat-flat-button (click)="collapseAll()">Collapse all</button>
+</div>
+<div class="category">
+  <h2 (click)="mainOpen = !mainOpen">
+    <app-emoji-list-preview [emojis]="gameEmojis" [shuffle]="false"></app-emoji-list-preview>
+    <span>Game roles ({{ gameEmojis.length }})</span>
+    <mat-icon [class.open]="mainOpen">expand_more</mat-icon>
+  </h2>
+  <div *ngIf="mainOpen" class="cards">
+    <app-card *ngFor="let card of gameEmojis"
+      ><span class="emoji">{{ card }}</span></app-card
+    >
+  </div>
+</div>
+<div *ngFor="let category of emojiCategories" class="category">
+  <h2 (click)="category.open = !category.open">
+    <app-emoji-list-preview [emojis]="category.emojis"></app-emoji-list-preview>
+    <span>{{ category.label }} ({{ category.emojis.length }}) </span>
+    <mat-icon [class.open]="category.open">expand_more</mat-icon>
+  </h2>
+  <div *ngIf="category.open" class="cards">
+    <app-card *ngFor="let card of category.emojis"
+      ><span class="emoji">{{ card }}</span></app-card
+    >
+  </div>
+</div>

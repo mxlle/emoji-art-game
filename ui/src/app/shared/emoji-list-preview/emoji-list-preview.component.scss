@@ -1,0 +1,20 @@
+:host {
+  display: inline-grid;
+  grid-template-columns: repeat(7, auto);
+
+  > * {
+    grid-row: 1;
+  }
+
+  :nth-child(1) {
+    grid-column: 1 / 4;
+    z-index: 2;
+  }
+  :nth-child(2) {
+    grid-column: 3 / 6;
+    z-index: 1;
+  }
+  :nth-child(3) {
+    grid-column: 5 / 8;
+  }
+}

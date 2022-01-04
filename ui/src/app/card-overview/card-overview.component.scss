@@ -1,8 +1,40 @@
 @use '../mixins';
 
 :host {
-  padding: var(--spacer-lg);
+  display: grid;
+  gap: var(--spacer-lg);
+  padding: 0 var(--spacer-lg) var(--spacer-lg);
   overflow-x: hidden;
   overflow-y: auto;
-  @include mixins.defaultGrid();
+}
+
+.buttons {
+  position: sticky;
+  z-index: 1;
+  top: 0;
+  background-color: rgba(var(--body-background-rgb), 0.85);
+  padding: var(--spacer-lg) 0;
+  display: flex;
+  gap: var(--spacer-lg);
+  justify-content: flex-end;
+}
+
+.category {
+  h2 {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: var(--spacer-md);
+    cursor: pointer;
+
+    mat-icon {
+      transition: transform 0.3s;
+
+      &.open {
+        transform: rotate(180deg);
+      }
+    }
+  }
+  .cards {
+    @include mixins.defaultGrid();
+  }
 }
