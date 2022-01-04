@@ -1,0 +1,17 @@
+:host {
+  display: block;
+
+  .inner-btn {
+    display: grid;
+    grid-template-areas: 'button';
+    place-items: center;
+
+    > * {
+      grid-area: button;
+    }
+
+    .mat-spinner circle {
+      color: var(--foreground);
+    }
+  }
+}

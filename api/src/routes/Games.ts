@@ -335,6 +335,13 @@ class GameApiImpl implements GameApi {
   emitPublicGame(game: GameDocument) {
     const publicGame = toPublicGame(docToPlain(game));
     this.socket.to(ROOM_GAME(game.id)).emit(GameEvent.Update, publicGame);
+
+    // send confetti if applicable
+    if (GamePhase.Evaluate === publicGame.phase) {
+      if (publicGame.currentOffer.filter((pic) => pic.painterTheme === pic.buyerTheme && !pic.isFake).length === publicGame.currentDemand) {
+        this.socket.to(ROOM_GAME(game.id)).emit(GameEvent.Confetti);
+      }
+    }
   }
 
   emitPlayerData(game: GameDocument, onlyPlayerId?: string) {

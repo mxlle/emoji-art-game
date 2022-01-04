@@ -1,9 +1,15 @@
 import { Injectable, NgZone } from '@angular/core';
-import { Observable, ReplaySubject } from 'rxjs';
+import { map, Observable, ReplaySubject, take, withLatestFrom } from 'rxjs';
 import { GameEvent, GameInfo, GamePhase, Player, PublicGame } from '../game-logic/game';
 import { socket } from '../data/socket';
 import { getCurrentUserId, getCurrentUserInGame } from '../data/functions';
 import apiFunctions from '../data/apiFunctions';
+import { bestPoints } from '../game-logic/gameConsts';
+
+export interface ConfettiEvent {
+  colors?: string[];
+  amount?: number;
+}
 
 @Injectable({
   providedIn: 'root',
@@ -15,6 +21,19 @@ export class GameService {
 
   get currentPlayer$(): Observable<Player> {
     return this._currentPlayer$.asObservable();
+  }
+
+  get confetti$(): Observable<ConfettiEvent> {
+    return this._confetti$.asObservable().pipe(
+      withLatestFrom(this.currentGame$),
+      map(([colors, game]: [string[], PublicGame]) => {
+        let amount = 1;
+        if (game && game.phase === GamePhase.End) {
+          amount = game.teamPoints.length / bestPoints;
+        }
+        return { colors, amount };
+      })
+    );
   }
 
   get newGames$(): Observable<GameInfo[]> {
@@ -31,6 +50,7 @@ export class GameService {
 
   private _currentGame$: ReplaySubject<PublicGame> = new ReplaySubject<PublicGame>(1);
   private _currentPlayer$: ReplaySubject<Player> = new ReplaySubject<Player>(1);
+  private _confetti$: ReplaySubject<string[]> = new ReplaySubject<string[]>(1);
   private _newGames$: ReplaySubject<GameInfo[]> = new ReplaySubject<GameInfo[]>(1);
   private _ongoingGames$: ReplaySubject<GameInfo[]> = new ReplaySubject<GameInfo[]>(1);
   private _finishedGames$: ReplaySubject<GameInfo[]> = new ReplaySubject<GameInfo[]>(1);
@@ -46,6 +66,7 @@ export class GameService {
     });
     socket.on(GameEvent.Update, (game: PublicGame) => this._ngZone.run(() => this._currentGame$.next(game)));
     socket.on(GameEvent.UpdatePlayerData, (player: Player) => this._ngZone.run(() => this._currentPlayer$.next(player)));
+    socket.on(GameEvent.Confetti, (colors: string[]) => this._ngZone.run(() => this._confetti$.next(colors)));
     apiFunctions.loadGame(gameId).then((game) => game && this._currentGame$.next(game));
   }
 
@@ -53,6 +74,7 @@ export class GameService {
     socket.emit(GameEvent.GameUnsubscribe, gameId, getCurrentUserId());
     socket.off(GameEvent.Update);
     socket.off(GameEvent.UpdatePlayerData);
+    socket.off(GameEvent.Confetti);
   }
 
   subscribeToGameList() {
@@ -65,6 +87,13 @@ export class GameService {
   unsubscribeFromGameList() {
     socket.emit(GameEvent.ListUnsubscribe);
     socket.off(GameEvent.UpdateList);
+  }
+
+  sendConfetti(colors: string[]) {
+    this._confetti$.next(colors);
+    this.currentGame$.pipe(take(1)).subscribe((game: PublicGame) => {
+      socket.emit(GameEvent.Confetti, game.id, colors);
+    });
   }
 
   private _loadGames() {
