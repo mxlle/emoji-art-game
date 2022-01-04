@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input } from '@angular/core';
 import { BuyerSelection, GamePhase, Picture, Player, PublicGame, Role } from '../../../../game-logic/game';
-import { getPictureCssClass, trackByPictureCard } from '../../../ui-helpers';
+import { canGetElementPositions, getPictureCssClass, isElementVerticallyCompletelyVisible, trackByPictureCard } from '../../../ui-helpers';
 import apiFunctions from '../../../../data/apiFunctions';
 import { getCurrentUserId } from '../../../../data/functions';
 import { unknownCardEmoji } from '../../../../game-logic/gameConsts';
@@ -33,6 +33,7 @@ export class CurrentOfferComponent {
   @Input() pictures: Picture[] = [];
   @Input() currentTheme!: string;
   @Input() currentPlayer: Player | null = null;
+  @Input() scrollContainer?: HTMLElement;
 
   showPreview: boolean = true;
   showPreviewEndAnimation: boolean = false;
@@ -50,7 +51,7 @@ export class CurrentOfferComponent {
     return (GamePhase.Choose === this._game?.phase && this.currentPlayer?.role === Role.BUYER) || GamePhase.Evaluate === this._game?.phase;
   }
 
-  constructor(private _cdr: ChangeDetectorRef) {}
+  constructor(private _cdr: ChangeDetectorRef, private _elementRef: ElementRef) {}
 
   getPictureIsSelected(picture: Picture): boolean {
     return (
@@ -71,6 +72,14 @@ export class CurrentOfferComponent {
   }
 
   private _triggerSwitchToMarketAnimation() {
+    if (
+      this.scrollContainer &&
+      canGetElementPositions(this._elementRef.nativeElement, this.scrollContainer) &&
+      !isElementVerticallyCompletelyVisible(this._elementRef.nativeElement, this.scrollContainer)
+    ) {
+      this._elementRef.nativeElement.scrollIntoView({ behavior: 'smooth' });
+    }
+
     this.showPreview = true;
     if (!this._animationTimeoutRef) {
       this.showPreviewEndAnimation = true;

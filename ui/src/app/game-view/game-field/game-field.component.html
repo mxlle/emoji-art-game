@@ -1,4 +1,4 @@
-<div class="scroll-container">
+<div #scrollContainer class="scroll-container">
   <!-- INFO -->
   <app-phase-info [game]="game"></app-phase-info>
 
@@ -12,7 +12,13 @@
   <app-jokers *ngIf="game.jokers.length" [game]="game" [currentPlayer]="currentPlayer"></app-jokers>
 
   <!-- OFFER -->
-  <app-current-offer *ngIf="GamePhase.Demand !== game.phase" [game]="game" [currentTheme]="currentTheme" [currentPlayer]="currentPlayer">
+  <app-current-offer
+    *ngIf="GamePhase.Demand !== game.phase"
+    [game]="game"
+    [currentTheme]="currentTheme"
+    [currentPlayer]="currentPlayer"
+    [scrollContainer]="scrollContainer"
+  >
     <button *ngIf="showEndRoundConfirm" mat-flat-button color="primary" (click)="endRound()">Continue</button>
   </app-current-offer>
 
