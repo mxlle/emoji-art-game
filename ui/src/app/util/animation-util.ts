@@ -10,7 +10,6 @@ export function animateNumber(value: number, animationMillis: number = 1000): Ob
       const linearPoints = ((now - start) / animationMillis) * value;
       return easeInQuad(linearPoints, value);
     }),
-    map((animatedValue) => Math.min(value, animatedValue)),
     takeUntil(timer(animationMillis))
   );
 

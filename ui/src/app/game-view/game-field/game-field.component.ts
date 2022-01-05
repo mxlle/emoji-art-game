@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, Input, ViewChild } from '@angular/core';
 
 import { GamePhase, Player, PublicGame, Role } from '../../../game-logic/game';
 import apiFunctions from '../../../data/apiFunctions';
+import { scrollTop } from '../../util/scroll-into-view';
 
 @Component({
   selector: 'app-game-field',
@@ -12,6 +13,7 @@ import apiFunctions from '../../../data/apiFunctions';
 export class GameFieldComponent {
   @Input() game!: PublicGame;
   @Input() currentPlayer: Player | null = null;
+  @ViewChild('scrollContainer') container?: ElementRef<HTMLElement>;
 
   currentTheme: string = '';
 
@@ -32,6 +34,10 @@ export class GameFieldComponent {
 
   get showEndRoundConfirm(): boolean {
     return GamePhase.Evaluate === this.game.phase && !!this.currentPlayer;
+  }
+
+  onThemesChange() {
+    scrollTop(this.container?.nativeElement);
   }
 
   endRound() {

@@ -3,7 +3,12 @@
   <app-phase-info [game]="game"></app-phase-info>
 
   <!-- THEMES -->
-  <app-current-themes [themes]="game.currentThemes" [active]="themesActive" [(currentTheme)]="currentTheme"></app-current-themes>
+  <app-current-themes
+    [themes]="game.currentThemes"
+    [active]="themesActive"
+    [(currentTheme)]="currentTheme"
+    (themesChange)="onThemesChange()"
+  ></app-current-themes>
 
   <!-- DEMAND -->
   <app-demand *ngIf="showDemandPicker" [game]="game"></app-demand>

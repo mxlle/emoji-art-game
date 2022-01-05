@@ -1,14 +1,10 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input } from '@angular/core';
 import { BuyerSelection, GamePhase, Picture, Player, PublicGame, Role } from '../../../../game-logic/game';
-import {
-  canGetElementPositions,
-  getPictureCssClass,
-  isElementVerticallyCompletelyVisible,
-  trackByPictureCard,
-} from '../../../util/ui-helpers';
+import { getPictureCssClass, trackByPictureCard } from '../../../util/ui-helpers';
 import apiFunctions from '../../../../data/apiFunctions';
 import { getCurrentUserId } from '../../../../data/functions';
 import { unknownCardEmoji } from '../../../../game-logic/gameConsts';
+import { scrollIntoViewIfPossible } from '../../../util/scroll-into-view';
 
 @Component({
   selector: 'app-current-offer',
@@ -50,6 +46,7 @@ export class CurrentOfferComponent {
   readonly trackByPictureCard = trackByPictureCard;
 
   private readonly _animationMillis = 3000;
+  private readonly _bottomScrollBuffer = 100; // a bit more than the quick access bar
   private _animationTimeoutRef?: number;
 
   get active(): boolean {
@@ -77,13 +74,7 @@ export class CurrentOfferComponent {
   }
 
   private _triggerSwitchToMarketAnimation() {
-    if (
-      this.scrollContainer &&
-      canGetElementPositions(this._elementRef.nativeElement, this.scrollContainer) &&
-      !isElementVerticallyCompletelyVisible(this._elementRef.nativeElement, this.scrollContainer)
-    ) {
-      this._elementRef.nativeElement.scrollIntoView({ behavior: 'smooth' });
-    }
+    setTimeout(() => scrollIntoViewIfPossible(this._elementRef.nativeElement, this.scrollContainer, 0, this._bottomScrollBuffer));
 
     this.showPreview = true;
     if (!this._animationTimeoutRef) {
