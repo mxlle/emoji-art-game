@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { gameEmojis } from '../game-logic/gameConsts';
 import { AppUpdateService } from './update.service';
+import { setPrimaryPlayerColor } from './util/ui-helpers';
 
 @Component({
   selector: 'app-root',
@@ -12,5 +13,7 @@ export class AppComponent {
   title = `Emoji Art Game`;
   readonly titleEmojis = gameEmojis;
 
-  constructor(private _appUpdateService: AppUpdateService) {}
+  constructor(private _appUpdateService: AppUpdateService) {
+    setPrimaryPlayerColor();
+  }
 }

@@ -1,5 +1,6 @@
 import { Picture, PublicGame } from '../../game-logic/game';
 import { TrackByFunction } from '@angular/core';
+import { SETTING_COLOR } from '../../data/constants';
 
 export const trackByObjectId: TrackByFunction<{ id: string }> = (
   _index: number,
@@ -23,5 +24,12 @@ export function getPictureCssClass(game: PublicGame, picture: Picture): string {
     return 'fake';
   } else {
     return '';
+  }
+}
+
+export function setPrimaryPlayerColor() {
+  const playerColor = window.localStorage.getItem(SETTING_COLOR);
+  if (playerColor) {
+    document.body.style.setProperty('--primary-color', playerColor);
   }
 }

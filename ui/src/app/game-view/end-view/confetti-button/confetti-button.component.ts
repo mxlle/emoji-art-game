@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostBinding, Input } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input } from '@angular/core';
 import { randomArrayValue } from '../../../../game-tools/random-util';
 import { allColors } from '../../../../game-tools/color-util';
 import { GameService } from '../../../game.service';
@@ -18,7 +18,7 @@ export class ConfettiButtonComponent {
 
   ammo: number = this._defaultAmmo;
 
-  @HostBinding('style.--color') get color(): string {
+  private get _color(): string {
     return this.currentPlayer.color ?? randomArrayValue(allColors);
   }
 
@@ -26,7 +26,7 @@ export class ConfettiButtonComponent {
 
   sendConfetti() {
     if (this.ammo) {
-      this._gameService.sendConfetti([this.color]);
+      this._gameService.sendConfetti([this._color]);
       this.ammo--;
       if (this.ammo <= 0) {
         setTimeout(() => {

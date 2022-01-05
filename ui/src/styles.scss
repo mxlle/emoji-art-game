@@ -118,6 +118,13 @@ h3 {
   background: var(--background);
 }
 
-body .mat-dialog-container {
-  background-color: var(--dialog-background);
+// material overrides
+body {
+  .mat-dialog-container {
+    background-color: var(--dialog-background);
+  }
+
+  .mat-flat-button.mat-primary {
+    background-color: var(--primary-color);
+  }
 }

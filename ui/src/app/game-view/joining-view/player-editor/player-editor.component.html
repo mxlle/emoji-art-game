@@ -1,5 +1,5 @@
 <h2>Join the game</h2>
-<app-color-picker [(selected)]="color"></app-color-picker>
+<app-color-picker [selected]="color" (selectedChange)="onColorChange($event)"></app-color-picker>
 <mat-form-field>
   <mat-label>Name</mat-label>
   <input type="text" matInput [(ngModel)]="name" (keydown.enter)="submitPlayer()" />

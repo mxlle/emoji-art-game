@@ -4,6 +4,7 @@ import { randomArrayValue } from '../../../../game-tools/random-util';
 import { allColors } from '../../../../game-tools/color-util';
 import { Player } from '../../../../game-logic/game';
 import { getCurrentUserId } from '../../../../data/functions';
+import { setPrimaryPlayerColor } from '../../../util/ui-helpers';
 
 @Component({
   selector: 'app-player-editor',
@@ -17,9 +18,14 @@ export class PlayerEditorComponent {
   name: string = window.localStorage.getItem(SETTING_NAME) ?? '';
   color: string = window.localStorage.getItem(SETTING_COLOR) ?? randomArrayValue(allColors);
 
+  onColorChange(color: string) {
+    this.color = color;
+    window.localStorage.setItem(SETTING_COLOR, this.color);
+    setPrimaryPlayerColor();
+  }
+
   submitPlayer() {
     window.localStorage.setItem(SETTING_NAME, this.name);
-    window.localStorage.setItem(SETTING_COLOR, this.color);
     this.playerSubmit.emit({ id: getCurrentUserId(), name: this.name, color: this.color });
   }
 }

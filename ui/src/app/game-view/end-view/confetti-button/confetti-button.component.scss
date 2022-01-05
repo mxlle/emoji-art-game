@@ -3,7 +3,7 @@
 
   .mat-fab {
     background: var(--foreground);
-    border: var(--spacer-xs) solid var(--color);
+    border: var(--spacer-xs) solid var(--primary-color);
     width: 3.5rem;
     height: 3.5rem;
     font-size: var(--emoji-size-sm);
@@ -31,7 +31,7 @@
     }
 
     .mat-spinner ::ng-deep circle {
-      stroke: var(--color);
+      stroke: var(--primary-color);
     }
   }
 
