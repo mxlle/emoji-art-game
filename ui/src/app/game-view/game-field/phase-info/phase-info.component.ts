@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, HostBinding, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { buyer, getPhaseEmojis, painter, pointsEmoji } from '../../../../game-logic/gameConsts';
 import { GamePhase, Player, PublicGame, Role } from '../../../../game-logic/game';
 import { getCurrentUserId } from '../../../../data/functions';
@@ -23,10 +23,6 @@ export class PhaseInfoComponent {
 
   get buyers(): Player[] {
     return this.game.players.filter((player) => Role.BUYER === player.role);
-  }
-
-  @HostBinding('class.evaluation-phase') get isEvaluation(): boolean {
-    return GamePhase.Evaluate === this.game.phase;
   }
 
   get paintersActive(): boolean {

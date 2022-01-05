@@ -5,6 +5,11 @@
   grid-template-rows: auto auto auto;
 }
 
+h2 {
+  display: flex;
+  gap: var(--spacer-lg);
+}
+
 app-offer-preview,
 .offer {
   grid-area: 2 / 1;

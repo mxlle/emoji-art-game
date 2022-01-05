@@ -1,2 +1,3 @@
-<span [class.bad]="count > game.currentDemand">{{ count }}</span
+<span *ngIf="includeEmoji" class="emoji">{{ emoji }}</span
+><span [class.bad]="count > game.currentDemand"> {{ count }}</span
 >/<span>{{ game.currentDemand || "?" }}</span>

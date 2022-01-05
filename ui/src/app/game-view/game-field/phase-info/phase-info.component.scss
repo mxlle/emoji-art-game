@@ -6,12 +6,6 @@
   border: var(--border-width) dashed var(--border-color-secondary);
   border-radius: var(--border-radius);
   align-items: center;
-
-  &.evaluation-phase {
-    .phase-emojis {
-      grid-row: 1 / 5;
-    }
-  }
 }
 
 .role-group {
@@ -51,12 +45,6 @@
 .phase-info {
   grid-column: 1;
   font-weight: bold;
-}
-
-.evaluation {
-  display: flex;
-  gap: var(--spacer-sm);
-  align-items: center;
 }
 
 .phase-emojis {
