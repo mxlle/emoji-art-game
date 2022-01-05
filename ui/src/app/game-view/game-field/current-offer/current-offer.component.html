@@ -3,7 +3,12 @@
   <app-counter *ngIf="game" [game]="game" [includeEmoji]="true"></app-counter>
 </h2>
 
-<app-offer-preview *ngIf="game && showPreview" [game]="game" [showEndAnimation]="showPreviewEndAnimation"></app-offer-preview>
+<app-offer-preview
+  *ngIf="game && showPreview"
+  [game]="game"
+  [prepareEndAnimation]="preparePreviewEndAnimation"
+  [showEndAnimation]="showPreviewEndAnimation"
+></app-offer-preview>
 
 <div
   *ngIf="game && (!showPreview || showPreviewEndAnimation)"

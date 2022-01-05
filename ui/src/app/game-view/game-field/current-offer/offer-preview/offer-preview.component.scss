@@ -6,12 +6,17 @@
   transition: transform 0.5s;
   transition-delay: 1s;
 
-  &.show-end-animation {
+  &.prepare-end-animation {
     transform: scale(0);
 
     .faker-cards {
       display: contents;
       position: unset;
+    }
+  }
+
+  &.show-end-animation {
+    .faker-cards {
       app-card {
         visibility: visible;
       }

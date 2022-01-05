@@ -11,6 +11,7 @@ import { fakesPerRound, masterFaker } from '../../../../../game-logic/gameConsts
 })
 export class OfferPreviewComponent {
   @Input() game!: PublicGame;
+  @HostBinding('class.prepare-end-animation') @Input() prepareEndAnimation: boolean = false;
   @HostBinding('class.show-end-animation') @Input() showEndAnimation: boolean = false;
 
   readonly fakerArray: string[] = new Array(fakesPerRound).fill(masterFaker);

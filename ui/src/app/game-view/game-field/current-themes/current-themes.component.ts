@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
 import { unknownCardEmoji } from '../../../../game-logic/gameConsts';
+import { scrollTop } from '../../../util/scroll-into-view';
 
 @Component({
   selector: 'app-current-themes',
@@ -10,7 +11,6 @@ import { unknownCardEmoji } from '../../../../game-logic/gameConsts';
 export class CurrentThemesComponent {
   @Input() set themes(themes: string[]) {
     if (this._themes.join() !== themes.join()) {
-      this.themesChange.emit();
       this._showAppearAnimation();
     }
     this._themes = themes;
@@ -23,13 +23,13 @@ export class CurrentThemesComponent {
   }
 
   @Input() active?: boolean;
+  @Input() scrollContainer?: HTMLElement;
 
   @Input() currentTheme?: string;
   @Output() currentThemeChange: EventEmitter<string> = new EventEmitter<string>();
-  @Output() themesChange: EventEmitter<void> = new EventEmitter<void>();
 
-  showBack: boolean = true;
-  enterAnimation: boolean = true;
+  showBack: boolean = false;
+  enterAnimation: boolean = false;
 
   readonly unknownCardEmoji = unknownCardEmoji;
 
@@ -42,9 +42,11 @@ export class CurrentThemesComponent {
     this.enterAnimation = true;
 
     requestAnimationFrame(() => {
-      this.enterAnimation = false;
-      this.showBack = false;
-      this._cdr.markForCheck();
+      scrollTop(this.scrollContainer).then(() => {
+        this.enterAnimation = false;
+        this.showBack = false;
+        this._cdr.markForCheck();
+      });
     });
   }
 }

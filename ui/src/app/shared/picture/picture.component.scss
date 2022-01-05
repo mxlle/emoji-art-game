@@ -1,5 +1,6 @@
 :host {
   display: block;
+  pointer-events: none; // re-activated when clickable
 
   &.correct {
     --card-border-color: var(--success-color);
@@ -11,6 +12,10 @@
   &.fake {
     --card-border-color: var(--danger-color);
     --card-background: var(--danger-background);
+  }
+
+  &.clickable {
+    pointer-events: all;
   }
 }
 

@@ -1,25 +1,37 @@
 import { animateNumber } from './animation-util';
+import { finalize, tap } from 'rxjs';
 
-export const scrollIntoViewIfPossible = (element?: Element, container?: Element, topBuffer: number = 0, bottomBuffer: number = 0) => {
+const ANIMATION_MILLIS = 300;
+
+export const scrollIntoViewIfPossible = async (element?: Element, container?: Element, topBuffer: number = 0, bottomBuffer: number = 0) => {
   if (element && container && canGetElementPositions(element, container)) {
     const verticalDiff = getVerticalScrollDiffToShowElement(element, container, topBuffer, bottomBuffer);
-    scrollByY(container, verticalDiff);
+    await scrollByY(container, verticalDiff);
   }
 };
 
-export const scrollTop = (container?: Element) => {
+export const scrollTop = async (container?: Element) => {
   if (container && canGetElementPosition(container)) {
-    scrollByY(container, 0 - container.scrollTop);
+    await scrollByY(container, 0 - container.scrollTop);
   }
 };
 
-export const scrollByY = (container: Element, y: number) => {
-  if (y !== 0) {
-    const startTop = container.scrollTop;
-    animateNumber(y, 300).subscribe((animatedDiff) => {
-      container.scrollTop = startTop + animatedDiff;
-    });
-  }
+export const scrollByY = (container: Element, y: number): Promise<void> => {
+  return new Promise((resolve: (value: void) => void) => {
+    if (y !== 0) {
+      const startTop = container.scrollTop;
+      animateNumber(y, ANIMATION_MILLIS)
+        .pipe(
+          tap((animatedDiff) => {
+            container.scrollTop = startTop + animatedDiff;
+          }),
+          finalize(resolve)
+        )
+        .subscribe();
+    } else {
+      resolve();
+    }
+  });
 };
 
 /**

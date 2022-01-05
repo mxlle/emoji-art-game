@@ -37,6 +37,7 @@ export class CurrentOfferComponent {
   @Input() scrollContainer?: HTMLElement;
 
   showPreview: boolean = true;
+  preparePreviewEndAnimation: boolean = false;
   showPreviewEndAnimation: boolean = false;
   showMarketStartAnimation: boolean = false;
 
@@ -74,23 +75,29 @@ export class CurrentOfferComponent {
   }
 
   private _triggerSwitchToMarketAnimation() {
-    setTimeout(() => scrollIntoViewIfPossible(this._elementRef.nativeElement, this.scrollContainer, 0, this._bottomScrollBuffer));
-
     this.showPreview = true;
-    if (!this._animationTimeoutRef) {
-      this.showPreviewEndAnimation = true;
-      this._animationTimeoutRef = setTimeout(() => {
-        this.showPreviewEndAnimation = false;
-        this.showMarketStartAnimation = true;
-        this.showPreview = false;
-        this._cdr.markForCheck();
-
-        this._animationTimeoutRef = setTimeout(() => {
-          this.showMarketStartAnimation = false;
-          this._animationTimeoutRef = undefined;
+    this.preparePreviewEndAnimation = true;
+    requestAnimationFrame(() => {
+      scrollIntoViewIfPossible(this._elementRef.nativeElement, this.scrollContainer, 0, this._bottomScrollBuffer).then(() => {
+        if (!this._animationTimeoutRef) {
+          this.showPreviewEndAnimation = true;
           this._cdr.markForCheck();
-        }, this._animationMillis / 2);
-      }, this._animationMillis / 2);
-    }
+
+          this._animationTimeoutRef = setTimeout(() => {
+            this.preparePreviewEndAnimation = false;
+            this.showPreviewEndAnimation = false;
+            this.showMarketStartAnimation = true;
+            this.showPreview = false;
+            this._cdr.markForCheck();
+
+            this._animationTimeoutRef = setTimeout(() => {
+              this.showMarketStartAnimation = false;
+              this._animationTimeoutRef = undefined;
+              this._cdr.markForCheck();
+            }, this._animationMillis / 2);
+          }, this._animationMillis / 2);
+        }
+      });
+    });
   }
 }

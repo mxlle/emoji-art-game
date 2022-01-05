@@ -135,7 +135,7 @@ export const getPhaseEmojis = (phase: GamePhase) => {
     case GamePhase.Choose:
       return `${Role.BUYER}💰`;
     case GamePhase.Evaluate:
-      return `📊`;
+      return `📊${pointsEmoji}`;
     case GamePhase.End:
       return `${pointsEmoji}⌛`;
     default:
