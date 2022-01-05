@@ -1,6 +1,7 @@
-<button mat-flat-button [disabled]="!ammo" (click)="sendConfetti()">
+<button mat-fab color="primary" [disabled]="!ammo" (click)="sendConfetti()">
   <div class="inner-btn">
-    <span>Confetti! ({{ ammo }})</span>
-    <mat-icon *ngIf="!ammo"><mat-spinner diameter="20"></mat-spinner></mat-icon>
+    <span class="emoji">🎉</span>
+    <mat-icon *ngIf="!ammo"><mat-spinner diameter="25"></mat-spinner></mat-icon>
   </div>
 </button>
+<span *ngIf="ammo" class="ammo">{{ ammo }}</span>

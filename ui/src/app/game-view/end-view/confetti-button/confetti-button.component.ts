@@ -1,8 +1,8 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component } from '@angular/core';
-import { SETTING_COLOR } from '../../../../data/constants';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostBinding, Input } from '@angular/core';
 import { randomArrayValue } from '../../../../game-tools/random-util';
 import { allColors } from '../../../../game-tools/color-util';
 import { GameService } from '../../../game.service';
+import { Player } from '../../../../game-logic/game';
 
 @Component({
   selector: 'app-confetti-button',
@@ -11,11 +11,16 @@ import { GameService } from '../../../game.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ConfettiButtonComponent {
+  @Input() currentPlayer!: Player;
+
   private readonly _defaultAmmo = 5;
   private readonly _ammoTimeout = 3000;
 
   ammo: number = this._defaultAmmo;
-  color: string = window.localStorage.getItem(SETTING_COLOR) ?? randomArrayValue(allColors);
+
+  @HostBinding('style.--color') get color(): string {
+    return this.currentPlayer.color ?? randomArrayValue(allColors);
+  }
 
   constructor(private _gameService: GameService, private _cdr: ChangeDetectorRef) {}
 

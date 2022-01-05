@@ -1,6 +1,26 @@
 :host {
   display: block;
 
+  .mat-fab {
+    background: var(--foreground);
+    border: var(--spacer-xs) solid var(--color);
+    width: 3.5rem;
+    height: 3.5rem;
+    font-size: var(--emoji-size-sm);
+
+    &[disabled] {
+      .emoji {
+        filter: grayscale(0.6);
+      }
+    }
+
+    &::ng-deep .mat-button-wrapper {
+      padding: 0;
+      display: grid;
+      place-items: center;
+    }
+  }
+
   .inner-btn {
     display: grid;
     grid-template-areas: 'button';
@@ -10,8 +30,16 @@
       grid-area: button;
     }
 
-    .mat-spinner circle {
-      color: var(--foreground);
+    .mat-spinner ::ng-deep circle {
+      stroke: var(--color);
     }
+  }
+
+  .ammo {
+    color: var(--foreground-secondary);
+    position: absolute;
+    bottom: var(--spacer-sm);
+    right: var(--spacer-md);
+    font-size: var(--font-size-sm);
   }
 }

@@ -11,7 +11,7 @@
     ></app-game-field>
 
     <!-- FINISHED GAME -->
-    <app-end-view *ngIf="GamePhase.End === game.phase" [game]="game"></app-end-view>
+    <app-end-view *ngIf="GamePhase.End === game.phase" [game]="game" [currentPlayer]="currentPlayer"></app-end-view>
 
     <!-- GAME STATUS -->
     <app-status-bar *ngIf="GamePhase.Init !== game.phase" [game]="game"></app-status-bar>

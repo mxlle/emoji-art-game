@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { PublicGame } from '../../../game-logic/game';
+import { Player, PublicGame } from '../../../game-logic/game';
 import { masterFaker, pointsEmoji } from '../../../game-logic/gameConsts';
 
 @Component({
@@ -10,6 +10,7 @@ import { masterFaker, pointsEmoji } from '../../../game-logic/gameConsts';
 })
 export class EndViewComponent {
   @Input() game!: PublicGame;
+  @Input() currentPlayer: Player | null = null;
 
   animatedPoints: number = 0;
 
