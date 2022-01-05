@@ -1,11 +1,11 @@
 <h2>Themes</h2>
 <div class="themes">
-  <app-card
-    *ngFor="let theme of themes"
-    [clickable]="active"
-    [selected]="active && currentTheme === theme"
-    (click)="currentThemeChange.emit(theme)"
-  >
-    <span class="emoji">{{ theme }}</span>
-  </app-card>
+  <app-flip-card *ngFor="let theme of themes" [showBack]="showBack" [class.enter-animation]="enterAnimation">
+    <app-card appFlipCardFront [clickable]="active" [selected]="active && currentTheme === theme" (click)="currentThemeChange.emit(theme)">
+      <span class="emoji">{{ theme }}</span>
+    </app-card>
+    <app-card appFlipCardBack>
+      <span class="emoji">{{ unknownCardEmoji }}</span>
+    </app-card>
+  </app-flip-card>
 </div>

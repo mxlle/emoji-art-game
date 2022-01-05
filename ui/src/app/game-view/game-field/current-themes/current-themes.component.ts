@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
+import { unknownCardEmoji } from '../../../../game-logic/gameConsts';
 
 @Component({
   selector: 'app-current-themes',
@@ -6,10 +7,11 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output
   styleUrls: ['./current-themes.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CurrentThemesComponent implements OnInit {
+export class CurrentThemesComponent {
   @Input() set themes(themes: string[]) {
     if (this._themes.join() !== themes.join()) {
       this.themesChange.emit();
+      this._showAppearAnimation();
     }
     this._themes = themes;
     if (!this.currentTheme || !themes.includes(this.currentTheme)) {
@@ -26,9 +28,23 @@ export class CurrentThemesComponent implements OnInit {
   @Output() currentThemeChange: EventEmitter<string> = new EventEmitter<string>();
   @Output() themesChange: EventEmitter<void> = new EventEmitter<void>();
 
+  showBack: boolean = true;
+  enterAnimation: boolean = true;
+
+  readonly unknownCardEmoji = unknownCardEmoji;
+
   private _themes: string[] = [];
 
-  constructor() {}
+  constructor(private _cdr: ChangeDetectorRef) {}
 
-  ngOnInit(): void {}
+  private _showAppearAnimation() {
+    this.showBack = true;
+    this.enterAnimation = true;
+
+    requestAnimationFrame(() => {
+      this.enterAnimation = false;
+      this.showBack = false;
+      this._cdr.markForCheck();
+    });
+  }
 }
