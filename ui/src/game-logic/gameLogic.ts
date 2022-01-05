@@ -468,3 +468,22 @@ export function toGameInfo(game: Game): GameInfo {
 function mapToPublicPlayer({ id, name, color, role }: Player): Player {
   return { id, name, color, role };
 }
+
+export const isRoleActive = (game: { phase: GamePhase; hostId: string }, currentPlayer?: Player): boolean => {
+  switch (game.phase) {
+    case GamePhase.Init:
+      return !currentPlayer || currentPlayer?.id === game.hostId;
+    case GamePhase.Demand:
+      return Role.BUYER == currentPlayer?.role;
+    case GamePhase.Offer:
+      return Role.PAINTER == currentPlayer?.role;
+    case GamePhase.Choose:
+      return Role.BUYER == currentPlayer?.role;
+    case GamePhase.Evaluate:
+      return !!currentPlayer;
+    case GamePhase.End:
+      return !!currentPlayer;
+    default:
+      return false;
+  }
+};

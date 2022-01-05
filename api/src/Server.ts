@@ -1,7 +1,7 @@
 import http from 'http';
 import SocketIO from 'socket.io';
 import GameApiImpl from './routes/Games';
-import { GameApi, GameEvent, ROOM_GAME, ROOM_GAME_LIST, ROOM_GAME_PLAYER } from '@gameTypes';
+import { GameApi, GameEvent, ROOM_GAME, ROOM_GAME_LIST, ROOM_GAME_PLAYER, ROOM_PLAYER_GAME_LIST } from '@gameTypes';
 
 export const httpServer = http.createServer();
 const io = SocketIO(httpServer, {
@@ -30,11 +30,15 @@ io.on('connection', (socket) => {
       .catch((error?: Error) => ack({ name: error?.name, message: error?.message }));
   });
 
-  socket.on(GameEvent.ListSubscribe, (ack: ErrorFirstCallback) => {
-    socket.join(ROOM_GAME_LIST, ack);
+  socket.on(GameEvent.ListSubscribe, (playerId: string, ack: ErrorFirstCallback) => {
+    socket.join(ROOM_GAME_LIST, () => {
+      socket.join(ROOM_PLAYER_GAME_LIST(playerId), ack);
+    });
   });
-  socket.on(GameEvent.ListUnsubscribe, (ack: ErrorFirstCallback) => {
-    socket.leave(ROOM_GAME_LIST, ack);
+  socket.on(GameEvent.ListUnsubscribe, (playerId: string, ack: ErrorFirstCallback) => {
+    socket.leave(ROOM_GAME_LIST, () => {
+      socket.leave(ROOM_PLAYER_GAME_LIST(playerId), ack);
+    });
   });
 
   socket.on(GameEvent.GameSubscribe, (gameId: string, playerId: string, ack: ErrorFirstCallback) => {

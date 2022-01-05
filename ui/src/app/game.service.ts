@@ -81,13 +81,13 @@ export class GameService {
 
   subscribeToGameList() {
     this.unsubscribeFromGameList();
-    socket.emit(GameEvent.ListSubscribe);
+    socket.emit(GameEvent.ListSubscribe, getCurrentUserId());
     socket.on(GameEvent.UpdateList, () => this._ngZone.run(() => this._loadGames()));
     this._loadGames();
   }
 
   unsubscribeFromGameList() {
-    socket.emit(GameEvent.ListUnsubscribe);
+    socket.emit(GameEvent.ListUnsubscribe, getCurrentUserId());
     socket.off(GameEvent.UpdateList);
     this._newGames$.next(null);
     this._ongoingGames$.next(null);

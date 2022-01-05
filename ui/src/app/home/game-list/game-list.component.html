@@ -10,7 +10,11 @@
         </button>
       </div>
       <div class="result" *ngIf="game.endResult">
-        {{ game.endResult }} <span class="emoji">{{ pointsEmoji }}</span>
+        <span>{{ game.endResult }}</span>
+        <span class="emoji">{{ pointsEmoji }}</span>
+      </div>
+      <div class="phase" *ngIf="!game.endResult" [class.inactive]="!isCurrentPlayersTurn(game)">
+        <span class="emoji">{{ getPhaseEmojis(game.phase) }}</span>
       </div>
     </div>
   </button>

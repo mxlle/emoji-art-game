@@ -194,5 +194,6 @@ export enum SocketEvent {
 }
 
 export const ROOM_GAME_LIST = 'gameList';
+export const ROOM_PLAYER_GAME_LIST = (playerId: string) => `gameList.${playerId}`;
 export const ROOM_GAME = (id: string) => `game.${id}`;
 export const ROOM_GAME_PLAYER = (id: string, playerId: string) => `game.${id}.${playerId}`;

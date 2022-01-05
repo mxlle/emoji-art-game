@@ -4,7 +4,7 @@ import GameDaoImpl from '@daos/Game';
 import { docToPlain, GameController, GameDocument, GamePhase, Player } from '@entities/Game';
 import { forbiddenError, gameNotFoundError, paramMissingError } from '@shared/constants';
 import { Namespace } from 'socket.io';
-import { Game, GameApi, GameConfig, GameEvent, Role, ROOM_GAME, ROOM_GAME_LIST, ROOM_GAME_PLAYER } from '@gameTypes';
+import { Game, GameApi, GameConfig, GameEvent, Role, ROOM_GAME, ROOM_GAME_LIST, ROOM_GAME_PLAYER, ROOM_PLAYER_GAME_LIST } from '@gameTypes';
 import { getPlayerInGame, toGameInfo, toPublicGame } from '@gameFunctions';
 
 // Init shared
@@ -342,6 +342,11 @@ class GameApiImpl implements GameApi {
         this.socket.to(ROOM_GAME(game.id)).emit(GameEvent.Confetti);
       }
     }
+
+    // update game list for players to see current phase
+    game.players.forEach((player) => {
+      this.socket.to(ROOM_PLAYER_GAME_LIST(player.id)).emit(GameEvent.UpdateList);
+    });
   }
 
   emitPlayerData(game: GameDocument, onlyPlayerId?: string) {
