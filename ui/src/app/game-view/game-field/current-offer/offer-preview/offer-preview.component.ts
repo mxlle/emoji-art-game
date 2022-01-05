@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, HostBinding, Input } from '@angular/core';
 import { Picture, PublicGame } from '../../../../../game-logic/game';
-import { trackByPictureCard } from '../../../../ui-helpers';
+import { trackByPictureCard } from '../../../../util/ui-helpers';
 import { fakesPerRound, masterFaker } from '../../../../../game-logic/gameConsts';
 
 @Component({

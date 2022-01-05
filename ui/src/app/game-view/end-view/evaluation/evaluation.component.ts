@@ -4,8 +4,8 @@ import { randomArrayValue } from '../../../../game-tools/random-util';
 import { allColors } from '../../../../game-tools/color-util';
 import { map, Observable, of, tap } from 'rxjs';
 import { bestPoints } from '../../../../game-logic/gameConsts';
-import { animateNumber } from '../../../animation-util';
-import { percentage } from '../../../util';
+import { animateNumber } from '../../../util/animation-util';
+import { percentage } from '../../../util/util';
 
 @Component({
   selector: 'app-evaluation',

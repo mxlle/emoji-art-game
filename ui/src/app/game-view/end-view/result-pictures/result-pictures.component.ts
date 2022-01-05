@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { trackByPictureCard } from '../../../ui-helpers';
+import { trackByPictureCard } from '../../../util/ui-helpers';
 import { Picture } from '../../../../game-logic/game';
 
 @Component({

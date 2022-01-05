@@ -1,6 +1,11 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input } from '@angular/core';
 import { BuyerSelection, GamePhase, Picture, Player, PublicGame, Role } from '../../../../game-logic/game';
-import { canGetElementPositions, getPictureCssClass, isElementVerticallyCompletelyVisible, trackByPictureCard } from '../../../ui-helpers';
+import {
+  canGetElementPositions,
+  getPictureCssClass,
+  isElementVerticallyCompletelyVisible,
+  trackByPictureCard,
+} from '../../../util/ui-helpers';
 import apiFunctions from '../../../../data/apiFunctions';
 import { getCurrentUserId } from '../../../../data/functions';
 import { unknownCardEmoji } from '../../../../game-logic/gameConsts';

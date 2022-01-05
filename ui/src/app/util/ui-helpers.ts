@@ -1,4 +1,4 @@
-import { Picture, PublicGame } from '../game-logic/game';
+import { Picture, PublicGame } from '../../game-logic/game';
 import { TrackByFunction } from '@angular/core';
 
 export const trackByObjectId: TrackByFunction<{ id: string }> = (

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, TrackByFunction } from '@angular/core';
 import { GameInfo } from '../../../game-logic/game';
-import { trackByObjectId } from '../../ui-helpers';
+import { trackByObjectId } from '../../util/ui-helpers';
 import { getCurrentUserId } from '../../../data/functions';
 import { getClearedForDeletion } from '../../../game-logic/gameLogic';
 import { pointsEmoji } from '../../../game-logic/gameConsts';
