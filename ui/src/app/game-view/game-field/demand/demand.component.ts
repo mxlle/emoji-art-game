@@ -10,6 +10,7 @@ import apiFunctions from '../../../../data/apiFunctions';
 })
 export class DemandComponent {
   @Input() game!: PublicGame;
+  @Input() readonly: boolean = true;
 
   get allowDemandConfirm(): boolean {
     return this.game.currentDemandSuggestions.length === 1;

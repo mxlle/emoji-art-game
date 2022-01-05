@@ -10,11 +10,11 @@
     [(currentTheme)]="currentTheme"
   ></app-current-themes>
 
-  <!-- DEMAND -->
-  <app-demand *ngIf="showDemandPicker" [game]="game"></app-demand>
-
   <!-- JOKERS -->
   <app-jokers *ngIf="game.jokers.length" [game]="game" [currentPlayer]="currentPlayer"></app-jokers>
+
+  <!-- DEMAND -->
+  <app-demand *ngIf="showDemandPicker" [game]="game" [readonly]="!canSetDemand"></app-demand>
 
   <!-- OFFER -->
   <app-current-offer

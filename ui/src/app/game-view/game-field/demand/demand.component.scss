@@ -2,8 +2,10 @@
   display: grid;
   grid-template-rows: repeat(3, auto);
   --card-padding: var(--spacer-lg);
-  button {
-    place-self: center;
-    margin-top: var(--spacer-lg); // todo ?
+
+  button .mat-icon {
+    width: var(--font-size-card-number);
+    height: var(--font-size-card-number);
+    font-size: var(--font-size-card-number);
   }
 }

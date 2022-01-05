@@ -6,6 +6,18 @@
 }
 
 app-card {
+  //--card-border-color: var(--background);
+  --card-border-color: var(--border-color-secondary);
+  --card-border-style: dashed;
+  --card-background: transparent;
+  --card-box-shadow: none;
+  color: var(--foreground-secondary);
+
+  &.active {
+    color: var(--foreground);
+    --card-border-color: var(--border-color);
+  }
+
   .suggestions {
     @include mixins.stackEffect(var(--spacer-sm));
   }

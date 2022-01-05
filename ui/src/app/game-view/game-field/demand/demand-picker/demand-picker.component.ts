@@ -12,10 +12,17 @@ import { getCurrentUserId } from '../../../../../data/functions';
 })
 export class DemandPickerComponent {
   @Input() game!: PublicGame;
+  @Input() readonly: boolean = true;
 
   readonly currentPlayerId = getCurrentUserId();
 
   readonly demandOptions: number[] = [...Array(maxDemand - minDemand + 1).keys()].map((val) => val + minDemand);
+
+  get biggestSuggestion(): number {
+    return (this.game.currentDemandSuggestions ?? []).reduce((biggest: number, suggestion: DemandSuggestion) => {
+      return suggestion.demand > biggest ? suggestion.demand : biggest;
+    }, 0);
+  }
 
   getDemandIsSelected(demand: number): boolean {
     const suggestion = this.getSuggestionForDemand(demand);

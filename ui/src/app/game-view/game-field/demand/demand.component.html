@@ -1,3 +1,6 @@
-<h2>Set demand</h2>
-<app-demand-picker [game]="game"></app-demand-picker>
-<button mat-flat-button color="primary" [disabled]="!allowDemandConfirm" (click)="setDemand()">Confirm</button>
+<h2>Market - Demand</h2>
+<app-demand-picker [game]="game" [readonly]="readonly">
+  <button *ngIf="!readonly" mat-flat-button color="primary" [disabled]="!allowDemandConfirm" (click)="setDemand()">
+    <mat-icon>check</mat-icon>
+  </button>
+</app-demand-picker>

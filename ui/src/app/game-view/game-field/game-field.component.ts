@@ -27,7 +27,11 @@ export class GameFieldComponent {
   }
 
   get showDemandPicker(): boolean {
-    return GamePhase.Demand === this.game.phase && Role.BUYER === this.currentPlayer?.role;
+    return GamePhase.Demand === this.game.phase;
+  }
+
+  get canSetDemand(): boolean {
+    return Role.BUYER === this.currentPlayer?.role;
   }
 
   get showEndRoundConfirm(): boolean {
