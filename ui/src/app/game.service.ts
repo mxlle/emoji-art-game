@@ -5,6 +5,7 @@ import { socket } from '../data/socket';
 import { getCurrentUserId, getCurrentUserInGame } from '../data/functions';
 import apiFunctions from '../data/apiFunctions';
 import { bestPoints } from '../game-logic/gameConsts';
+import { allColors } from '../game-tools/color-util';
 
 export interface ConfettiEvent {
   colors?: string[];
@@ -94,7 +95,7 @@ export class GameService {
     this._finishedGames$.next(null);
   }
 
-  sendConfetti(colors: string[]) {
+  sendConfetti(colors: string[] = allColors) {
     this._confetti$.next(colors);
     this.currentGame$.pipe(take(1)).subscribe((game: PublicGame | null) => {
       if (game) socket.emit(GameEvent.Confetti, game.id, colors);

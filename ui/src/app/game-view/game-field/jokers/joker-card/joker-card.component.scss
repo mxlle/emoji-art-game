@@ -1,0 +1,31 @@
+:host {
+  &.highlighted {
+    z-index: 1;
+    app-flip-card {
+      transform: var(--translate-to-center) scale(3);
+
+      app-card[appFlipCardFront] {
+        --card-background: var(--card-background-selected);
+      }
+    }
+  }
+}
+
+app-flip-card {
+  transition: transform 0.5s;
+
+  app-card {
+    span {
+      display: inline-block;
+      white-space: nowrap;
+
+      & + span {
+        margin-inline-start: var(--spacer-xs);
+      }
+    }
+
+    &[appFlipCardFront] {
+      transition: background-color 0.5s;
+    }
+  }
+}

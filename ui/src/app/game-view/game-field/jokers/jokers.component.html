@@ -1,17 +1,11 @@
 <h2>Jokers</h2>
 <div class="jokers">
-  <app-flip-card *ngFor="let joker of game.jokers; trackBy: trackByJoker" [showBack]="joker.used">
-    <app-card
-      appFlipCardFront
-      [clickable]="isAvailable(joker) && userIsAllowed(joker)"
-      [disabled]="!isAvailable(joker)"
-      (click)="useJoker(joker)"
-    >
-      <span class="emoji">{{ joker.role }}</span>
-      <span class="emoji">{{ getJokerLabel(joker) }}</span>
-    </app-card>
-    <app-card appFlipCardBack [disabled]="true">
-      {{ joker.type }}
-    </app-card>
-  </app-flip-card>
+  <app-joker-card
+    *ngFor="let joker of game.jokers; trackBy: trackByJoker"
+    [joker]="joker"
+    [used]="joker.used"
+    [disabled]="!isAvailable(joker)"
+    [clickable]="isAvailable(joker) && userIsAllowed(joker)"
+    (useJoker)="useJoker(joker)"
+  ></app-joker-card>
 </div>

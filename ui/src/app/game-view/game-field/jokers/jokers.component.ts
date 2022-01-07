@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, HostBinding, Input, TrackByFunction
 import { GamePhase, Joker, JokerType, Player, PublicGame } from '../../../../game-logic/game';
 import apiFunctions from '../../../../data/apiFunctions';
 import { JokerConfirmDialogService } from './joker-confirm-dialog/joker-confirm-dialog.service';
-import { getJokerLabel, maxDemand, minDemand } from '../../../../game-logic/gameConsts';
+import { maxDemand, minDemand } from '../../../../game-logic/gameConsts';
 
 @Component({
   selector: 'app-jokers',
@@ -20,7 +20,6 @@ export class JokersComponent {
   }
 
   readonly trackByJoker: TrackByFunction<Joker> = (_, joker: Joker) => joker.type;
-  readonly getJokerLabel = getJokerLabel;
 
   constructor(private _jokerConfirmDialogService: JokerConfirmDialogService) {}
 
@@ -33,7 +32,7 @@ export class JokersComponent {
   }
 
   useJoker(joker: Joker) {
-    if (!joker.used && this.isAvailable(joker)) {
+    if (this.isAvailable(joker)) {
       let options;
       if (JokerType.CHANGE_DEMAND === joker.type) {
         const smallerDemand = this.game.currentDemand - 1;

@@ -1,0 +1,9 @@
+<app-flip-card [showBack]="joker.used">
+  <app-card appFlipCardFront [clickable]="clickable" [disabled]="disabled && !highlighted" (click)="useJoker.emit()">
+    <span class="emoji">{{ joker.role }}</span>
+    <span class="emoji">{{ getJokerLabel(joker) }}</span>
+  </app-card>
+  <app-card appFlipCardBack [disabled]="true">
+    {{ joker.type }}
+  </app-card>
+</app-flip-card>

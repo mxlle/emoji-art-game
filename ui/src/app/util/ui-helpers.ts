@@ -33,3 +33,9 @@ export function setPrimaryPlayerColor() {
     document.body.style.setProperty('--primary-color', playerColor);
   }
 }
+export function getDiffToCenter(element: HTMLElement): { x: number; y: number } {
+  const bounding = element.getBoundingClientRect();
+  const x = window.innerWidth / 2 - bounding.left - bounding.width / 2;
+  const y = window.innerHeight / 2 - bounding.top - bounding.height / 2;
+  return { x, y };
+}
