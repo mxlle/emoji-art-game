@@ -1,6 +1,7 @@
 :host {
+  z-index: 15; // to be above market cards
+
   &.highlighted {
-    z-index: 1;
     app-flip-card {
       transform: var(--translate-to-center) scale(3);
 
