@@ -81,7 +81,6 @@ const GameSchema: Schema = new Schema(
 
     teamPoints: [PictureSchema],
     fakePoints: [PictureSchema],
-    neutralCards: [PictureSchema],
 
     creationTime: Date,
     startTime: Date,

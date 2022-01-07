@@ -1,4 +1,4 @@
-import { Picture, PublicGame } from '../../game-logic/game';
+import { Picture } from '../../game-logic/game';
 import { TrackByFunction } from '@angular/core';
 import { SETTING_COLOR } from '../../data/constants';
 
@@ -15,12 +15,12 @@ export const trackByPictureCard: TrackByFunction<Picture> = (_index: number, val
   return value?.card;
 };
 
-export function getPictureCssClass(game: PublicGame, picture: Picture): string {
-  if (game.teamPoints.findIndex((pic) => pic.card === picture.card) > -1) {
+export function getPictureCssClass(picture: Picture): string {
+  if (picture.buyerTheme && picture.buyerTheme === picture.painterTheme && !picture.isFake) {
     return 'correct';
-  } else if (game.neutralCards.findIndex((pic) => pic.card === picture.card) > -1) {
+  } else if (picture.buyerTheme !== picture.painterTheme && !picture.isFake) {
     return 'neutral';
-  } else if (game.fakePoints.findIndex((pic) => pic.card === picture.card) > -1) {
+  } else if (picture.buyerTheme !== picture.painterTheme && picture.isFake) {
     return 'fake';
   } else {
     return '';

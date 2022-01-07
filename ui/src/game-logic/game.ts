@@ -20,7 +20,6 @@ export interface Game {
 
   teamPoints: Picture[];
   fakePoints: Picture[];
-  neutralCards: Picture[];
 
   creationTime?: Date;
   startTime?: Date;
@@ -48,7 +47,6 @@ export interface PublicGame {
 
   teamPoints: Picture[];
   fakePoints: Picture[];
-  neutralCards: Picture[];
 }
 
 export interface GameInfo {

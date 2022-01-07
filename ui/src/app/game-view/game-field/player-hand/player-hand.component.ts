@@ -14,6 +14,7 @@ export class PlayerHandComponent {
   @Input() player!: Player;
   @Input() currentTheme!: string;
 
+  readonly getPictureCssClass = (picture: Picture) => (GamePhase.Evaluate === this.game.phase ? getPictureCssClass(picture) : '');
   readonly trackByPictureCard = trackByPictureCard;
 
   @HostBinding('class.active') get active(): boolean {
@@ -22,9 +23,5 @@ export class PlayerHandComponent {
 
   togglePainterSelection(picture: Picture) {
     apiFunctions.togglePainterSelections(this.game.id, picture.card, this.currentTheme);
-  }
-
-  getPictureCssClass(picture: Picture): string {
-    return getPictureCssClass(this.game, picture);
   }
 }

@@ -45,7 +45,6 @@ export function createGame(name: string): Game {
     phase: GamePhase.Init,
     rounds: [],
     teamPoints: [],
-    neutralCards: [],
     fakePoints: [],
   };
 }
@@ -203,10 +202,6 @@ export function choosePictures(game: Game) {
 
   game.teamPoints.push(...newTeamPoints);
   game.fakePoints.push(...newFakePoints);
-  game.neutralCards.push(
-    ...selectedPictures.filter((pic) => pic.buyerTheme !== pic.painterTheme && !pic.isFake),
-    ...round.pictures.filter((pic) => !pic.isFake && !isPictureSelectedFromBuyer(pic))
-  );
 
   if (newTeamPoints.length === round.demand) {
     reactivateJoker(game, newTeamPoints.length);
@@ -309,7 +304,6 @@ function discardRoundCards(game: Game) {
   );
   if (!game.discardedDeck) game.discardedDeck = [];
   game.discardedDeck.push(...round.themes, ...notInPoints.map((p) => p.card));
-  game.neutralCards = []; // reset neutral cards - todo only dynamic in round
 }
 
 function fillUpCards(game: Game) {
@@ -416,7 +410,7 @@ export function getPlayerInGame(game: { players: Player[] }, playerId?: string):
 }
 
 export function toPublicGame(game: Game): PublicGame {
-  const { id, name, hostId, players, jokers, phase, currentRound, rounds, teamPoints, fakePoints, neutralCards } = game;
+  const { id, name, hostId, players, jokers, phase, currentRound, rounds, teamPoints, fakePoints } = game;
   const round = rounds[currentRound];
 
   return {
@@ -443,7 +437,6 @@ export function toPublicGame(game: Game): PublicGame {
     phase,
     teamPoints,
     fakePoints,
-    neutralCards,
   };
 }
 

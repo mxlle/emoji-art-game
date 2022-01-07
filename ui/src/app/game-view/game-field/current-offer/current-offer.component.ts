@@ -44,6 +44,7 @@ export class CurrentOfferComponent {
   readonly currentPlayerId = getCurrentUserId();
   readonly unknownCardEmoji = unknownCardEmoji;
 
+  readonly getPictureCssClass = (picture: Picture) => (GamePhase.Evaluate === this._game?.phase ? getPictureCssClass(picture) : '');
   readonly trackByPictureCard = trackByPictureCard;
 
   private readonly _animationMillis = 3000;
@@ -62,10 +63,6 @@ export class CurrentOfferComponent {
       (!!picture.buyerSelection &&
         picture.buyerSelection.findIndex((s: BuyerSelection) => !!this.currentPlayerId && s.playerIds.includes(this.currentPlayerId)) > -1)
     );
-  }
-
-  getPictureCssClass(picture: Picture): string {
-    return this._game ? getPictureCssClass(this._game, picture) : '';
   }
 
   toggleBuyerSelection(picture: Picture) {
