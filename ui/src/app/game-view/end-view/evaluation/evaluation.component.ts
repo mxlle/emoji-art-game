@@ -4,7 +4,7 @@ import { randomArrayValue } from '../../../../game-tools/random-util';
 import { allColors } from '../../../../game-tools/color-util';
 import { map, Observable, of, tap } from 'rxjs';
 import { bestPoints } from '../../../../game-logic/gameConsts';
-import { animateNumber } from '../../../util/animation-util';
+import { animateNumber, AnimationType } from '../../../util/animation-util';
 import { percentage } from '../../../util/util';
 
 @Component({
@@ -17,7 +17,7 @@ export class EvaluationComponent {
   @Input() set points(points: number) {
     this.resultPercentage = percentage(points, bestPoints);
 
-    this.animatedPercentage$ = animateNumber(points, this._resultAnimationMillis).pipe(
+    this.animatedPercentage$ = animateNumber(points, this._resultAnimationMillis, AnimationType.EaseIn).pipe(
       tap((animatedPoints: number) => this.animatedPointsChange.emit(Math.ceil(animatedPoints))),
       map((animatedPoints: number) => percentage(animatedPoints, bestPoints))
     );
