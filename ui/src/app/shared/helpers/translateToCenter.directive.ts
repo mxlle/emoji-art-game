@@ -18,11 +18,9 @@ export class TranslateToCenterDirective implements OnChanges {
       let x = this.x;
       let y = this.y;
       if (this.shift) {
-        console.log('apply shift');
         x += randomInt(this.shift, -this.shift);
         y += randomInt(this.shift, -this.shift);
       }
-      console.log(x, y);
       return `translate(${x}px, ${y}px)`;
     } else {
       return undefined;

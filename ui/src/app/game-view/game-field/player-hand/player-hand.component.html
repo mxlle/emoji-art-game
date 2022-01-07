@@ -2,7 +2,6 @@
 <div class="hand">
   <app-picture
     *ngFor="let picture of player.pictures; trackBy: trackByPictureCard"
-    class="{{ getPictureCssClass(picture) }}"
     [picture]="picture"
     [selected]="!!picture.painterTheme"
     [clickable]="active"

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, HostBinding, Input } from '@angular/core';
 import { GamePhase, Picture, Player, PublicGame, Role } from '../../../../game-logic/game';
-import { getPictureCssClass, trackByPictureCard } from '../../../util/ui-helpers';
+import { trackByPictureCard } from '../../../util/ui-helpers';
 import apiFunctions from '../../../../data/apiFunctions';
 
 @Component({
@@ -14,7 +14,6 @@ export class PlayerHandComponent {
   @Input() player!: Player;
   @Input() currentTheme!: string;
 
-  readonly getPictureCssClass = (picture: Picture) => (GamePhase.Evaluate === this.game.phase ? getPictureCssClass(picture) : '');
   readonly trackByPictureCard = trackByPictureCard;
 
   @HostBinding('class.active') get active(): boolean {

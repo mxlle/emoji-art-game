@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, OnDestroy } from '@angular/core';
 import { BuyerSelection, GamePhase, Picture, Player, PublicGame, Role } from '../../../../game-logic/game';
-import { getPictureCssClass, trackByPictureCard } from '../../../util/ui-helpers';
+import { trackByPictureCard } from '../../../util/ui-helpers';
 import apiFunctions from '../../../../data/apiFunctions';
 import { getCurrentUserId } from '../../../../data/functions';
 import { unknownCardEmoji } from '../../../../game-logic/gameConsts';
@@ -42,7 +42,6 @@ export class CurrentOfferComponent implements OnDestroy {
   readonly currentPlayerId = getCurrentUserId();
   readonly unknownCardEmoji = unknownCardEmoji;
 
-  readonly getPictureCssClass = (picture: Picture) => (GamePhase.Evaluate === this._game?.phase ? getPictureCssClass(picture) : '');
   readonly trackByPictureCard = trackByPictureCard;
 
   private readonly _animationMillis = 1750;
@@ -66,6 +65,22 @@ export class CurrentOfferComponent implements OnDestroy {
       (!!picture.buyerSelection &&
         picture.buyerSelection.findIndex((s: BuyerSelection) => !!this.currentPlayerId && s.playerIds.includes(this.currentPlayerId)) > -1)
     );
+  }
+
+  getPictureCssClass(picture: Picture): string {
+    if (GamePhase.Evaluate === this._game?.phase) {
+      if (picture.buyerTheme && picture.buyerTheme === picture.painterTheme && !picture.isFake) {
+        return 'correct';
+      } else if (picture.buyerTheme !== picture.painterTheme && !picture.isFake) {
+        return 'neutral';
+      } else if (picture.buyerTheme !== picture.painterTheme && picture.isFake) {
+        return 'fake';
+      } else {
+        return '';
+      }
+    } else {
+      return '';
+    }
   }
 
   toggleBuyerSelection(picture: Picture) {
