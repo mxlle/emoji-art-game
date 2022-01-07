@@ -1,10 +1,11 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, OnDestroy } from '@angular/core';
 import { BuyerSelection, GamePhase, Picture, Player, PublicGame, Role } from '../../../../game-logic/game';
 import { getPictureCssClass, trackByPictureCard } from '../../../util/ui-helpers';
 import apiFunctions from '../../../../data/apiFunctions';
 import { getCurrentUserId } from '../../../../data/functions';
 import { unknownCardEmoji } from '../../../../game-logic/gameConsts';
 import { scrollIntoViewIfPossible } from '../../../util/scroll-into-view';
+import { finalize, interval, Subject, take, takeUntil, tap } from 'rxjs';
 
 @Component({
   selector: 'app-current-offer',
@@ -12,7 +13,7 @@ import { scrollIntoViewIfPossible } from '../../../util/scroll-into-view';
   styleUrls: ['./current-offer.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class CurrentOfferComponent {
+export class CurrentOfferComponent implements OnDestroy {
   @Input() set game(game: PublicGame | undefined) {
     if (this._game && GamePhase.Offer === this._game?.phase && GamePhase.Choose === game?.phase) {
       this._triggerSwitchToMarketAnimation();
@@ -32,8 +33,11 @@ export class CurrentOfferComponent {
   @Input() scrollContainer?: HTMLElement;
 
   showPreview: boolean = true;
-  prepareSwitchToMarketAnimation: boolean = false;
-  showSwitchToMarketAnimation: boolean = false;
+  prepareAnimation: boolean = false;
+  showShuffleAnimation: boolean = false;
+  showShift = false;
+
+  readonly shuffleShift: number = 80;
 
   readonly currentPlayerId = getCurrentUserId();
   readonly unknownCardEmoji = unknownCardEmoji;
@@ -44,11 +48,17 @@ export class CurrentOfferComponent {
   private readonly _animationMillis = 1750;
   private readonly _bottomScrollBuffer = 100; // a bit more than the quick access bar
 
+  private _destroy$: Subject<void> = new Subject<void>();
+
   get active(): boolean {
-    return (GamePhase.Choose === this._game?.phase && this.currentPlayer?.role === Role.BUYER) || GamePhase.Evaluate === this._game?.phase;
+    return GamePhase.Choose === this._game?.phase && this.currentPlayer?.role === Role.BUYER;
   }
 
   constructor(private _cdr: ChangeDetectorRef, private _elementRef: ElementRef) {}
+
+  ngOnDestroy() {
+    this._destroy$.next();
+  }
 
   getPictureIsSelected(picture: Picture): boolean {
     return (
@@ -64,19 +74,35 @@ export class CurrentOfferComponent {
     }
   }
 
-  private _triggerSwitchToMarketAnimation() {
+  _triggerSwitchToMarketAnimation() {
     this.showPreview = true;
-    this.prepareSwitchToMarketAnimation = true;
+    this.prepareAnimation = true;
+
     requestAnimationFrame(() => {
       scrollIntoViewIfPossible(this._elementRef.nativeElement, this.scrollContainer, 0, this._bottomScrollBuffer).then(() => {
-        this.showSwitchToMarketAnimation = true;
+        this.showShuffleAnimation = true;
         this._cdr.markForCheck();
 
         setTimeout(() => {
-          this.prepareSwitchToMarketAnimation = false;
-          this.showSwitchToMarketAnimation = false;
+          this.prepareAnimation = false;
           this.showPreview = false;
           this._cdr.markForCheck();
+
+          interval(200)
+            .pipe(
+              tap(() => {
+                this.showShift = !this.showShift;
+                this._cdr.markForCheck();
+              }),
+              take(7),
+              takeUntil(this._destroy$),
+              finalize(() => {
+                this.showShuffleAnimation = false;
+                this.showShift = false;
+                this._cdr.markForCheck();
+              })
+            )
+            .subscribe();
         }, this._animationMillis);
       });
     });

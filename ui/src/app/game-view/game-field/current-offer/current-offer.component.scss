@@ -36,5 +36,11 @@ app-offer-preview,
       transition-delay: 0s;
       --flip-card-delay: 0s;
     }
+
+    &.shuffle-animation {
+      transform: var(--translate-to-center);
+      transition-delay: 0s;
+      transition: transform 0.2s;
+    }
   }
 }
