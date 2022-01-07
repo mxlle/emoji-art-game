@@ -33,9 +33,18 @@ export function setPrimaryPlayerColor() {
     document.body.style.setProperty('--primary-color', playerColor);
   }
 }
-export function getDiffToCenter(element: HTMLElement): { x: number; y: number } {
+export function getDiffToCenter(element: HTMLElement, container: HTMLElement = document.body): { x: number; y: number } {
   const bounding = element.getBoundingClientRect();
-  const x = window.innerWidth / 2 - bounding.left - bounding.width / 2;
-  const y = window.innerHeight / 2 - bounding.top - bounding.height / 2;
+  const containerBounding = container.getBoundingClientRect();
+  const x = getCenteredX(containerBounding) - getCenteredX(bounding);
+  const y = getCenteredY(containerBounding) - getCenteredY(bounding);
   return { x, y };
+}
+
+function getCenteredX(rect: DOMRect) {
+  return rect.x + rect.width / 2;
+}
+
+function getCenteredY(rect: DOMRect) {
+  return rect.y + rect.height / 2;
 }

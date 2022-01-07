@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, HostBinding, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, HostBinding, Input } from '@angular/core';
 import { Picture, PublicGame } from '../../../../../game-logic/game';
 import { trackByPictureCard } from '../../../../util/ui-helpers';
 import { fakesPerRound, masterFaker } from '../../../../../game-logic/gameConsts';
@@ -25,4 +25,6 @@ export class OfferPreviewComponent {
 
     return [...this.game.offerPreview, ...demandArray];
   }
+
+  constructor(public elementRef: ElementRef) {}
 }

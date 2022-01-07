@@ -17,17 +17,24 @@ app-offer-preview,
 
 .offer {
   @include mixins.defaultGrid();
-  transform: scale(1);
-  transition: transform 1.5s;
-  --flip-card-delay: 0.5s;
 
-  &.initial-show {
-    transform: scale(0);
-    opacity: 0;
-  }
+  app-flip-card {
+    transition: transform 1s;
 
-  &.show-start-animation {
-    transform: scale(1);
-    opacity: 1;
+    @for $i from 1 through 11 {
+      &:nth-child(#{$i}) {
+        z-index: 11 - $i;
+        transition-delay: #{($i - 1) * 0.1 + 0.1}s;
+        --flip-card-delay: #{($i - 1) * 0.1 + 0.2}s;
+      }
+    }
+
+    &.prepare-animation {
+      transform: var(--translate-to-center);
+      opacity: 0;
+
+      transition-delay: 0s;
+      --flip-card-delay: 0s;
+    }
   }
 }

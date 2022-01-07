@@ -2,13 +2,8 @@
 
 :host {
   @include mixins.defaultGrid();
-  transform: scale(1);
-  transition: transform 0.5s;
-  transition-delay: 1s;
 
   &.prepare-end-animation {
-    transform: scale(0);
-
     .faker-cards {
       display: contents;
       position: unset;
@@ -16,14 +11,23 @@
   }
 
   &.show-end-animation {
+    app-card {
+      transform: var(--translate-to-center);
+      z-index: 1;
+    }
+
     .faker-cards {
       app-card {
         visibility: visible;
+        z-index: 0;
       }
     }
   }
 
   app-card {
+    transition: transform 0.5s;
+    transition-delay: 1.25s;
+
     &.too-much {
       --card-border-color: var(--danger-color);
     }
@@ -45,8 +49,8 @@
 
       @for $i from 1 through 4 {
         &:nth-child(#{$i}n) {
-          transition: visibility 0.25s;
-          transition-delay: #{($i - 1) * 0.25}s;
+          transition: visibility 0.25s, transform 0.5s;
+          transition-delay: #{$i * 0.25}s, 1.25s;
         }
       }
     }

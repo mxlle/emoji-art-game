@@ -2,6 +2,8 @@
   *ngFor="let picture of offerPreview; trackBy: trackByPictureCard; let index = index"
   [class.too-much]="index >= game.currentDemand"
   [class.missing]="!picture.card"
+  [appTranslateToCenter]="showEndAnimation"
+  [container]="elementRef.nativeElement"
 >
   <span class="emoji">
     {{ picture.card }}
@@ -14,7 +16,7 @@
 </app-card>
 
 <div class="faker-cards">
-  <app-card *ngFor="let picture of fakerArray">
+  <app-card *ngFor="let picture of fakerArray" [appTranslateToCenter]="showEndAnimation" [container]="elementRef.nativeElement">
     <span class="emoji">{{ picture }}</span>
   </app-card>
 </div>

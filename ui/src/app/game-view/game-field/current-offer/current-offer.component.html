@@ -6,17 +6,18 @@
 <app-offer-preview
   *ngIf="game && showPreview"
   [game]="game"
-  [prepareEndAnimation]="preparePreviewEndAnimation"
-  [showEndAnimation]="showPreviewEndAnimation"
+  [prepareEndAnimation]="prepareSwitchToMarketAnimation"
+  [showEndAnimation]="showSwitchToMarketAnimation"
 ></app-offer-preview>
 
-<div
-  *ngIf="game && (!showPreview || showPreviewEndAnimation)"
-  class="offer"
-  [class.initial-show]="showPreviewEndAnimation"
-  [class.show-start-animation]="showMarketStartAnimation"
->
-  <app-flip-card *ngFor="let picture of game.currentOffer; trackBy: trackByPictureCard" [showBack]="showPreviewEndAnimation">
+<div *ngIf="game && (!showPreview || showSwitchToMarketAnimation)" #offer class="offer">
+  <app-flip-card
+    *ngFor="let picture of game.currentOffer; trackBy: trackByPictureCard"
+    [showBack]="showSwitchToMarketAnimation"
+    [appTranslateToCenter]="showSwitchToMarketAnimation"
+    [container]="offer"
+    [class.prepare-animation]="showSwitchToMarketAnimation"
+  >
     <app-picture
       appFlipCardFront
       class="{{ getPictureCssClass(picture) }}"

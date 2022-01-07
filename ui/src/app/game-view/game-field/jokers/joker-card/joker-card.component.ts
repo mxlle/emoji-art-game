@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, HostBinding, Input, Output } from '@angular/core';
 import { Joker } from '../../../../../game-logic/game';
 import { getJokerLabel } from '../../../../../game-logic/gameConsts';
-import { getDiffToCenter } from '../../../../util/ui-helpers';
 
 @Component({
   selector: 'app-joker-card',
@@ -34,12 +33,9 @@ export class JokerCardComponent {
   constructor(private _cdr: ChangeDetectorRef, private _elementRef: ElementRef) {}
 
   private _showWinBackAnimation() {
-    const { x, y } = getDiffToCenter(this._elementRef.nativeElement);
-    this._elementRef.nativeElement.style.setProperty('--translate-to-center', `translate(${x}px, ${y}px)`);
     this.highlighted = true;
     setTimeout(() => {
       this.highlighted = false;
-      this._elementRef.nativeElement.style.removeProperty('--translate-to-center');
       this._cdr.markForCheck();
     }, this._animationMillis);
   }
