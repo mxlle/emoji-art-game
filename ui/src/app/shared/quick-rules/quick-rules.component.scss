@@ -1,0 +1,29 @@
+:host {
+  display: grid;
+  gap: var(--spacer-md);
+  text-align: start;
+  padding: var(--spacer-lg);
+
+  h3 {
+    margin: 0;
+  }
+
+  > div {
+    display: grid;
+    grid-template-columns: calc(2 * #{var(--emoji-size-sm)}) 1fr;
+    gap: var(--spacer-md);
+    align-items: center;
+    font-size: var(--font-size-sm);
+
+    .emoji {
+      font-size: var(--emoji-size-sm);
+      text-align: end;
+    }
+
+    em {
+      font-style: normal;
+      font-size: var(--font-size-default);
+      color: var(--accent-color);
+    }
+  }
+}

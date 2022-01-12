@@ -6,9 +6,10 @@ import { RouterModule } from '@angular/router';
 import { GameListModule } from './game-list/game-list.module';
 import { GameCreatorModule } from './game-creator/game-creator.module';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { QuickRulesModule } from '../shared/quick-rules/quick-rules.module';
 
 @NgModule({
   declarations: [HomeComponent],
-  imports: [CommonModule, MatButtonModule, RouterModule, GameListModule, GameCreatorModule, MatProgressSpinnerModule],
+  imports: [CommonModule, MatButtonModule, RouterModule, GameListModule, GameCreatorModule, MatProgressSpinnerModule, QuickRulesModule],
 })
 export class HomeModule {}

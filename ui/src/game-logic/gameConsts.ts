@@ -109,7 +109,7 @@ export const getInitialJokers = (): Joker[] => {
   ];
 };
 
-export function getJokerLabel(joker: Joker): string {
+export function getJokerLabel(joker: { type: JokerType }): string {
   switch (joker.type) {
     case JokerType.EXCHANGE_THEMES:
       return `2️⃣🔄`;

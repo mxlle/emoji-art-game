@@ -22,4 +22,11 @@
   mat-progress-spinner {
     margin: var(--spacer-xxxl);
   }
+
+  app-quick-rules {
+    border: var(--border-width) dashed var(--border-color-secondary);
+    border-radius: var(--border-radius);
+    margin-block-start: var(--spacer-xxxl);
+    margin-block-end: var(--spacer-xxl);
+  }
 }
