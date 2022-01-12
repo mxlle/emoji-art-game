@@ -1,34 +1,38 @@
 <div #scrollContainer class="scroll-container">
-  <!-- INFO -->
-  <app-phase-info [game]="game"></app-phase-info>
+  <div>
+    <!-- INFO -->
+    <app-phase-info [game]="game"></app-phase-info>
 
-  <!-- THEMES -->
-  <app-current-themes
-    [themes]="game.currentThemes"
-    [active]="themesActive"
-    [scrollContainer]="scrollContainer"
-    [(currentTheme)]="currentTheme"
-  ></app-current-themes>
+    <!-- THEMES -->
+    <app-current-themes
+      [themes]="game.currentThemes"
+      [active]="themesActive"
+      [scrollContainer]="scrollContainer"
+      [(currentTheme)]="currentTheme"
+    ></app-current-themes>
 
-  <!-- JOKERS -->
-  <app-jokers *ngIf="game.jokers.length" [game]="game" [currentPlayer]="currentPlayer"></app-jokers>
+    <!-- JOKERS -->
+    <app-jokers *ngIf="game.jokers.length" [game]="game" [currentPlayer]="currentPlayer"></app-jokers>
+  </div>
 
-  <!-- DEMAND -->
-  <app-demand *ngIf="showDemandPicker" [game]="game" [readonly]="!canSetDemand"></app-demand>
+  <div>
+    <!-- DEMAND -->
+    <app-demand *ngIf="showDemandPicker" [game]="game" [readonly]="!canSetDemand"></app-demand>
 
-  <!-- OFFER -->
-  <app-current-offer
-    *ngIf="GamePhase.Demand !== game.phase"
-    [game]="game"
-    [currentTheme]="currentTheme"
-    [currentPlayer]="currentPlayer"
-    [scrollContainer]="scrollContainer"
-  >
-    <button *ngIf="showEndRoundConfirm" mat-flat-button color="primary" (click)="endRound()">Continue</button>
-  </app-current-offer>
+    <!-- OFFER -->
+    <app-current-offer
+      *ngIf="GamePhase.Demand !== game.phase"
+      [game]="game"
+      [currentTheme]="currentTheme"
+      [currentPlayer]="currentPlayer"
+      [scrollContainer]="scrollContainer"
+    >
+      <button *ngIf="showEndRoundConfirm" mat-flat-button color="primary" (click)="endRound()">Continue</button>
+    </app-current-offer>
 
-  <!-- PLAYER HAND -->
-  <app-player-hand *ngIf="currentPlayer" [game]="game" [player]="currentPlayer" [currentTheme]="currentTheme"></app-player-hand>
+    <!-- PLAYER HAND -->
+    <app-player-hand *ngIf="currentPlayer" [game]="game" [player]="currentPlayer" [currentTheme]="currentTheme"></app-player-hand>
+  </div>
 </div>
 
 <!-- QUICK ACCESS -->
