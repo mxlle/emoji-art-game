@@ -127,4 +127,11 @@ body {
   .mat-flat-button.mat-primary {
     background-color: var(--primary-color);
   }
+
+  .mat-spinner,
+  .mat-progress-spinner {
+    circle {
+      stroke: var(--primary-color);
+    }
+  }
 }

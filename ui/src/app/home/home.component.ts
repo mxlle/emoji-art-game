@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { GameInfo } from '../../game-logic/game';
 import apiFunctions from '../../data/apiFunctions';
 import { GameService } from '../game.service';
@@ -16,18 +16,30 @@ export class HomeComponent implements OnInit, OnDestroy {
   ongoingGames$: Observable<GameInfo[] | null> = this._gameService.ongoingGames$;
   finishedGames$: Observable<GameInfo[] | null> = this._gameService.finishedGames$;
 
+  loading: boolean = true;
+
   private readonly _destroy$: Subject<void> = new Subject<void>();
 
-  constructor(private _gameService: GameService, private _connectionService: ConnectionService) {}
+  constructor(private _gameService: GameService, private _connectionService: ConnectionService, private _cdr: ChangeDetectorRef) {}
 
   ngOnInit(): void {
-    this._gameService.subscribeToGameList();
-    this._connectionService.reconnect$.pipe(takeUntil(this._destroy$)).subscribe(() => this._gameService.subscribeToGameList());
+    this.subscribeToGameList();
+    this._connectionService.reconnect$.pipe(takeUntil(this._destroy$)).subscribe(() => this.subscribeToGameList());
   }
 
   ngOnDestroy() {
     this._destroy$.next();
     this._gameService.unsubscribeFromGameList();
+  }
+
+  subscribeToGameList() {
+    this.loading = true;
+    this._cdr.markForCheck();
+
+    this._gameService.subscribeToGameList().then(() => {
+      this.loading = false;
+      this._cdr.markForCheck();
+    });
   }
 
   deleteGame(gameId: string) {

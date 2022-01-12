@@ -17,6 +17,8 @@ export class GameViewComponent implements OnInit, OnDestroy {
 
   @HostBinding('style.--primary-color') primaryColor?: string;
 
+  loading: boolean = true;
+
   private readonly _gameId: string;
 
   private readonly _destroy$: Subject<void> = new Subject<void>();
@@ -31,8 +33,8 @@ export class GameViewComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this._gameService.subscribeToGame(this._gameId);
-    this._connectionService.reconnect$.pipe(takeUntil(this._destroy$)).subscribe(() => this._gameService.subscribeToGame(this._gameId));
+    this._subscribeToGame();
+    this._connectionService.reconnect$.pipe(takeUntil(this._destroy$)).subscribe(() => this._subscribeToGame());
     this.currentPlayer$.pipe(takeUntil(this._destroy$)).subscribe((player: Player | null) => {
       this.primaryColor = player?.color;
       this._cdr.markForCheck();
@@ -42,6 +44,16 @@ export class GameViewComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this._destroy$.next();
     this._gameService.unsubscribeFromGame(this._gameId);
+  }
+
+  private _subscribeToGame() {
+    this.loading = true;
+    this._cdr.markForCheck();
+
+    this._gameService.subscribeToGame(this._gameId).then(() => {
+      this.loading = false;
+      this._cdr.markForCheck();
+    });
   }
 
   get GamePhase(): typeof GamePhase {

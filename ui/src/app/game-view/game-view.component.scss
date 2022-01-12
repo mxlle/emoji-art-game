@@ -5,3 +5,8 @@
   overflow: hidden;
   grid-template-rows: 1fr auto;
 }
+
+.mat-progress-spinner {
+  place-self: center;
+  margin: var(--spacer-xxl);
+}

@@ -68,7 +68,7 @@ export class GameService {
     socket.on(GameEvent.Update, (game: PublicGame) => this._ngZone.run(() => this._currentGame$.next(game)));
     socket.on(GameEvent.UpdatePlayerData, (player: Player) => this._ngZone.run(() => this._currentPlayer$.next(player)));
     socket.on(GameEvent.Confetti, (colors: string[]) => this._ngZone.run(() => this._confetti$.next(colors)));
-    apiFunctions.loadGame(gameId).then((game) => game && this._currentGame$.next(game));
+    return apiFunctions.loadGame(gameId).then((game) => game && this._currentGame$.next(game));
   }
 
   unsubscribeFromGame(gameId: string) {
@@ -84,7 +84,7 @@ export class GameService {
     this.unsubscribeFromGameList();
     socket.emit(GameEvent.ListSubscribe, getCurrentUserId());
     socket.on(GameEvent.UpdateList, () => this._ngZone.run(() => this._loadGames()));
-    this._loadGames();
+    return this._loadGames();
   }
 
   unsubscribeFromGameList() {
@@ -103,7 +103,7 @@ export class GameService {
   }
 
   private _loadGames() {
-    apiFunctions.loadGames().then((allGames: GameInfo[]) => {
+    return apiFunctions.loadGames().then((allGames: GameInfo[]) => {
       const newGames = allGames.filter((game) => game.phase === GamePhase.Init && !getCurrentUserInGame(game));
       const ongoingGames = allGames.filter(
         (game) => ![GamePhase.Init, GamePhase.End].includes(game.phase) || (game.phase === GamePhase.Init && !!getCurrentUserInGame(game))

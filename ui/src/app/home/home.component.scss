@@ -18,4 +18,8 @@
     width: 20rem;
     max-width: 100vw;
   }
+
+  mat-progress-spinner {
+    margin: var(--spacer-xxxl);
+  }
 }

@@ -29,10 +29,6 @@
     > * {
       grid-area: button;
     }
-
-    .mat-spinner ::ng-deep circle {
-      stroke: var(--primary-color);
-    }
   }
 
   .ammo {
