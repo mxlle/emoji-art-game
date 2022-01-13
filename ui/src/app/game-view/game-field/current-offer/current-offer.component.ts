@@ -8,13 +8,13 @@ import { scrollIntoViewIfPossible } from '../../../util/scroll-into-view';
 import { finalize, interval, Subject, take, takeUntil, tap } from 'rxjs';
 
 @Component({
-  selector: 'app-current-offer',
+  selector: 'app-current-offer[game][currentTheme]',
   templateUrl: './current-offer.component.html',
   styleUrls: ['./current-offer.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CurrentOfferComponent implements OnDestroy {
-  @Input() set game(game: PublicGame | undefined) {
+  @Input() set game(game: PublicGame) {
     if (this._game && GamePhase.Offer === this._game?.phase && GamePhase.Choose === game?.phase) {
       this._triggerSwitchToMarketAnimation();
     } else {
@@ -22,10 +22,10 @@ export class CurrentOfferComponent implements OnDestroy {
     }
     this._game = game;
   }
-  get game(): PublicGame | undefined {
+  get game(): PublicGame {
     return this._game;
   }
-  private _game?: PublicGame;
+  private _game!: PublicGame;
 
   @Input() pictures: Picture[] = [];
   @Input() currentTheme!: string;

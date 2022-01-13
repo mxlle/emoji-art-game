@@ -1,16 +1,16 @@
 <h2>
   <span>Market </span>
-  <app-counter *ngIf="game" [game]="game" [includeEmoji]="true"></app-counter>
+  <app-counter [game]="game" [includeEmoji]="true"></app-counter>
 </h2>
 
 <app-offer-preview
-  *ngIf="game && showPreview"
+  *ngIf="showPreview"
   [game]="game"
   [prepareEndAnimation]="prepareAnimation"
   [showEndAnimation]="showShuffleAnimation"
 ></app-offer-preview>
 
-<div *ngIf="game && (!showPreview || showShuffleAnimation)" #offer class="offer">
+<div *ngIf="!showPreview || showShuffleAnimation" #offer class="offer">
   <app-flip-card
     *ngFor="let picture of game.currentOffer; trackBy: trackByPictureCard"
     [showBack]="showShuffleAnimation"
