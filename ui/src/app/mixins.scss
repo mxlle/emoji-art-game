@@ -5,19 +5,17 @@
   gap: var(--spacer-lg);
 }
 
-@mixin stackEffect($shiftValue: var(--spacer-xs)) {
-  // stack effect - up to 3
-  :nth-child(2) {
-    position: absolute;
-    right: $shiftValue;
-    top: 0;
+@mixin stackEffect($maxVisible: 3, $shiftValue: var(--spacer-xs)) {
+  // stack effect
+  @for $i from 1 through $maxVisible {
+    :nth-child(#{$i}) {
+      position: absolute;
+      right: calc((#{$i} - 1) * #{$shiftValue});
+      top: 0;
+    }
   }
-  :nth-child(3) {
-    position: absolute;
-    right: calc(2 * #{$shiftValue});
-    top: 0;
-  }
-  :nth-child(n + 4) {
+
+  :nth-child(n + #{$maxVisible + 1}) {
     display: none;
   }
 }

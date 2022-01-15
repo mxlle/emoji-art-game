@@ -36,7 +36,7 @@ $quickAccessBarHeight: 85px; // 68 + margin
 
 app-quick-access-bar {
   align-self: end;
-  z-index: 1;
+  z-index: 100;
   background-color: rgba(var(--body-background-rgb), 0.85);
 }
 

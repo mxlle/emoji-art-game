@@ -1,16 +1,19 @@
 @use '../../../../mixins';
 
+$max-stacked: 12; // still fits in card
+$card-padding: var(--spacer-xl);
+
 :host {
-  @include mixins.defaultGrid(calc(#{var(--font-size-card-number)} + 2 * #{var(--spacer-lg)}));
+  @include mixins.defaultGrid(calc(#{var(--font-size-card-number)} + 2 * #{$card-padding}));
   --card-font-size: var(--font-size-card-number);
 }
 
 app-card {
-  //--card-border-color: var(--background);
   --card-border-color: var(--border-color-secondary);
   --card-border-style: dashed;
   --card-background: transparent;
   --card-box-shadow: none;
+  --card-padding: #{$card-padding};
   color: var(--foreground-secondary);
 
   &.active {
@@ -19,6 +22,7 @@ app-card {
   }
 
   .suggestions {
-    @include mixins.stackEffect(var(--spacer-sm));
+    position: relative;
+    @include mixins.stackEffect($max-stacked);
   }
 }
