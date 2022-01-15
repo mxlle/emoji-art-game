@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, HostBinding, Input, OnInit } from '@angular/core';
-import { Picture } from '../../../game-logic/game';
+import { Picture, Role } from '../../../game-logic/game';
 import { masterFaker } from '../../../game-logic/gameConsts';
 
 @Component({
@@ -20,5 +20,8 @@ export class PictureComponent implements OnInit {
 
   get masterFaker(): typeof masterFaker {
     return masterFaker;
+  }
+  get Role(): typeof Role {
+    return Role;
   }
 }

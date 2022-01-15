@@ -12,9 +12,9 @@
     [selections]="picture.buyerSelection ?? []"
   ></app-buyer-selection-marker>
 
-  <div *ngIf="picture?.painterTheme" appCardBottomLeft class="theme emoji">
-    {{ picture?.painterTheme }}
-  </div>
+  <app-color-dot *ngIf="picture?.painterTheme" appCardBottomLeft [color]="picture?.painterId | playerColor | async" class="theme emoji">{{
+    picture?.painterTheme
+  }}</app-color-dot>
 
   <div *ngIf="picture?.isFake" appCardBottomLeft class="theme fake emoji">
     {{ masterFaker }}

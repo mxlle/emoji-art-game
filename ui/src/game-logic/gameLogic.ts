@@ -347,14 +347,12 @@ function isPictureSelectedFromBuyer(pic: Picture): boolean {
   return !!pic.buyerTheme;
 }
 
-export function getOfferedPictures(game: Game, includePlayerId: boolean = false): Picture[] {
+export function getOfferedPictures(game: Game): Picture[] {
   return game.players.reduce(
     (currentArr: Picture[], player: Player) =>
       currentArr.concat(
         (player.pictures ?? []).filter(isPictureSelectedFromPainter).map((pic) => {
-          if (includePlayerId) {
-            return { ...pic, playerId: player.id };
-          }
+          pic.painterId = player.id;
           return pic;
         })
       ),
@@ -420,9 +418,9 @@ export function toPublicGame(game: Game): PublicGame {
     players: players.map(mapToPublicPlayer),
     jokers,
     currentOffer:
-      round?.pictures.map(({ card, isFake, buyerTheme, painterTheme, buyerSelection, fakeStatusKnown }) => {
+      round?.pictures.map(({ card, isFake, buyerTheme, painterTheme, buyerSelection, fakeStatusKnown, painterId }) => {
         if (GamePhase.Evaluate === phase) {
-          return { card, isFake, buyerTheme, painterTheme };
+          return { card, isFake, buyerTheme, painterTheme, painterId };
         } else {
           let painterTheme = fakeStatusKnown ? (isFake ? masterFaker : Role.PAINTER) : undefined;
           return { card, buyerSelection, painterTheme };
@@ -431,7 +429,7 @@ export function toPublicGame(game: Game): PublicGame {
     currentThemes: round?.themes ?? [],
     currentDemand: round?.demand ?? 0,
     currentDemandSuggestions: round?.demandSuggestions ?? [],
-    offerPreview: getOfferedPictures(game, true).map(({ playerId }) => ({ card: unknownCardEmoji, playerId })),
+    offerPreview: getOfferedPictures(game).map(({ painterId }) => ({ card: unknownCardEmoji, painterId })),
     selectionCount: getBuyerSelection(game).length,
     correctCount: round?.pictures.filter((pic) => game.teamPoints.findIndex((p) => pic.card === p.card) > -1).length,
     phase,

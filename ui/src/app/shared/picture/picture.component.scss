@@ -22,5 +22,6 @@
 app-card {
   .theme {
     font-size: var(--emoji-size-xs);
+    --player-marker-size: var(--emoji-size-md); // to be around emoji
   }
 }

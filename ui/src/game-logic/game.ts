@@ -82,7 +82,7 @@ export interface Picture {
   buyerSelection?: BuyerSelection[];
   isFake?: boolean;
   fakeStatusKnown?: boolean;
-  playerId?: string;
+  painterId?: string;
 }
 
 export enum Role {

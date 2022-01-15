@@ -10,7 +10,7 @@
 >
   <span>{{ option }}</span>
   <div *ngIf="getSuggestionForDemand(option) as suggestion" appCardTopRight class="suggestions">
-    <app-player-marker *ngFor="let id of suggestion.playerIds" [players]="game.players" [playerId]="id"></app-player-marker>
+    <app-color-dot *ngFor="let id of suggestion.playerIds" [color]="id | playerColor | async"></app-color-dot>
   </div>
 </app-card>
 <ng-content></ng-content>

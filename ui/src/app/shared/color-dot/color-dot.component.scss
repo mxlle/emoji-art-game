@@ -1,0 +1,9 @@
+:host {
+  display: grid;
+  place-items: center;
+  height: var(--player-marker-size, var(--emoji-size-xs));
+  width: var(--player-marker-size, var(--emoji-size-xs));
+  background: var(--color);
+  border: 1px solid var(--border-color);
+  border-radius: 50%;
+}

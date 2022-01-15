@@ -5,6 +5,7 @@ export const PictureSchema: Schema = new Schema(
   {
     card: String,
     painterTheme: { type: String, required: false },
+    painterId: { type: String, required: false },
     buyerTheme: { type: String, required: false },
     buyerSelection: {
       type: [
