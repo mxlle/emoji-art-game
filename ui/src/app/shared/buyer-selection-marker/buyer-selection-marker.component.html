@@ -1,3 +1,5 @@
 <div *ngFor="let selection of selections; trackBy: trackBySelectionTheme" class="theme-group">
-  <app-color-dot *ngFor="let id of selection.playerIds" [color]="id | playerColor | async">{{ selection.theme }}</app-color-dot>
+  <app-color-dot *ngFor="let id of selection.playerIds" [color]="id | playerColor | async" [coloredBorder]="true">{{
+    selection.theme
+  }}</app-color-dot>
 </div>

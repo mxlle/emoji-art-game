@@ -8,6 +8,7 @@ import { ChangeDetectionStrategy, Component, HostBinding, Input } from '@angular
 })
 export class ColorDotComponent {
   @Input() color: string | null = null;
+  @HostBinding('class.colored-border') @Input() coloredBorder: boolean = false;
   @HostBinding('style.--color') get actualColor(): string {
     return !this.color ? 'var(--card-background-selected)' : this.color;
   }

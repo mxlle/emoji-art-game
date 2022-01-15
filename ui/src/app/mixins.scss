@@ -7,7 +7,7 @@
 
 @mixin stackEffect($maxVisible: 3, $shiftValue: var(--spacer-xs)) {
   // stack effect
-  @for $i from 1 through $maxVisible {
+  @for $i from 2 through $maxVisible {
     :nth-child(#{$i}) {
       position: absolute;
       right: calc((#{$i} - 1) * #{$shiftValue});
