@@ -16,3 +16,8 @@ export const allColors = [
   '#ff6d00',
   '#f4511e',
 ];
+
+export function getColorGradient(colors: string[] = []): string {
+  const sortedColors = allColors.filter((c) => colors.includes(c));
+  return `linear-gradient(to right, ${sortedColors.join(',')})`;
+}

@@ -112,6 +112,18 @@ export interface Player {
   pictures?: Picture[];
 }
 
+export function playerToString(player: Player): string {
+  return player.id + player.name + player.color + player.role;
+}
+
+export function playersToString(players: Player[]): string {
+  return players.reduce((stringVal, player) => stringVal.concat(playerToString(player)), '');
+}
+
+export function getPlayerColors(players: Player[]): string[] {
+  return players.map((p) => p.color ?? '').filter((c) => !!c);
+}
+
 export interface BuyerSelection {
   // playerIds per theme
   theme: string;

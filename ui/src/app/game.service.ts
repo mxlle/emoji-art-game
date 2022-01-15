@@ -1,6 +1,6 @@
 import { Injectable, NgZone } from '@angular/core';
-import { map, Observable, ReplaySubject, take, withLatestFrom } from 'rxjs';
-import { GameEvent, GameInfo, GamePhase, Player, PublicGame } from '../game-logic/game';
+import { distinctUntilChanged, filter, map, Observable, ReplaySubject, take, withLatestFrom } from 'rxjs';
+import { GameEvent, GameInfo, GamePhase, Player, playersToString, PublicGame, Role } from '../game-logic/game';
 import { socket } from '../data/socket';
 import { getCurrentUserId, getCurrentUserInGame } from '../data/functions';
 import apiFunctions from '../data/apiFunctions';
@@ -12,12 +12,47 @@ export interface ConfettiEvent {
   amount?: number;
 }
 
+export interface PlayerMapping {
+  [key: string]: Player;
+}
+
 @Injectable({
   providedIn: 'root',
 })
 export class GameService {
   get currentGame$(): Observable<PublicGame | null> {
     return this._currentGame$.asObservable();
+  }
+
+  get currentPlayers$(): Observable<Player[]> {
+    return this.currentGame$.pipe(
+      filter(Boolean),
+      distinctUntilChanged(
+        (prev: PublicGame, curr: PublicGame) =>
+          prev.players.length === curr.players.length && playersToString(prev.players) === playersToString(curr.players)
+      ),
+      map((game: PublicGame) => game.players)
+    );
+  }
+
+  get currentPainters$(): Observable<Player[]> {
+    return this.currentPlayers$.pipe(map((players: Player[]) => players.filter((player: Player) => Role.PAINTER === player.role)));
+  }
+
+  get currentBuyers$(): Observable<Player[]> {
+    return this.currentPlayers$.pipe(map((players: Player[]) => players.filter((player: Player) => Role.BUYER === player.role)));
+  }
+
+  get playerMapping$(): Observable<PlayerMapping> {
+    return this.currentPlayers$.pipe(
+      map((players: Player[]) =>
+        players.reduce((playerMapping: PlayerMapping, player: Player) => {
+          playerMapping[player.id] = player;
+
+          return playerMapping;
+        }, {})
+      )
+    );
   }
 
   get currentPlayer$(): Observable<Player | null> {

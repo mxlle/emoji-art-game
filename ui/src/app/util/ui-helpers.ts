@@ -15,18 +15,6 @@ export const trackByPictureCard: TrackByFunction<Picture> = (_index: number, val
   return value?.card;
 };
 
-export function getPictureCssClass(picture: Picture): string {
-  if (picture.buyerTheme && picture.buyerTheme === picture.painterTheme && !picture.isFake) {
-    return 'correct';
-  } else if (picture.buyerTheme !== picture.painterTheme && !picture.isFake) {
-    return 'neutral';
-  } else if (picture.buyerTheme !== picture.painterTheme && picture.isFake) {
-    return 'fake';
-  } else {
-    return '';
-  }
-}
-
 export function setPrimaryPlayerColor() {
   const playerColor = window.localStorage.getItem(SETTING_COLOR);
   if (playerColor) {

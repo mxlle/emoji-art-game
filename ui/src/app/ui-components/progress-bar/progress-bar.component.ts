@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { allColors } from '../../../game-tools/color-util';
+import { getColorGradient } from '../../../game-tools/color-util';
 
 @Component({
   selector: 'app-progress-bar',
@@ -12,7 +12,6 @@ export class ProgressBarComponent {
   @Input() colors: string[] = [];
 
   get background(): string {
-    const sortedColors = allColors.filter((c) => this.colors.includes(c));
-    return `linear-gradient(to right, ${sortedColors.join(',')})`;
+    return getColorGradient(this.colors);
   }
 }
