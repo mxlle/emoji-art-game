@@ -6,7 +6,7 @@
 
   .theme-group {
     position: relative;
-    --player-marker-size: var(--emoji-size-md); // to be around emoji
+    --color-dot-size: var(--emoji-size-md); // to be around emoji
 
     @include mixins.stackEffect();
   }

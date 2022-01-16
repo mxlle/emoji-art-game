@@ -20,6 +20,10 @@ export class PlayerHandComponent {
     return GamePhase.Offer === this.game.phase && this.player.role === Role.PAINTER;
   }
 
+  @HostBinding('style.--player-color') get playerColor(): string | undefined {
+    return this.player.color;
+  }
+
   togglePainterSelection(picture: Picture) {
     apiFunctions.togglePainterSelections(this.game.id, picture.card, this.currentTheme);
   }
