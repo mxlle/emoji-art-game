@@ -31,6 +31,7 @@ html {
   --card-background-default: #444444;
   --card-background-selected: #666666;
   --inactive-background: rgba(255, 255, 255, 0.1);
+  --overlay-background: rgba(0, 0, 0, 0.85);
   --border-color-secondary: #555555;
   --border-color: #999999;
   // shadow copied from mat-card
@@ -63,6 +64,7 @@ html {
   --emoji-size-lg: 3rem;
   --emoji-size-xl: 4rem;
   --emoji-size-xxl: 6rem;
+  --emoji-size-max: 235px; // then it vanishes
 
   --inactive-opacity: 0.5;
 }

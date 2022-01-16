@@ -9,6 +9,7 @@
       [active]="themesActive"
       [scrollContainer]="scrollContainer"
       [(currentTheme)]="currentTheme"
+      [roleNotifierVisible]="roleNotifierVisible"
     ></app-current-themes>
 
     <!-- JOKERS -->
@@ -42,3 +43,11 @@
   [currentPlayer]="currentPlayer"
   [(currentTheme)]="currentTheme"
 ></app-quick-access-bar>
+
+<!-- ROLE NOTIFIER -->
+<app-role-notifier
+  *ngIf="currentPlayer"
+  [role]="currentPlayer.role"
+  [phase]="game.phase"
+  (isVisible)="roleNotifierVisible = $event"
+></app-role-notifier>

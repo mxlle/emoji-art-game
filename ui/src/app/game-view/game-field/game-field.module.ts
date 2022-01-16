@@ -14,6 +14,7 @@ import { QuickAccessBarModule } from './quick-access-bar/quick-access-bar.module
 import { PhaseInfoModule } from './phase-info/phase-info.module';
 import { JokersModule } from './jokers/jokers.module';
 import { DemandModule } from './demand/demand.module';
+import { RoleNotifierModule } from '../role-notifier/role-notifier.module';
 
 @NgModule({
   declarations: [GameFieldComponent],
@@ -33,6 +34,7 @@ import { DemandModule } from './demand/demand.module';
     PhaseInfoModule,
     JokersModule,
     DemandModule,
+    RoleNotifierModule,
   ],
 })
 export class GameFieldModule {}

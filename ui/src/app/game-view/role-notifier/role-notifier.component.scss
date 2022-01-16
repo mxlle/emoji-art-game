@@ -1,0 +1,33 @@
+:host {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  z-index: 1000;
+
+  display: grid;
+  place-items: center;
+  text-align: center;
+  pointer-events: none;
+
+  &:not(.visible) .container {
+    transform: scale(0);
+    transition: none;
+  }
+
+  .container {
+    display: grid;
+    gap: var(--spacer-md);
+    padding: 3rem;
+    width: calc(#{var(--emoji-size-max)} + 12rem);
+    height: calc(#{var(--emoji-size-max)} + 12rem);
+    background-color: var(--overlay-background);
+    border-radius: 50%;
+    transition: transform 0.5s;
+
+    .emoji {
+      font-size: var(--emoji-size-max);
+    }
+  }
+}

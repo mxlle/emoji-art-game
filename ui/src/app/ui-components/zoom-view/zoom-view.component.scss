@@ -3,7 +3,7 @@
   place-items: center;
   padding: var(--spacer-xxl);
   .emoji {
-    font-size: var(--font-size);
+    font-size: var(--emoji-size-max);
     text-shadow: 0 0 2px var(--text-shadow-color);
   }
 }

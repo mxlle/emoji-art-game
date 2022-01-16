@@ -14,6 +14,7 @@ export class GameFieldComponent {
   @Input() currentPlayer: Player | null = null;
 
   currentTheme: string = '';
+  roleNotifierVisible: boolean = false;
 
   get themesActive(): boolean {
     return (

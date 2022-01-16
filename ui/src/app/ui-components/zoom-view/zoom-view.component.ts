@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, HostBinding, Inject } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
@@ -8,8 +8,5 @@ import { MAT_DIALOG_DATA } from '@angular/material/dialog';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class ZoomViewComponent {
-  readonly maxFontSize: number = 235;
-  @HostBinding('style.--font-size.px') fontSize: number = this.maxFontSize;
-
   constructor(@Inject(MAT_DIALOG_DATA) public data: { emoji: string }) {}
 }

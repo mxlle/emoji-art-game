@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
 import { unknownCardEmoji } from '../../../../game-logic';
 import { scrollTop } from '../../../util/scroll-into-view';
+import { BehaviorSubject, filter, take } from 'rxjs';
 
 @Component({
   selector: 'app-current-themes',
@@ -21,6 +22,7 @@ export class CurrentThemesComponent {
   get themes(): string[] {
     return this._themes;
   }
+  private _themes: string[] = [];
 
   @Input() active?: boolean;
   @Input() scrollContainer?: HTMLElement;
@@ -28,12 +30,15 @@ export class CurrentThemesComponent {
   @Input() currentTheme?: string;
   @Output() currentThemeChange: EventEmitter<string> = new EventEmitter<string>();
 
+  @Input() set roleNotifierVisible(isVisible: boolean) {
+    this._roleNotifierVisible$.next(isVisible);
+  }
+  private _roleNotifierVisible$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
   showBack: boolean = false;
   enterAnimation: boolean = false;
 
   readonly unknownCardEmoji = unknownCardEmoji;
-
-  private _themes: string[] = [];
 
   constructor(private _cdr: ChangeDetectorRef) {}
 
@@ -44,8 +49,17 @@ export class CurrentThemesComponent {
     requestAnimationFrame(() => {
       scrollTop(this.scrollContainer).then(() => {
         this.enterAnimation = false;
-        this.showBack = false;
         this._cdr.markForCheck();
+
+        this._roleNotifierVisible$
+          .pipe(
+            filter((isVisible: boolean) => !isVisible),
+            take(1)
+          )
+          .subscribe(() => {
+            this.showBack = false;
+            this._cdr.markForCheck();
+          });
       });
     });
   }
