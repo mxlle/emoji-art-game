@@ -9,7 +9,7 @@
     <mat-icon [class.open]="mainOpen">expand_more</mat-icon>
   </h2>
   <div *ngIf="mainOpen" class="cards">
-    <app-card *ngFor="let card of gameEmojis"
+    <app-card *ngFor="let card of gameEmojis" [zoomEmoji]="card"
       ><span class="emoji">{{ card }}</span></app-card
     >
   </div>
@@ -21,7 +21,7 @@
     <mat-icon [class.open]="category.open">expand_more</mat-icon>
   </h2>
   <div *ngIf="category.open" class="cards">
-    <app-card *ngFor="let card of category.emojis"
+    <app-card *ngFor="let card of category.emojis" [zoomEmoji]="card"
       ><span class="emoji">{{ card }}</span></app-card
     >
   </div>

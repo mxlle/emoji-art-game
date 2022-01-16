@@ -44,4 +44,19 @@
     place-self: end start;
     margin: var(--indicator-spacer, var(--spacer-xs));
   }
+
+  .bottom-right {
+    $size: var(--font-size-sm);
+    place-self: end end;
+    margin: var(--indicator-spacer, var(--spacer-xs));
+    line-height: $size;
+    pointer-events: all; // override parent
+
+    .mat-icon {
+      color: var(--foreground-tertiary);
+      width: $size;
+      height: $size;
+      font-size: $size;
+    }
+  }
 }

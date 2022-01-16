@@ -3,3 +3,4 @@
 </div>
 <div class="top-right"><ng-content select="[appCardTopRight]"></ng-content></div>
 <div class="bottom-left"><ng-content select="[appCardBottomLeft]"></ng-content></div>
+<div *ngIf="showZoomButton" class="bottom-right" (click)="openZoomView($event)"><mat-icon>zoom_out_map</mat-icon></div>

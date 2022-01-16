@@ -1,0 +1,8 @@
+:host {
+  display: grid;
+  place-items: center;
+  padding: var(--spacer-xxl);
+  .emoji {
+    font-size: var(--font-size);
+  }
+}
