@@ -1,6 +1,6 @@
 <h2 [class.inactive]="!games.length">{{ label }} ({{ games.length }})</h2>
 <mat-action-list>
-  <button mat-list-item *ngFor="let game of games; trackBy: trackByGameId" [routerLink]="'/' + game.id">
+  <button mat-list-item *ngFor="let game of games | slice: 0:limit; trackBy: trackByGameId" [routerLink]="'/' + game.id">
     <div class="inner-list-item">
       <div>{{ game.name }}</div>
       <div>{{ getPlayersString(game) }}</div>
@@ -17,5 +17,9 @@
         <span class="emoji">{{ getPhaseEmojis(game.phase) }}</span>
       </div>
     </div>
+  </button>
+  <button mat-list-item *ngIf="limit < games.length" class="show-more-button" (click)="increaseLimit()">
+    <mat-icon matListIcon>expand_more</mat-icon>
+    <div matLine>Show more</div>
   </button>
 </mat-action-list>

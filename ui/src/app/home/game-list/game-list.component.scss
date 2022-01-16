@@ -10,7 +10,7 @@ h2 {
   }
 }
 
-button.mat-list-item {
+button.mat-list-item:not(.show-more-button) {
   height: auto;
 }
 
