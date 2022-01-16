@@ -47,7 +47,7 @@ export function toPublicGame(game: Game): PublicGame {
     currentOffer:
       round?.pictures.map(({ card, isFake, buyerTheme, painterTheme, buyerSelection, fakeStatusKnown, painterId }) => {
         if (GamePhase.Evaluate === phase) {
-          return { card, isFake, buyerTheme, painterTheme, painterId };
+          return { card, isFake, buyerTheme, buyerSelection, painterTheme, painterId };
         } else {
           let painterTheme = fakeStatusKnown ? (isFake ? masterFaker : Role.PAINTER) : undefined;
           return { card, buyerSelection, painterTheme };
