@@ -8,4 +8,6 @@
 
 <app-result-pictures [pictures]="game.fakePoints" [points]="animatedFakePoints" [label]="masterFaker"></app-result-pictures>
 
+<app-duration-info *ngIf="game.startTime && game.endTime" [start]="game.startTime" [end]="game.endTime"></app-duration-info>
+
 <app-confetti-button *ngIf="currentPlayer" [currentPlayer]="currentPlayer"></app-confetti-button>

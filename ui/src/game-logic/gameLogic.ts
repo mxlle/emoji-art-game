@@ -73,6 +73,8 @@ export function removePlayerFromGame(game: Game, playerId: string) {
 export function startGame(game: Game, config: GameConfig = getDefaultConfig()) {
   if (GamePhase.Init !== game.phase) return;
 
+  game.startTime = new Date();
+
   // deal cards and assign roles
   game.deck = createDeck(config.deckCategories, config.deckLimitPerCategory);
   const dealtCards = dealCards(game.deck, game.players.length, getNumOfCardsPerPlayer(game.players.length));
@@ -215,6 +217,7 @@ export function endRound(game: Game) {
 
   if (game.fakePoints.length >= gameEndCondition) {
     game.phase = GamePhase.End;
+    game.endTime = new Date();
   } else {
     discardRoundCards(game);
     fillUpCards(game);
@@ -408,7 +411,7 @@ export function getPlayerInGame(game: { players: Player[] }, playerId?: string):
 }
 
 export function toPublicGame(game: Game): PublicGame {
-  const { id, name, hostId, players, jokers, phase, currentRound, rounds, teamPoints, fakePoints } = game;
+  const { id, name, hostId, players, jokers, phase, currentRound, rounds, teamPoints, fakePoints, creationTime, startTime, endTime } = game;
   const round = rounds[currentRound];
 
   return {
@@ -435,6 +438,9 @@ export function toPublicGame(game: Game): PublicGame {
     phase,
     teamPoints,
     fakePoints,
+    creationTime,
+    startTime,
+    endTime,
   };
 }
 

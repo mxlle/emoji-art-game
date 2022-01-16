@@ -47,6 +47,10 @@ export interface PublicGame {
 
   teamPoints: Picture[];
   fakePoints: Picture[];
+
+  creationTime?: Date;
+  startTime?: Date;
+  endTime?: Date;
 }
 
 export interface GameInfo {
