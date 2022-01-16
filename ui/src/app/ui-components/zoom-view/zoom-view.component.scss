@@ -4,5 +4,6 @@
   padding: var(--spacer-xxl);
   .emoji {
     font-size: var(--font-size);
+    text-shadow: 0 0 2px var(--text-shadow-color);
   }
 }
