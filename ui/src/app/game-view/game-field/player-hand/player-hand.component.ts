@@ -20,7 +20,7 @@ export class PlayerHandComponent {
     return GamePhase.Offer === this.game.phase && this.player.role === Role.PAINTER;
   }
 
-  @HostBinding('style.--player-color') get playerColor(): string | undefined {
+  @HostBinding('style.--player-color') get playerColor(): string {
     return this.player.color;
   }
 

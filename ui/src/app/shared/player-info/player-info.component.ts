@@ -10,6 +10,6 @@ import { Player } from '../../../game-logic';
 export class PlayerInfoComponent {
   @Input() player!: Player;
   @HostBinding('style.--border-color') get color(): string {
-    return this.player.color ?? 'transparent';
+    return this.player.color;
   }
 }

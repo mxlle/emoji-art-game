@@ -5,7 +5,7 @@ import { Game } from './game';
 export interface Player {
   id: string;
   name: string;
-  color?: string;
+  color: string;
   role?: Role;
   pictures?: Picture[];
 }
@@ -19,7 +19,7 @@ export function playersToString(players: Player[]): string {
 }
 
 export function getPlayerColors(players: Player[]): string[] {
-  return players.map((p) => p.color ?? '').filter((c) => !!c);
+  return players.map((p) => p.color);
 }
 
 export function getPlayerInGame(game: { players: Player[] }, playerId?: string): Player | undefined {

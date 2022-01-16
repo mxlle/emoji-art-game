@@ -1,6 +1,4 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input } from '@angular/core';
-import { randomArrayValue } from '../../../../game-tools/random-util';
-import { allColors } from '../../../../game-tools/color-util';
 import { GameService } from '../../../game.service';
 import { Player } from '../../../../game-logic';
 
@@ -19,7 +17,7 @@ export class ConfettiButtonComponent {
   ammo: number = this._defaultAmmo;
 
   private get _color(): string {
-    return this.currentPlayer.color ?? randomArrayValue(allColors);
+    return this.currentPlayer.color;
   }
 
   constructor(private _gameService: GameService, private _cdr: ChangeDetectorRef) {}
