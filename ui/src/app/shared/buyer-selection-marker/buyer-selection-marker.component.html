@@ -1,4 +1,4 @@
-<div *ngFor="let selection of selections; trackBy: trackBySelectionTheme" class="theme-group">
+<div *ngFor="let selection of selections; trackBy: trackBySelectionTheme" class="theme-group" [appZoomButton]="selection.theme">
   <app-color-dot *ngFor="let id of selection.playerIds" [color]="id | playerColor | async" [coloredBorder]="true">{{
     selection.theme
   }}</app-color-dot>
