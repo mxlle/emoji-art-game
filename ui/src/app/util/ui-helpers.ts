@@ -1,4 +1,4 @@
-import { Picture } from '../../game-logic/game';
+import { Picture } from '../../game-logic';
 import { TrackByFunction } from '@angular/core';
 import { SETTING_COLOR } from '../../data/constants';
 

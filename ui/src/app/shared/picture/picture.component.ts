@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, HostBinding, Input, OnInit } from '@angular/core';
-import { Picture, Role } from '../../../game-logic/game';
-import { masterFaker } from '../../../game-logic/gameConsts';
+import { masterFaker, Picture, Role } from '../../../game-logic';
 
 @Component({
   selector: 'app-picture',

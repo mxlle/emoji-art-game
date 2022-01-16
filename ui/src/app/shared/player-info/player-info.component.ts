@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, HostBinding, Input } from '@angular/core';
-import { Player } from '../../../game-logic/game';
+import { Player } from '../../../game-logic';
 
 @Component({
   selector: 'app-player-info',

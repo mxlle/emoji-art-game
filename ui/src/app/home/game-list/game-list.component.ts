@@ -1,9 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, TrackByFunction } from '@angular/core';
-import { GameInfo, Player } from '../../../game-logic/game';
+import { GameInfo, getClearedForDeletion, getPhaseEmojis, getPlayerInGame, isRoleActive, Player, pointsEmoji } from '../../../game-logic';
 import { trackByObjectId } from '../../util/ui-helpers';
 import { getCurrentUserId } from '../../../data/functions';
-import { getClearedForDeletion, getPlayerInGame, isRoleActive } from '../../../game-logic/gameLogic';
-import { getPhaseEmojis, pointsEmoji } from '../../../game-logic/gameConsts';
 
 @Component({
   selector: 'app-game-list',

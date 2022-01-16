@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { GameInfo } from '../../game-logic/game';
+import { GameInfo } from '../../game-logic';
 import apiFunctions from '../../data/apiFunctions';
 import { GameService } from '../game.service';
 import { ConnectionService } from '../connection.service';

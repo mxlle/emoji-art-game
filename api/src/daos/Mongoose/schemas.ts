@@ -1,5 +1,5 @@
 import { Schema } from 'mongoose';
-import { getPlayersWithRequiredAction } from '@gameFunctions';
+import { getPlayersWithRequiredAction } from '@gameLogic';
 
 export const PictureSchema: Schema = new Schema(
   {

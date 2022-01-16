@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input } from '@a
 import { randomArrayValue } from '../../../../game-tools/random-util';
 import { allColors } from '../../../../game-tools/color-util';
 import { GameService } from '../../../game.service';
-import { Player } from '../../../../game-logic/game';
+import { Player } from '../../../../game-logic';
 
 @Component({
   selector: 'app-confetti-button',

@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Output } from '@angul
 import { SETTING_COLOR, SETTING_NAME } from '../../../../data/constants';
 import { randomArrayValue } from '../../../../game-tools/random-util';
 import { allColors } from '../../../../game-tools/color-util';
-import { Player } from '../../../../game-logic/game';
+import { Player } from '../../../../game-logic';
 import { getCurrentUserId } from '../../../../data/functions';
 import { setPrimaryPlayerColor } from '../../../util/ui-helpers';
 

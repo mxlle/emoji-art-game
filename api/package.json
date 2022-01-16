@@ -13,8 +13,7 @@
     "@entities": "dist/api/src/entities",
     "@shared": "dist/api/src/shared",
     "@server": "dist/api/src/Server",
-    "@gameTypes": "dist/ui/src/game-logic/game",
-    "@gameFunctions": "dist/ui/src/game-logic/gameLogic"
+    "@gameLogic": "dist/ui/src/game-logic"
   },
   "dependencies": {
     "command-line-args": "^5.2.0",

@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
 import { trackByPictureCard } from '../../../util/ui-helpers';
-import { Picture } from '../../../../game-logic/game';
+import { Picture } from '../../../../game-logic';
 
 @Component({
   selector: 'app-result-pictures',

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { GamePhase, Player, PublicGame, Role } from '../../../../game-logic/game';
+import { GamePhase, Player, PublicGame, Role } from '../../../../game-logic';
 import apiFunctions from '../../../../data/apiFunctions';
 
 @Component({

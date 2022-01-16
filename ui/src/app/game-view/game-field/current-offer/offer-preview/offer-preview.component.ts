@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, ElementRef, HostBinding, Input } from '@angular/core';
-import { Picture, PublicGame } from '../../../../../game-logic/game';
+import { fakesPerRound, masterFaker, Picture, PublicGame } from '../../../../../game-logic';
 import { trackByPictureCard } from '../../../../util/ui-helpers';
-import { fakesPerRound, masterFaker } from '../../../../../game-logic/gameConsts';
 
 @Component({
   selector: 'app-offer-preview',

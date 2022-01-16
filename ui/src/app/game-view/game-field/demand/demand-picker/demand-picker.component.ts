@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { maxDemand, minDemand } from '../../../../../game-logic/gameConsts';
-import { DemandSuggestion, PublicGame } from '../../../../../game-logic/game';
+import { DemandSuggestion, maxDemand, minDemand, PublicGame } from '../../../../../game-logic';
 import apiFunctions from '../../../../../data/apiFunctions';
 import { getCurrentUserId } from '../../../../../data/functions';
 

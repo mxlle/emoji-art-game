@@ -1,9 +1,8 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, Input, OnDestroy } from '@angular/core';
-import { BuyerSelection, GamePhase, Picture, Player, PublicGame, Role } from '../../../../game-logic/game';
+import { BuyerSelection, GamePhase, Picture, Player, PublicGame, Role, unknownCardEmoji } from '../../../../game-logic';
 import { trackByPictureCard } from '../../../util/ui-helpers';
 import apiFunctions from '../../../../data/apiFunctions';
 import { getCurrentUserId } from '../../../../data/functions';
-import { unknownCardEmoji } from '../../../../game-logic/gameConsts';
 import { scrollIntoViewIfPossible } from '../../../util/scroll-into-view';
 import { finalize, interval, Subject, take, takeUntil, tap } from 'rxjs';
 

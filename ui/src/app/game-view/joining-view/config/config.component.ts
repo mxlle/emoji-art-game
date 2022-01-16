@@ -1,7 +1,14 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Output, ViewChild } from '@angular/core';
-import { emojiCategories, EmojiCategory, EmojiCategoryId } from '../../../../game-logic/deck';
-import { GameConfig } from '../../../../game-logic/game';
-import { getDefaultConfig, maxPerCategory, minDeck, minPerCategory } from '../../../../game-logic/gameConsts';
+import {
+  emojiCategories,
+  EmojiCategory,
+  EmojiCategoryId,
+  GameConfig,
+  getDefaultConfig,
+  maxPerCategory,
+  minDeck,
+  minPerCategory,
+} from '../../../../game-logic';
 import { MatSlider, MatSliderChange } from '@angular/material/slider';
 
 @Component({

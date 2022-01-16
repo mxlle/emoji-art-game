@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { Joker, Picture } from '../../../../../game-logic/game';
+import { Joker, Picture } from '../../../../../game-logic';
 import { JokerConfirmDialogComponent, JokerConfirmDialogData } from './joker-confirm-dialog.component';
 import { Observable } from 'rxjs';
 

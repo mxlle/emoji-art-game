@@ -1,7 +1,7 @@
 import http from 'http';
 import SocketIO from 'socket.io';
 import GameApiImpl from './routes/Games';
-import { GameApi, GameEvent, ROOM_GAME, ROOM_GAME_LIST, ROOM_GAME_PLAYER, ROOM_PLAYER_GAME_LIST } from '@gameTypes';
+import { GameApi, GameEvent, ROOM_GAME, ROOM_GAME_LIST, ROOM_GAME_PLAYER, ROOM_PLAYER_GAME_LIST } from '@gameLogic';
 
 export const httpServer = http.createServer();
 const io = SocketIO(httpServer, {

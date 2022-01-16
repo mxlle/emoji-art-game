@@ -1,5 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { getPlayerColors, Role } from '../../../game-logic/game';
+import { getPlayerColors, Role } from '../../../game-logic';
 import { getColorGradient } from '../../../game-tools/color-util';
 import { map, Observable } from 'rxjs';
 import { GameService } from '../../game.service';

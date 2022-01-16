@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, Inject } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Joker, JokerType, Picture } from '../../../../../game-logic/game';
-import { getJokerLabel } from '../../../../../game-logic/gameConsts';
+import { getJokerLabel, Joker, JokerType, Picture } from '../../../../../game-logic';
 
 export interface JokerConfirmDialogData {
   joker: Joker;

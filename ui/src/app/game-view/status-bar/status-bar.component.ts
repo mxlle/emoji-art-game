@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, HostBinding, Input } from '@angular/core';
-import { PublicGame } from '../../../game-logic/game';
-import { getPhaseEmojis, masterFaker, pointsEmoji } from '../../../game-logic/gameConsts';
+import { getPhaseEmojis, masterFaker, pointsEmoji, PublicGame } from '../../../game-logic';
 
 @Component({
   selector: 'app-status-bar',

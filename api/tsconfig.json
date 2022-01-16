@@ -15,8 +15,7 @@
       "@entities/*": ["src/entities/*"],
       "@shared/*": ["src/shared/*"],
       "@server": ["src/Server"],
-      "@gameTypes": ["../ui/src/game-logic/game"],
-      "@gameFunctions": ["../ui/src/game-logic/gameLogic"]
+      "@gameLogic": ["../ui/src/game-logic"]
     },
     "types": [
       "node"

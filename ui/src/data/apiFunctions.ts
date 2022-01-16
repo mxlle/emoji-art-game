@@ -1,5 +1,5 @@
 import { getCurrentUserId } from './functions';
-import { GameApi, GameEvent } from '../game-logic/game';
+import { GameApi, GameEvent } from '../game-logic';
 import { socket } from './socket';
 
 const Api: GameApi = new Proxy({} as GameApi, {

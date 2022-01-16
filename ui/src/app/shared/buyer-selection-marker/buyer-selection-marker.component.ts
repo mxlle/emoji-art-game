@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, TrackByFunction } from '@angular/core';
-import { BuyerSelection } from '../../../game-logic/game';
+import { BuyerSelection } from '../../../game-logic';
 
 @Component({
   selector: 'app-buyer-selection-marker',

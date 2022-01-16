@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, HostBinding, Input } from '@angular/core';
-import { GamePhase, Picture, Player, PublicGame, Role } from '../../../../game-logic/game';
+import { GamePhase, Picture, Player, PublicGame, Role } from '../../../../game-logic';
 import { trackByPictureCard } from '../../../util/ui-helpers';
 import apiFunctions from '../../../../data/apiFunctions';
 

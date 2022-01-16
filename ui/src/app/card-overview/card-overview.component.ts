@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { gameEmojis } from '../../game-logic/gameConsts';
+import { emojiCategories, EmojiCategory, gameEmojis } from '../../game-logic';
 import { splitEmojis } from '../../game-tools/emoji-util';
-import { emojiCategories, EmojiCategory } from '../../game-logic/deck';
 
 interface UiEmojiCategory extends EmojiCategory {
   open: boolean;

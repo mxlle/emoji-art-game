@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { buyer, getPhaseEmojis, painter, pointsEmoji } from '../../../../game-logic/gameConsts';
-import { GamePhase, Player, PublicGame, Role } from '../../../../game-logic/game';
+import { buyer, GamePhase, getPhaseEmojis, painter, Player, pointsEmoji, PublicGame, Role } from '../../../../game-logic';
 import { getCurrentUserId } from '../../../../data/functions';
 
 @Component({

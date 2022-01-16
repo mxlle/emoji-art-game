@@ -1,7 +1,6 @@
 import { SETTING_ID } from './constants';
 import { generateEmojiId } from '../game-tools/emoji-util';
-import { getPlayerInGame } from '../game-logic/gameLogic';
-import { Game, GameInfo, Player } from '../game-logic/game';
+import { Game, GameInfo, getPlayerInGame, Player } from '../game-logic';
 
 export function getCurrentUserId() {
   let userId = localStorage.getItem(SETTING_ID) || '';

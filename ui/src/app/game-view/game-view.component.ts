@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, HostBinding, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { GamePhase, Player, PublicGame } from '../../game-logic/game';
+import { GamePhase, Player, PublicGame } from '../../game-logic';
 import { GameService } from '../game.service';
 import { Observable, Subject, takeUntil } from 'rxjs';
 import { ConnectionService } from '../connection.service';

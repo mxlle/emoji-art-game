@@ -1,5 +1,5 @@
 import * as io from 'socket.io-client';
-import { SocketEvent } from '../game-logic/game';
+import { SocketEvent } from '../game-logic';
 
 const socket = io({
   path: '/api',

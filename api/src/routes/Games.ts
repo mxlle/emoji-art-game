@@ -4,8 +4,21 @@ import GameDaoImpl from '@daos/Game';
 import { docToPlain, GameController, GameDocument, GamePhase, Player } from '@entities/Game';
 import { forbiddenError, gameNotFoundError, paramMissingError } from '@shared/constants';
 import { Namespace } from 'socket.io';
-import { Game, GameApi, GameConfig, GameEvent, Role, ROOM_GAME, ROOM_GAME_LIST, ROOM_GAME_PLAYER, ROOM_PLAYER_GAME_LIST } from '@gameTypes';
-import { getPlayerInGame, toGameInfo, toPublicGame } from '@gameFunctions';
+import {
+  Game,
+  GameApi,
+  GameConfig,
+  GameEvent,
+  getClearedForDeletion,
+  getPlayerInGame,
+  Role,
+  ROOM_GAME,
+  ROOM_GAME_LIST,
+  ROOM_GAME_PLAYER,
+  ROOM_PLAYER_GAME_LIST,
+  toGameInfo,
+  toPublicGame,
+} from '@gameLogic';
 
 // Init shared
 const gameDao = new GameDaoImpl();
@@ -323,7 +336,7 @@ class GameApiImpl implements GameApi {
     const game = await gameDao.getOne(gameId);
 
     if (!game) throw new Error(gameNotFoundError);
-    if (game.hostId !== this.userId && !GameController.getClearedForDeletion(game)) throw new Error(forbiddenError);
+    if (game.hostId !== this.userId && !getClearedForDeletion(game)) throw new Error(forbiddenError);
 
     await gameDao.delete(gameId);
 

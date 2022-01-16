@@ -1,10 +1,8 @@
 import { Document } from 'mongoose';
-import { Game, GamePhase, Player } from '@gameTypes';
+import { Game, GameController, GamePhase, Player } from '@gameLogic';
 
 type GameDocument = Game & Document;
-export { Game, GameDocument, GamePhase, Player };
-
-export * as GameController from '@gameFunctions';
+export { Game, GameDocument, GamePhase, Player, GameController };
 
 export function docToPlain(gameDoc: GameDocument): Game {
   return gameDoc.toObject();

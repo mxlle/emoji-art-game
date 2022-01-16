@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { gameEmojis } from '../game-logic/gameConsts';
+import { gameEmojis } from '../game-logic';
 import { AppUpdateService } from './update.service';
 import { setPrimaryPlayerColor } from './util/ui-helpers';
 

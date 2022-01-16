@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, EventEmitter, HostBinding, Input, Output } from '@angular/core';
-import { Joker } from '../../../../../game-logic/game';
-import { getJokerLabel } from '../../../../../game-logic/gameConsts';
+import { getJokerLabel, Joker } from '../../../../../game-logic';
 
 @Component({
   selector: 'app-joker-card',

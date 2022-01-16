@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { PublicGame } from '../../../../game-logic/game';
+import { PublicGame } from '../../../../game-logic';
 import apiFunctions from '../../../../data/apiFunctions';
 
 @Component({

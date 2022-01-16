@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { Player, PublicGame } from '../../../game-logic/game';
-import { masterFaker, pointsEmoji } from '../../../game-logic/gameConsts';
+import { masterFaker, Player, pointsEmoji, PublicGame } from '../../../game-logic';
 
 @Component({
   selector: 'app-end-view',

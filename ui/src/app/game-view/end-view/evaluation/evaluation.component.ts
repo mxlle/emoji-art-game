@@ -1,9 +1,8 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
-import { Player } from '../../../../game-logic/game';
+import { bestPoints, Player } from '../../../../game-logic';
 import { randomArrayValue } from '../../../../game-tools/random-util';
 import { allColors } from '../../../../game-tools/color-util';
 import { map, Observable, of, tap } from 'rxjs';
-import { bestPoints } from '../../../../game-logic/gameConsts';
 import { animateNumber, AnimationType } from '../../../util/animation-util';
 import { percentage } from '../../../util/util';
 

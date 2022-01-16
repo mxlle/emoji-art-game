@@ -1,17 +1,4 @@
-import {
-  BuyerSelection,
-  DELETE_CLEARANCE_TIME,
-  DemandSuggestion,
-  Game,
-  GameConfig,
-  GameInfo,
-  GamePhase,
-  GameRound,
-  Picture,
-  Player,
-  PublicGame,
-  Role,
-} from './game';
+import { BuyerSelection, Game, GameConfig, GamePhase, GameRound, Picture, Player } from './game';
 import { shuffleArray } from '../game-tools/random-util';
 import {
   fakesPerRound,
@@ -20,15 +7,21 @@ import {
   getInitialJokers,
   getNumOfCardsPerPlayer,
   getRoleOrder,
-  masterFaker,
   maxDemand,
   minDemand,
   themesPerRound,
-  unknownCardEmoji,
 } from './gameConsts';
 import { dealCards, drawCards } from '../game-tools/card-game-util';
 import { generateEmojiId } from '../game-tools/emoji-util';
 import { createDeck } from './deck';
+import {
+  getCurrentRound,
+  getDemandFromSuggestions,
+  getOfferedPictures,
+  getPlayerInGame,
+  isPictureSelectedFromBuyer,
+  isPictureSelectedFromPainter,
+} from './calculatedGameValues';
 
 export function createGame(name: string): Game {
   const id = generateEmojiId();
@@ -158,7 +151,7 @@ export function offerPictures(game: Game) {
   const round = getCurrentRound(game);
 
   const originals = getOfferedPictures(game);
-  const fakes = getFakes(game);
+  const fakes = drawFakes(game);
   round.pictures = shuffleArray([...originals, ...fakes]);
 
   game.phase = GamePhase.Choose;
@@ -288,11 +281,7 @@ function reactivateJoker(game: Game, value: number) {
   }
 }
 
-function getCurrentRound(game: Game): GameRound {
-  return game.rounds[game.currentRound];
-}
-
-function getFakes(game: Game): Picture[] {
+function drawFakes(game: Game): Picture[] {
   return drawCardsSafe(game, fakesPerRound).map((card) => ({
     card,
     isFake: true,
@@ -342,45 +331,6 @@ function rotateRoles(game: Game) {
   }
 }
 
-function isPictureSelectedFromPainter(pic: Picture): boolean {
-  return !!pic.painterTheme;
-}
-
-function isPictureSelectedFromBuyer(pic: Picture): boolean {
-  return !!pic.buyerTheme;
-}
-
-export function getOfferedPictures(game: Game): Picture[] {
-  return game.players.reduce(
-    (currentArr: Picture[], player: Player) =>
-      currentArr.concat(
-        (player.pictures ?? []).filter(isPictureSelectedFromPainter).map((pic) => {
-          pic.painterId = player.id;
-          return pic;
-        })
-      ),
-    []
-  );
-}
-
-export function getBuyerSelection(game: Game): Picture[] {
-  return game && GamePhase.Choose === game.phase
-    ? game.rounds[game.currentRound].pictures.filter(
-        (pic) => !!pic.buyerTheme || (pic.buyerSelection && !!Object.keys(pic.buyerSelection).length)
-      )
-    : [];
-}
-
-export function getDemandFromSuggestions(suggestions: DemandSuggestion[] = []): number {
-  const bestSelection = suggestions.reduce((currentSuggestion: DemandSuggestion | undefined, suggestion: DemandSuggestion) => {
-    if (!currentSuggestion || suggestion.playerIds?.length > currentSuggestion.playerIds?.length) {
-      return suggestion;
-    }
-    return currentSuggestion;
-  }, undefined);
-  return bestSelection?.demand ?? minDemand;
-}
-
 export function setBuyerThemeForPicture(picture: Picture) {
   if (picture.buyerSelection) {
     const bestSelection = picture.buyerSelection.reduce((currentSelection: BuyerSelection | undefined, selection: BuyerSelection) => {
@@ -392,97 +342,3 @@ export function setBuyerThemeForPicture(picture: Picture) {
     picture.buyerTheme = bestSelection?.theme;
   }
 }
-
-export function getPlayersWithRequiredAction(_game: Game): Player[] {
-  return []; // todo
-}
-
-export function getClearedForDeletion(game: Game | GameInfo, nowTime: number = new Date().getTime()): boolean {
-  if (game?.creationTime) {
-    const diff = nowTime - new Date(game.creationTime).getTime();
-    return diff > DELETE_CLEARANCE_TIME;
-  } else {
-    return [GamePhase.Init, GamePhase.End].includes(game.phase);
-  }
-}
-
-export function getPlayerInGame(game: { players: Player[] }, playerId?: string): Player | undefined {
-  return game.players.find((player: Player) => player.id === playerId);
-}
-
-export function toPublicGame(game: Game): PublicGame {
-  const { id, name, hostId, players, jokers, phase, currentRound, rounds, teamPoints, fakePoints, creationTime, startTime, endTime } = game;
-  const round = rounds[currentRound];
-
-  return {
-    id,
-    name,
-    hostId,
-    players: players.map(mapToPublicPlayer),
-    jokers,
-    currentOffer:
-      round?.pictures.map(({ card, isFake, buyerTheme, painterTheme, buyerSelection, fakeStatusKnown, painterId }) => {
-        if (GamePhase.Evaluate === phase) {
-          return { card, isFake, buyerTheme, painterTheme, painterId };
-        } else {
-          let painterTheme = fakeStatusKnown ? (isFake ? masterFaker : Role.PAINTER) : undefined;
-          return { card, buyerSelection, painterTheme };
-        }
-      }) ?? [],
-    currentThemes: round?.themes ?? [],
-    currentDemand: round?.demand ?? 0,
-    currentDemandSuggestions: round?.demandSuggestions ?? [],
-    offerPreview: getOfferedPictures(game).map(({ painterId }) => ({ card: unknownCardEmoji, painterId })),
-    selectionCount: getBuyerSelection(game).length,
-    correctCount: round?.pictures.filter((pic) => game.teamPoints.findIndex((p) => pic.card === p.card) > -1).length,
-    phase,
-    teamPoints,
-    fakePoints,
-    creationTime,
-    startTime,
-    endTime,
-  };
-}
-
-export function toGameInfo(game: Game): GameInfo {
-  const { id, name, hostId, players, phase, creationTime, startTime, endTime, teamPoints } = game;
-  let endResult = undefined;
-  if (GamePhase.End === phase) {
-    endResult = teamPoints.length;
-  }
-
-  return {
-    id,
-    name,
-    hostId,
-    players: players.map(mapToPublicPlayer),
-    phase,
-    creationTime,
-    startTime,
-    endTime,
-    endResult,
-  };
-}
-
-function mapToPublicPlayer({ id, name, color, role }: Player): Player {
-  return { id, name, color, role };
-}
-
-export const isRoleActive = (game: { phase: GamePhase; hostId: string }, currentPlayer?: Player): boolean => {
-  switch (game.phase) {
-    case GamePhase.Init:
-      return !currentPlayer || currentPlayer?.id === game.hostId;
-    case GamePhase.Demand:
-      return Role.BUYER == currentPlayer?.role;
-    case GamePhase.Offer:
-      return Role.PAINTER == currentPlayer?.role;
-    case GamePhase.Choose:
-      return Role.BUYER == currentPlayer?.role;
-    case GamePhase.Evaluate:
-      return !!currentPlayer;
-    case GamePhase.End:
-      return !!currentPlayer;
-    default:
-      return false;
-  }
-};

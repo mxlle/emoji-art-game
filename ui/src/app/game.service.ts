@@ -1,10 +1,9 @@
 import { Injectable, NgZone } from '@angular/core';
 import { distinctUntilChanged, filter, map, Observable, ReplaySubject, take, withLatestFrom } from 'rxjs';
-import { GameEvent, GameInfo, GamePhase, Player, playersToString, PublicGame, Role } from '../game-logic/game';
+import { bestPoints, GameEvent, GameInfo, GamePhase, Player, playersToString, PublicGame, Role } from '../game-logic';
 import { socket } from '../data/socket';
 import { getCurrentUserId, getCurrentUserInGame } from '../data/functions';
 import apiFunctions from '../data/apiFunctions';
-import { bestPoints } from '../game-logic/gameConsts';
 import { allColors } from '../game-tools/color-util';
 
 export interface ConfettiEvent {

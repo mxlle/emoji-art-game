@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { GamePhase, PublicGame } from '../../../game-logic/game';
-import { buyer, painter, pointsEmoji } from '../../../game-logic/gameConsts';
+import { buyer, GamePhase, painter, pointsEmoji, PublicGame } from '../../../game-logic';
 
 @Component({
   selector: 'app-counter',

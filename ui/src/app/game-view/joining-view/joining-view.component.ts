@@ -1,7 +1,6 @@
 import { ChangeDetectionStrategy, Component, Input } from '@angular/core';
-import { GameConfig, Player, PublicGame } from '../../../game-logic/game';
+import { GameConfig, getDefaultConfig, minDeck, minNumPlayers, Player, PublicGame } from '../../../game-logic';
 import apiFunctions from '../../../data/apiFunctions';
-import { getDefaultConfig, minDeck, minNumPlayers } from '../../../game-logic/gameConsts';
 
 @Component({
   selector: 'app-joining-view',

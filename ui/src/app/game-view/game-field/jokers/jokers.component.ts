@@ -1,8 +1,7 @@
 import { ChangeDetectionStrategy, Component, HostBinding, Input, TrackByFunction } from '@angular/core';
-import { GamePhase, Joker, JokerType, Player, PublicGame } from '../../../../game-logic/game';
+import { GamePhase, Joker, JokerType, maxDemand, minDemand, Player, PublicGame } from '../../../../game-logic';
 import apiFunctions from '../../../../data/apiFunctions';
 import { JokerConfirmDialogService } from './joker-confirm-dialog/joker-confirm-dialog.service';
-import { maxDemand, minDemand } from '../../../../game-logic/gameConsts';
 
 @Component({
   selector: 'app-jokers',

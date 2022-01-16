@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, Output } from '@angular/core';
-import { unknownCardEmoji } from '../../../../game-logic/gameConsts';
+import { unknownCardEmoji } from '../../../../game-logic';
 import { scrollTop } from '../../../util/scroll-into-view';
 
 @Component({

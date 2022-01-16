@@ -1,6 +1,5 @@
 import { ChangeDetectionStrategy, Component } from '@angular/core';
-import { getJokerLabel, getPhaseEmojis, masterFaker } from '../../../game-logic/gameConsts';
-import { GamePhase, JokerType, Role } from '../../../game-logic/game';
+import { GamePhase, getJokerLabel, getPhaseEmojis, JokerType, masterFaker, Role } from '../../../game-logic';
 
 @Component({
   selector: 'app-quick-rules',

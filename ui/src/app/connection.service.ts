@@ -1,6 +1,6 @@
 import { Injectable, NgZone } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { SocketEvent } from '../game-logic/game';
+import { SocketEvent } from '../game-logic';
 import { socket } from '../data/socket';
 
 @Injectable({
