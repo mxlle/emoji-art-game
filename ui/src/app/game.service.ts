@@ -1,6 +1,6 @@
 import { Injectable, NgZone } from '@angular/core';
 import { distinctUntilChanged, filter, map, Observable, ReplaySubject, take, withLatestFrom } from 'rxjs';
-import { bestPoints, GameEvent, GameInfo, GamePhase, Player, playersToString, PublicGame, Role } from '../game-logic';
+import { bestPoints, GameEvent, GamePhase, ListGame, Player, playersToString, PublicGame, Role } from '../game-logic';
 import { socket } from '../data/socket';
 import { getCurrentUserId, getCurrentUserInGame } from '../data/functions';
 import apiFunctions from '../data/apiFunctions';
@@ -71,24 +71,24 @@ export class GameService {
     );
   }
 
-  get newGames$(): Observable<GameInfo[] | null> {
+  get newGames$(): Observable<ListGame[] | null> {
     return this._newGames$.asObservable();
   }
 
-  get ongoingGames$(): Observable<GameInfo[] | null> {
+  get ongoingGames$(): Observable<ListGame[] | null> {
     return this._ongoingGames$.asObservable();
   }
 
-  get finishedGames$(): Observable<GameInfo[] | null> {
+  get finishedGames$(): Observable<ListGame[] | null> {
     return this._finishedGames$.asObservable();
   }
 
   private _currentGame$: ReplaySubject<PublicGame | null> = new ReplaySubject<PublicGame | null>(1);
   private _currentPlayer$: ReplaySubject<Player | null> = new ReplaySubject<Player | null>(1);
   private _confetti$: ReplaySubject<string[]> = new ReplaySubject<string[]>(1);
-  private _newGames$: ReplaySubject<GameInfo[] | null> = new ReplaySubject<GameInfo[] | null>(1);
-  private _ongoingGames$: ReplaySubject<GameInfo[] | null> = new ReplaySubject<GameInfo[] | null>(1);
-  private _finishedGames$: ReplaySubject<GameInfo[] | null> = new ReplaySubject<GameInfo[] | null>(1);
+  private _newGames$: ReplaySubject<ListGame[] | null> = new ReplaySubject<ListGame[] | null>(1);
+  private _ongoingGames$: ReplaySubject<ListGame[] | null> = new ReplaySubject<ListGame[] | null>(1);
+  private _finishedGames$: ReplaySubject<ListGame[] | null> = new ReplaySubject<ListGame[] | null>(1);
 
   constructor(private _ngZone: NgZone) {}
 
@@ -137,7 +137,7 @@ export class GameService {
   }
 
   private _loadGames() {
-    return apiFunctions.loadGames().then((allGames: GameInfo[]) => {
+    return apiFunctions.loadGames().then((allGames: ListGame[]) => {
       const newGames = allGames.filter((game) => game.phase === GamePhase.Init && !getCurrentUserInGame(game));
       const ongoingGames = allGames.filter(
         (game) => ![GamePhase.Init, GamePhase.End].includes(game.phase) || (game.phase === GamePhase.Init && !!getCurrentUserInGame(game))

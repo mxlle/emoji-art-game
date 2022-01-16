@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output, TrackByFunction } from '@angular/core';
-import { GameInfo, getClearedForDeletion, getPhaseEmojis, getPlayerInGame, isRoleActive, Player, pointsEmoji } from '../../../game-logic';
+import { getClearedForDeletion, getPhaseEmojis, getPlayerInGame, isRoleActive, ListGame, Player, pointsEmoji } from '../../../game-logic';
 import { trackByObjectId } from '../../util/ui-helpers';
 import { getCurrentUserId } from '../../../data/functions';
 
@@ -11,13 +11,13 @@ import { getCurrentUserId } from '../../../data/functions';
 })
 export class GameListComponent implements OnInit {
   @Input() label: string = '';
-  @Input() games: GameInfo[] = [];
+  @Input() games: ListGame[] = [];
   @Input() initialLimit: number = 5;
   @Output() delete: EventEmitter<string> = new EventEmitter<string>();
 
   limit: number = this.initialLimit;
 
-  readonly trackByGameId: TrackByFunction<GameInfo> = trackByObjectId;
+  readonly trackByGameId: TrackByFunction<ListGame> = trackByObjectId;
   readonly getPhaseEmojis = getPhaseEmojis;
   readonly currentUserId: string = getCurrentUserId();
   readonly pointsEmoji: string = pointsEmoji;
@@ -32,15 +32,15 @@ export class GameListComponent implements OnInit {
     this.limit += this.limitStep;
   }
 
-  getPlayersString(game: GameInfo): string {
+  getPlayersString(game: ListGame): string {
     return game.players.map((pl: Player) => pl.name).join(', ') || '-';
   }
 
-  isCurrentPlayersTurn(game: GameInfo) {
+  isCurrentPlayersTurn(game: ListGame) {
     return isRoleActive(game, getPlayerInGame(game, this.currentUserId));
   }
 
-  isDeleteAllowed(game: GameInfo): boolean {
+  isDeleteAllowed(game: ListGame): boolean {
     return game.hostId === this.currentUserId || getClearedForDeletion(game);
   }
 

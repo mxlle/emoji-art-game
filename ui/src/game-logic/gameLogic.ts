@@ -1,46 +1,28 @@
-import { BuyerSelection, Game, GameConfig, GamePhase, GameRound, Picture, Player } from './game';
-import { shuffleArray } from '../game-tools/random-util';
 import {
-  fakesPerRound,
-  gameEndCondition,
+  BuyerSelection,
+  Game,
+  GameConfig,
+  GamePhase,
+  GameRound,
   getDefaultConfig,
-  getInitialJokers,
-  getNumOfCardsPerPlayer,
-  getRoleOrder,
-  maxDemand,
-  minDemand,
-  themesPerRound,
-} from './gameConsts';
-import { dealCards, drawCards } from '../game-tools/card-game-util';
-import { generateEmojiId } from '../game-tools/emoji-util';
-import { createDeck } from './deck';
-import {
-  getCurrentRound,
   getDemandFromSuggestions,
+  getNumOfCardsPerPlayer,
   getOfferedPictures,
   getPlayerInGame,
+  getRoleOrder,
   isPictureSelectedFromBuyer,
   isPictureSelectedFromPainter,
-} from './calculatedGameValues';
+  Picture,
+  Player,
+} from './models';
+import { shuffleArray } from '../game-tools/random-util';
+import { fakesPerRound, gameEndCondition, maxDemand, minDemand, themesPerRound } from './gameConsts';
+import { dealCards, drawCards } from '../game-tools/card-game-util';
+import { createDeck } from './deck';
 
-export function createGame(name: string): Game {
-  const id = generateEmojiId();
-
-  return {
-    id,
-    name,
-    players: [],
-    hostId: '',
-    deck: [],
-    discardedDeck: [],
-    jokers: getInitialJokers(),
-    currentRound: -1,
-    phase: GamePhase.Init,
-    rounds: [],
-    teamPoints: [],
-    fakePoints: [],
-  };
-}
+// ------------------------------------------------------------------------------------------------
+// GAME PREPARATION
+// ------------------------------------------------------------------------------------------------
 
 export function addOrUpdatePlayer(game: Game, newPlayer: Player) {
   if (GamePhase.Init !== game.phase) return;
@@ -80,6 +62,10 @@ export function startGame(game: Game, config: GameConfig = getDefaultConfig()) {
   // start first round
   startRound(game);
 }
+
+// ------------------------------------------------------------------------------------------------
+// GAME ACTIONS
+// ------------------------------------------------------------------------------------------------
 
 function startRound(game: Game) {
   game.currentRound++;
@@ -219,9 +205,9 @@ export function endRound(game: Game) {
   }
 }
 
-// -------------
+// ------------------------------------------------------------------------------------------------
 // JOKER USAGE
-// -------------
+// ------------------------------------------------------------------------------------------------
 
 export function useExchangeThemesJoker(game: Game) {
   const joker = game.jokers[0];
@@ -280,6 +266,10 @@ function reactivateJoker(game: Game, value: number) {
     joker.used = false;
   }
 }
+
+// ------------------------------------------------------------------------------------------------
+// HELPER FUNCTIONS
+// ------------------------------------------------------------------------------------------------
 
 function drawFakes(game: Game): Picture[] {
   return drawCardsSafe(game, fakesPerRound).map((card) => ({
@@ -341,4 +331,8 @@ export function setBuyerThemeForPicture(picture: Picture) {
     }, undefined);
     picture.buyerTheme = bestSelection?.theme;
   }
+}
+
+function getCurrentRound(game: Game): GameRound {
+  return game.rounds[game.currentRound];
 }

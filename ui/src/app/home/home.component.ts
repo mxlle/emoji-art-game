@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { GameInfo } from '../../game-logic';
+import { ListGame } from '../../game-logic';
 import apiFunctions from '../../data/apiFunctions';
 import { GameService } from '../game.service';
 import { ConnectionService } from '../connection.service';
@@ -12,9 +12,9 @@ import { Observable, Subject, takeUntil } from 'rxjs';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HomeComponent implements OnInit, OnDestroy {
-  newGames$: Observable<GameInfo[] | null> = this._gameService.newGames$;
-  ongoingGames$: Observable<GameInfo[] | null> = this._gameService.ongoingGames$;
-  finishedGames$: Observable<GameInfo[] | null> = this._gameService.finishedGames$;
+  newGames$: Observable<ListGame[] | null> = this._gameService.newGames$;
+  ongoingGames$: Observable<ListGame[] | null> = this._gameService.ongoingGames$;
+  finishedGames$: Observable<ListGame[] | null> = this._gameService.finishedGames$;
 
   loading: boolean = true;
 

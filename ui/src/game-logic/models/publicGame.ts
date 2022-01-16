@@ -1,6 +1,38 @@
-import { Game, GameInfo, GamePhase, Player, PublicGame, Role } from './game';
-import { masterFaker, unknownCardEmoji } from './gameConsts';
-import { getBuyerSelection, getOfferedPictures } from './calculatedGameValues';
+import { mapToPublicPlayer, Player } from './player';
+import { Joker } from './joker';
+import { getBuyerSelection, getOfferedPictures, Picture } from './picture';
+import { GamePhase } from './gamePhase';
+import { Game } from './game';
+import { masterFaker, unknownCardEmoji } from '../gameConsts';
+import { Role } from './role';
+import { DemandSuggestion } from './demand';
+
+export interface PublicGame {
+  id: string;
+  name: string;
+  players: Player[];
+  hostId: string;
+
+  jokers: Joker[];
+
+  currentOffer: Picture[];
+  currentThemes: string[];
+
+  currentDemand: number;
+  currentDemandSuggestions: DemandSuggestion[];
+  offerPreview: Picture[];
+  selectionCount: number;
+  correctCount: number;
+
+  phase: GamePhase;
+
+  teamPoints: Picture[];
+  fakePoints: Picture[];
+
+  creationTime?: Date;
+  startTime?: Date;
+  endTime?: Date;
+}
 
 export function toPublicGame(game: Game): PublicGame {
   const { id, name, hostId, players, jokers, phase, currentRound, rounds, teamPoints, fakePoints, creationTime, startTime, endTime } = game;
@@ -34,28 +66,4 @@ export function toPublicGame(game: Game): PublicGame {
     startTime,
     endTime,
   };
-}
-
-export function toGameInfo(game: Game): GameInfo {
-  const { id, name, hostId, players, phase, creationTime, startTime, endTime, teamPoints } = game;
-  let endResult = undefined;
-  if (GamePhase.End === phase) {
-    endResult = teamPoints.length;
-  }
-
-  return {
-    id,
-    name,
-    hostId,
-    players: players.map(mapToPublicPlayer),
-    phase,
-    creationTime,
-    startTime,
-    endTime,
-    endResult,
-  };
-}
-
-function mapToPublicPlayer({ id, name, color, role }: Player): Player {
-  return { id, name, color, role };
 }

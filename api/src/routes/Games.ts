@@ -16,7 +16,7 @@ import {
   ROOM_GAME_LIST,
   ROOM_GAME_PLAYER,
   ROOM_PLAYER_GAME_LIST,
-  toGameInfo,
+  toListGame,
   toPublicGame,
 } from '@gameLogic';
 
@@ -40,7 +40,7 @@ class GameApiImpl implements GameApi {
       .filter((game: Game) => {
         return game.phase === GamePhase.Init || (this.userId && game.players.findIndex((p) => p.id === this.userId) > -1);
       })
-      .map((game: Game) => toGameInfo(game));
+      .map((game: Game) => toListGame(game));
   }
 
   async loadGame(gameId: string) {
