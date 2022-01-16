@@ -4,13 +4,18 @@
 
 <div class="games">
   <!-- NEW GAMES -->
-  <app-game-list *ngIf="newGames$ | async as newGames" label="New Games" [games]="newGames" (delete)="deleteGame($event)"></app-game-list>
+  <app-game-list
+    *ngIf="newGames$ | async as newGames"
+    label="New Games"
+    [games]="newGames | orderBy: 'creationTime'"
+    (delete)="deleteGame($event)"
+  ></app-game-list>
 
   <!-- ONGOING GAMES -->
   <app-game-list
     *ngIf="ongoingGames$ | async as ongoingGames"
     label="My ongoing Games"
-    [games]="ongoingGames"
+    [games]="ongoingGames | orderBy: 'creationTime' | orderBy: 'startTime'"
     (delete)="deleteGame($event)"
   ></app-game-list>
 
@@ -18,7 +23,7 @@
   <app-game-list
     *ngIf="finishedGames$ | async as finishedGames"
     label="My finished Games"
-    [games]="finishedGames"
+    [games]="finishedGames | orderBy: 'creationTime' | orderBy: 'endTime'"
     (delete)="deleteGame($event)"
   ></app-game-list>
 </div>

@@ -60,6 +60,8 @@ export interface GameInfo {
   hostId: string;
   phase: GamePhase;
   creationTime?: Date;
+  startTime?: Date;
+  endTime?: Date;
   endResult?: number;
 }
 
