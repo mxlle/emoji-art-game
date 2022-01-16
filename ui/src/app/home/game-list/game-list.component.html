@@ -9,11 +9,11 @@
           <mat-icon>delete</mat-icon>
         </button>
       </div>
-      <div class="result" *ngIf="game.endResult">
+      <div class="result" *ngIf="game.endResult !== undefined">
         <span>{{ game.endResult }}</span>
         <span class="emoji">{{ pointsEmoji }}</span>
       </div>
-      <div class="phase" *ngIf="!game.endResult" [class.inactive]="!isCurrentPlayersTurn(game)">
+      <div class="phase" *ngIf="game.endResult === undefined" [class.inactive]="!isCurrentPlayersTurn(game)">
         <span class="emoji">{{ getPhaseEmojis(game.phase) }}</span>
       </div>
     </div>
