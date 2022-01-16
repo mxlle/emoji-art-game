@@ -1,4 +1,4 @@
-@mixin defaultGrid($minValue: calc(#{var(--emoji-size-lg)} + 2 * #{var(--spacer-lg)})) {
+@mixin defaultGrid($minValue: calc(#{var(--emoji-size-lg)} + 2 * #{var(--spacer-xl)})) {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax($minValue, 1fr));
   grid-auto-rows: 1fr;

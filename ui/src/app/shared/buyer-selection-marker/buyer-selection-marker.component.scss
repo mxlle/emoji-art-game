@@ -8,6 +8,6 @@
     position: relative;
     --color-dot-size: var(--emoji-size-md); // to be around emoji
 
-    @include mixins.stackEffect();
+    @include mixins.stackEffect(5);
   }
 }
