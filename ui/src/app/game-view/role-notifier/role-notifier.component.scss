@@ -18,16 +18,18 @@
 
   .container {
     display: grid;
-    gap: var(--spacer-md);
     padding: 3rem;
     width: calc(#{var(--emoji-size-max)} + 12rem);
     height: calc(#{var(--emoji-size-max)} + 12rem);
     background-color: var(--overlay-background);
     border-radius: 50%;
     transition: transform 0.5s;
+    max-width: 100vw;
+    max-height: 100vw;
 
     .emoji {
-      font-size: var(--emoji-size-max);
+      margin-block-start: var(--spacer-lg);
+      font-size: calc(0.8 * #{var(--emoji-size-max)});
     }
   }
 }
