@@ -17,7 +17,7 @@ export const getDefaultConfig = (): GameConfig => {
 };
 
 // ROLE ORDER
-export const roleOrder: Role[] = [Role.PAINTER, Role.BUYER, Role.BUYER, Role.PAINTER, Role.BUYER];
+export const roleOrder: Role[] = [Role.BUYER, Role.PAINTER, Role.PAINTER, Role.BUYER, Role.PAINTER];
 export const getRoleOrder = (numOfPlayer: number): Role[] => {
   const order = [];
   while (order.length < numOfPlayer) {
